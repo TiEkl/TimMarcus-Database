@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="749.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1080.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@bgimage.jpg" />
+         </image></ImageView>
+      <MenuBar prefHeight="29.0" prefWidth="1080.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <PasswordField fx:id="adminPassword" layoutX="412.0" layoutY="402.0" prefHeight="27.0" prefWidth="257.0" promptText="Password" />
+      <TextField fx:id="adminUserName" layoutX="412.0" layoutY="361.0" prefHeight="27.0" prefWidth="257.0" promptText="Username" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="465.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@fpmwlddibizqewcyodnb.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="499.0" layoutY="328.0" opacity="0.65" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Login" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Medium" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="AdminLoginButton" defaultButton="true" layoutX="493.0" layoutY="469.0" mnemonicParsing="false" onAction="#AdminLoginButton" prefHeight="27.0" prefWidth="96.0" text="Login">
+         <font>
+            <Font name="Avenir Next Condensed Medium" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="GoBack" defaultButton="true" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Go Back" textOverrun="CENTER_ELLIPSIS">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
