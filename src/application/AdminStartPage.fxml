@@ -30,57 +30,5 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <JFXTabPane layoutX="73.0" layoutY="141.0" prefHeight="535.0" prefWidth="840.0" stylesheets="@application.css">
-         <tabs>
-            <Tab text="Add new Customer">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <JFXTextField layoutX="26.0" layoutY="94.0" prefHeight="27.0" prefWidth="300.0" promptText="Full name" />
-                        <JFXTextField layoutX="26.0" layoutY="141.0" prefHeight="27.0" prefWidth="300.0" promptText="Phone number" />
-                        <JFXTextField layoutX="26.0" layoutY="186.0" prefHeight="27.0" prefWidth="300.0" promptText="Adress" />
-                        <JFXTextField layoutX="26.0" layoutY="231.0" prefHeight="27.0" prefWidth="300.0" promptText="Card ID" />
-                        <JFXButton buttonType="RAISED" layoutX="97.0" layoutY="290.0" prefHeight="27.0" prefWidth="158.0" ripplerFill="#9ccce2" text="Add new Customer" />
-                        <Text layoutX="26.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new Customer">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Text>
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Update Customer Info">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <JFXTreeTableView layoutX="86.0" layoutY="189.0" prefHeight="316.0" prefWidth="669.0">
-                           <columns>
-                              <TreeTableColumn prefWidth="75.0" text="Name" />
-                              <TreeTableColumn prefWidth="122.0" text="Phone number" />
-                              <TreeTableColumn prefWidth="77.0" text="adress" />
-                              <TreeTableColumn minWidth="0.0" prefWidth="69.0" text="Column X" />
-                              <TreeTableColumn prefWidth="71.0" text="Column X" />
-                              <TreeTableColumn prefWidth="77.0" text="Column X" />
-                              <TreeTableColumn prefWidth="89.0" text="Column X" />
-                           </columns>
-                        </JFXTreeTableView>
-                        <JFXTextField layoutX="132.0" layoutY="114.0" prefHeight="27.0" prefWidth="577.0" promptText="Search for customer..." />
-                        <RadioButton layoutX="132.0" layoutY="152.0" mnemonicParsing="false" text="Card ID" />
-                        <RadioButton layoutX="212.0" layoutY="152.0" mnemonicParsing="false" text="Name" />
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Untitled Tab">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Untitled Tab">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
    </children>
 </AnchorPane>

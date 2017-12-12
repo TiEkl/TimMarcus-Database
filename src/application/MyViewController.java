@@ -130,9 +130,7 @@ public class MyViewController implements Initializable {
    setTextSearch(Search.getText());
    
 	if(RadioTitle.isSelected()) {
-
 		setSearchCategory("title");
-		
 	}
 	
 	else if(RadioAuthor.isSelected()) {
@@ -225,9 +223,6 @@ public class MyViewController implements Initializable {
 		  RadioTitle.setToggleGroup(toggleGroup);
     		  
     }
-
-
-	
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			library = new Database();
@@ -237,12 +232,5 @@ public class MyViewController implements Initializable {
 		}
 		
 	}
-    
-	
-		
-	
-	
-    
-    
    
 }

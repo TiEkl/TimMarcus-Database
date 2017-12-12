@@ -99,8 +99,7 @@ public class AdvancedSearchController implements Initializable   {
 
     @FXML
     void SearchButton(ActionEvent event) throws SQLException {
-    	MyViewController MyViewCo = new MyViewController();
-
+    		MyViewController MyViewCo = new MyViewController();
 	    	if(Search.getText().trim().isEmpty()){
 	    		MyViewCo.setSearchCategory("author");
 	    		MyViewCo.setTextSearch(SearchAuthor.getText());
@@ -175,6 +174,7 @@ public class AdvancedSearchController implements Initializable   {
     }
 
     public void genToplistInit() {
+
     	try {
     		library = new Database ();
     		 myview = new MyViewController();
@@ -193,12 +193,12 @@ public class AdvancedSearchController implements Initializable   {
     		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
     		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
     		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-    		try {
+    		/* try {
     			result.setItems(getToplist());
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    }
+    			e.printStackTrace(); 
+    }*/
     }
 
 	@Override

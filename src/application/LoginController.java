@@ -50,20 +50,20 @@ public class LoginController {
 		   String password = adminPassword.getText();
 		   
 		   Database loginData = new Database();
-		  boolean loginChecker = loginData.verifyLogin(userName, password);
+		  //boolean loginChecker = loginData.verifyLogin(userName, password);
 		  
-		  if(loginChecker) {
-			 	Parent Admin_parent = FXMLLoader.load(getClass().getResource("AdminStartPage.fxml"));
+		  //if(loginChecker) {
+			 Parent Admin_parent = FXMLLoader.load(getClass().getResource("AdminStartPage.fxml"));
 		    	Scene Admin_scene = new Scene(Admin_parent);
 		    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		    	app_stage.setScene(Admin_scene);
 		    	app_stage.show();
 		  }
-		  else if(!loginChecker) {
+		 /* else if(!loginChecker) {
 			  System.out.println("wrong password");
 		  }
 	    	
-	    }
+	    }*/
 	
 	
 	
