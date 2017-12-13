@@ -90,6 +90,12 @@ public class MyViewController implements Initializable {
 
 
 
+
+
+  @FXML 
+  public void onEnter(ActionEvent ae) throws IOException {
+	  SearchButton(ae);
+  }
 	@FXML
 	void SearchButton(ActionEvent event) throws IOException{
 		setTextSearch(Search.getText());
@@ -97,11 +103,9 @@ public class MyViewController implements Initializable {
 		if(RadioTitle.isSelected()) {
 			setSearchCategory("title");
 		}
-
 		else if(RadioAuthor.isSelected()) {
 			setSearchCategory("author");
 		}
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("AdvancedSearch.fxml"));
 		Parent root = (Parent) loader.load();
 
@@ -120,20 +124,14 @@ public class MyViewController implements Initializable {
 		 */
 	}
 
-
-
-
 	@FXML
 	void exitProgram(ActionEvent event) {
 		Platform.exit();
 
 	}
 
-
 	@FXML
 	void AdvSearch(ActionEvent event) throws IOException {
-
-
 		Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
 		Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
 		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -141,6 +139,7 @@ public class MyViewController implements Initializable {
 		app_stage.show();
 
 	}
+	
 	@FXML
 	void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
 		Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
@@ -148,6 +147,7 @@ public class MyViewController implements Initializable {
 		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		app_stage.setScene(My_Books_scene);
 		app_stage.show();
+		
 	}
 
 	@FXML
@@ -169,6 +169,7 @@ public class MyViewController implements Initializable {
 		app_stage.show();
 
 	}
+	
 	@FXML
 	void EnterAdminLogin(ActionEvent event) throws IOException {
 		Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -186,6 +187,7 @@ public class MyViewController implements Initializable {
 		RadioTitle.setToggleGroup(toggleGroup);
 
 	}
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			library = new Database();
@@ -193,7 +195,5 @@ public class MyViewController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 }

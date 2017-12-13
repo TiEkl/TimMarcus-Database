@@ -154,10 +154,10 @@ public class Database  {
 		
 		String sql = "SELECT * FROM customer";
 		ResultSet customerSet = PreparedQuery(sql);
-		Customer[] customerArray = getCustomerArray(customerSet);
+		Customer[] customerArray = rsToCustomerArray(customerSet);
 		return customerArray;
 	}
-	public Customer[] getCustomerArray(ResultSet customerSet) throws SQLException {
+	public Customer[] rsToCustomerArray(ResultSet customerSet) throws SQLException {
 		ArrayList<Customer> customerList= new ArrayList<Customer>();
 		String name, city, street, phoneNr;
 		int card_id;
@@ -172,6 +172,25 @@ public class Database  {
 		}
 		Customer[] customerArray = customerList.toArray(new Customer[customerList.size()]);
 		return customerArray;
+	}
+	public Customer rsToCustomer(ResultSet customerSet) throws SQLException {
+		String name, city, street, phoneNr;
+		int card_id;
+		name = customerSet.getString("name");
+		city = customerSet.getString("city");
+		phoneNr = customerSet.getString("phone_nr");
+		street = customerSet.getString("street");
+		card_id = customerSet.getInt("card_id");
+		Customer result = new Customer(name, city, street, phoneNr, card_id);
+		return result;
+	}
+	public Customer getCustomer(int card_id) throws SQLException {
+		String sql = "SELECT * FROM customer " +
+				"WHERE card_id = ?";
+
+		ResultSet rs = PreparedQuery(sql, card_id);  
+		Customer result = rsToCustomer(rs);
+		return result;	
 	}
 	public void updateCustomer(String category, String update, int card_id) throws SQLException {
 		String sql = "UPDATE  customer SET "+category+" = ? WHERE card_id = ?";
@@ -210,6 +229,9 @@ public class Database  {
 		}
 		checkoutList.clear();
 		return result;
+	}
+	public  ArrayList<Book> getCheckoutList() {
+		return checkoutList;
 	}
 	public boolean checkIfAlreadyBorrowed(int book_id, int card_id) throws SQLException {
 		
@@ -613,11 +635,16 @@ public class Database  {
 	public void addToCheckout(Book addition) {
 		checkoutList.add(addition);
 	}
+	public void addToCheckout(int book_id) throws SQLException {
+		checkoutList.add(searchOneBook(book_id));
+	}
+	public void setCheckout(ArrayList<Book> list) {
+		checkoutList = list;
+	}
 	public void removeFromCheckout(Book remove) {
 		checkoutList.remove(remove);
 	}
 	public ResultSet PreparedQuery(String query, Object...objects) throws SQLException {
-		//try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 			PreparedStatement pstmt = conn.prepareStatement(query);
 				for(int i = 0; i < objects.length; i++) {
 					Object obj = objects[i];
@@ -641,8 +668,7 @@ public class Database  {
 					}
 				}
 			ResultSet result = pstmt.executeQuery();
-			return result;
-		//}	
+			return result;	
 	}
 	public void PreparedUpdate(String update, Object...objects) throws SQLException {
 		try (PreparedStatement pstmt = conn.prepareStatement(update)) {
@@ -676,19 +702,4 @@ public class Database  {
 		pstmt.execute();
 		pstmt.close();
 	}
-public String getCustomer(int card_id) throws SQLException {
-		
-		
-		String sql = "SELECT * FROM customer " +
-				"WHERE card_id = "+card_id;
-		
-			ResultSet rs = stmt.executeQuery(sql);  
-			
-				 String name = rs.getString("name");
-			
-					
-				return name;	
-		
-		
-			}
 }

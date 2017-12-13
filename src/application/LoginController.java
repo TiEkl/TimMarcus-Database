@@ -57,7 +57,6 @@ public class LoginController implements Initializable {
 		}
 	}
 	
-	
 	@FXML
 	void GoBack(ActionEvent event) throws IOException {
 		Parent  My_View_parent = FXMLLoader.load(getClass().getResource("MyView.fxml"));
