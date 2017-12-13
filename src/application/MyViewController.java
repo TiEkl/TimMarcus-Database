@@ -123,7 +123,10 @@ public class MyViewController implements Initializable {
     	app_stage.show();
     }
 
-  
+  @FXML 
+  public void onEnter(ActionEvent ae) throws IOException {
+	  SearchButton(ae);
+  }
 
     @FXML
     void SearchButton(ActionEvent event) throws IOException{

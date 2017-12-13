@@ -53,5 +53,18 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
+      <TableView fx:id="result" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0">
+         <columns>
+            <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
+            <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
+            <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
+            <TableColumn fx:id="PagesCol" prefWidth="63.0" text="Pages" />
+            <TableColumn fx:id="PublisherCol" prefWidth="112.0" text="Publisher" />
+            <TableColumn fx:id="QuantityCol" prefWidth="65.0" text="Quantity" />
+            <TableColumn fx:id="ISBNCol" editable="false" minWidth="0.0" prefWidth="71.0" text="ISBN" />
+            <TableColumn fx:id="RatingCol" prefWidth="63.0" text="Rating" />
+            <TableColumn fx:id="Book_idCol" minWidth="0.0" prefWidth="0.0" text="Book ID" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

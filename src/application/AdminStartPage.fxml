@@ -25,10 +25,58 @@
             <Image url="@fpmwlddibizqewcyodnb.png" />
          </image>
       </ImageView>
-      <Button fx:id="GoBack" defaultButton="true" layoutX="913.0" layoutY="90.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Log out" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="logOut" defaultButton="true" layoutX="913.0" layoutY="90.0" mnemonicParsing="false" onAction="#logOut" opacity="0.86" text="Log out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
+      <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="870.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="manageCostumer" text="Manage Costumer">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="addCustomerName" layoutX="33.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Full name" />
+                        <TextField fx:id="addPhoneNr" layoutX="33.0" layoutY="133.0" prefHeight="27.0" prefWidth="317.0" promptText="Phone number" />
+                        <TextField fx:id="addCity" layoutX="33.0" layoutY="184.0" prefHeight="27.0" prefWidth="317.0" promptText="City" />
+                        <TextField fx:id="addStreet" layoutX="33.0" layoutY="234.0" prefHeight="27.0" prefWidth="317.0" promptText="Street" />
+                        <TextField fx:id="addCardID" layoutX="33.0" layoutY="288.0" prefHeight="27.0" prefWidth="317.0" promptText="Card ID" />
+                        <Text layoutX="110.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Customer">
+                           <font>
+                              <Font name="Heiti TC Light" size="23.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="547.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Customer">
+                           <font>
+                              <Font name="Heiti TC Light" size="23.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="costumerIdUpdate" layoutX="488.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Enter Custmer's Card ID" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="manageBooks" text="Manage Books">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="addTitle" layoutX="20.0" layoutY="90.0" prefHeight="27.0" prefWidth="317.0" promptText="Title" />
+                        <Text layoutX="126.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Book">
+                           <font>
+                              <Font name="Heiti TC Light" size="24.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="addAuthor" layoutX="20.0" layoutY="140.0" prefHeight="27.0" prefWidth="317.0" promptText="Author" />
+                        <TextField fx:id="addGenre" layoutX="20.0" layoutY="190.0" prefHeight="27.0" prefWidth="317.0" promptText="Genre" />
+                        <TextField fx:id="addPublisher" layoutX="20.0" layoutY="240.0" prefHeight="27.0" prefWidth="317.0" promptText="Publisher" />
+                        <TextField fx:id="addPages" layoutX="20.0" layoutY="290.0" prefHeight="27.0" prefWidth="317.0" promptText="Pages" />
+                        <TextField fx:id="addQuantity" layoutX="20.0" layoutY="340.0" prefHeight="27.0" prefWidth="317.0" promptText="Quantity" />
+                        <TextField fx:id="addISBN" layoutX="20.0" layoutY="390.0" prefHeight="27.0" prefWidth="317.0" promptText="ISBN" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

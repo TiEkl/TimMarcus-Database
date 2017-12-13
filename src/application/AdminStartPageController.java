@@ -1,32 +1,35 @@
 package application;
 
-
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 
 public class AdminStartPageController {
 
-	 @FXML
-	    private Button GoBack;
-	
-	 
+    @FXML
+    private Tab manageCostumer, manageBooks;
 
-	    @FXML
-	  
-	    	 void GoBack(ActionEvent event) throws IOException {
-	 	    	Parent  My_View_parent = FXMLLoader.load(getClass().getResource("MyView.fxml"));
-	 	    	Scene My_View_scene = new Scene(My_View_parent);
-	 	    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	 	    	app_stage.setScene(My_View_scene);
-	 	    	app_stage.show();
-	    }
-	    }
-	    
+    @FXML
+    private TextField addTitle, addStreet, addAuthor, costumerIdUpdate, addCustomerName, addCity,
+    addPhoneNr, addISBN, addPublisher, addQuantity, addCardID, addGenre, addPages;
+
+
+    @FXML
+    private Button logOut;
+
+ 
+
+    @FXML
+    private TabPane adminManageTab;
+
+  
+
+    @FXML
+    void logOut(ActionEvent event) {
+
+    }
+
+}

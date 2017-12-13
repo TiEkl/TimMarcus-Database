@@ -70,9 +70,9 @@
             <TableColumn fx:id="Book_idCol" minWidth="0.0" prefWidth="0.0" text="Book ID" />
          </columns>
       </TableView>
-      <TextField id="hej" fx:id="Search" layoutX="180.0" layoutY="226.0" onAction="#Search" prefHeight="27.0" prefWidth="625.0" />
+      <TextField id="hej" fx:id="Search" layoutX="180.0" layoutY="226.0" onAction="#onEnter" prefHeight="27.0" prefWidth="625.0" />
       <Text layoutX="137.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-      <TextField fx:id="SearchAuthor" layoutX="180.0" layoutY="258.0" onAction="#SearchAuthor" prefHeight="27.0" prefWidth="625.0" />
+      <TextField fx:id="SearchAuthor" layoutX="180.0" layoutY="258.0" onAction="#onEnter" prefHeight="27.0" prefWidth="625.0" />
       <Text layoutX="129.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
       <SplitMenuButton layoutX="180.0" layoutY="296.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="210.0" text="Genre">
          <items>
@@ -81,11 +81,12 @@
          </items>
       </SplitMenuButton>
       <Button fx:id="SearchButton" defaultButton="true" layoutX="444.0" layoutY="317.0" mnemonicParsing="false" onAction="#SearchButton" prefHeight="27.0" prefWidth="97.0" text="Search" />
-      <Button fx:id="generateToplist" defaultButton="true" layoutX="877.0" layoutY="317.0" mnemonicParsing="false" onAction="#generateToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="generateToplist" defaultButton="true" layoutX="686.0" layoutY="317.0" mnemonicParsing="false" onAction="#generateToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
+      <Button fx:id="AddCheckOut" defaultButton="true" layoutX="891.0" layoutY="317.0" mnemonicParsing="false" onAction="#AddToCheckOut" text="Add to Cbeck Out" />
       
    </children>
 </AnchorPane>

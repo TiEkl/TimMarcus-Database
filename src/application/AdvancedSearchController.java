@@ -9,8 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-
-
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -47,17 +47,13 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML
 	private MenuItem exit;
 
-	   @FXML
-	    private Button generateToplist;
 
     @FXML
-    private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks;
-    
+    private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, addCheckOut, generateToplist;
+   
     
     @FXML
-    private TextField SearchAuthor;
-    @FXML
-    private TextField Search;
+    private TextField Search, SearchAuthor;
 	
 	public String textSearch;
 	
@@ -93,13 +89,21 @@ public class AdvancedSearchController implements Initializable   {
     	 setTextSearch(Search.getText());
     	 
     }
+   
     @FXML
     void exitProgram(ActionEvent event) {
+    }
+    
+    @FXML 
+    public void onEnter(ActionEvent ae) throws IOException, SQLException {
+  	  SearchButton(ae);
     }
 
     @FXML
     void SearchButton(ActionEvent event) throws SQLException {
-    		MyViewController MyViewCo = new MyViewController();
+    		
+    	MyViewController MyViewCo = new MyViewController();
+    
 	    	if(Search.getText().trim().isEmpty()){
 	    		MyViewCo.setSearchCategory("author");
 	    		MyViewCo.setTextSearch(SearchAuthor.getText());
@@ -109,8 +113,11 @@ public class AdvancedSearchController implements Initializable   {
 	    		MyViewCo.setTextSearch(Search.getText());
 	    	}
 	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {
+	    		
+	    		
 	    		String titleText = Search.getText();
 	    		String authorText = SearchAuthor.getText();
+	    		
 	    		result.setItems(getBook(true, titleText, authorText));
 	    		return;
 	    	}
@@ -118,6 +125,13 @@ public class AdvancedSearchController implements Initializable   {
 	    	//initialize(null, null);
 
     }
+
+    @FXML
+    void AddToCheckOut(ActionEvent event) {
+
+    }
+    
+ 
 
     @FXML
     void generateToplist(ActionEvent event) throws SQLException {
@@ -234,6 +248,7 @@ public class AdvancedSearchController implements Initializable   {
 	
 	}
 	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws SQLException{
+		
 		Book [] searchArray;
 		ObservableList<Book> book = FXCollections.observableArrayList();
 		if (searchMethod) {
@@ -243,10 +258,12 @@ public class AdvancedSearchController implements Initializable   {
 					book.add(searchArray[i]);
 				}
 			}
-			searchArray=library.search(myview.getTextSearch(), myview.getSearchCategory());
-			for(int i =0; i<searchArray.length; i++) {
-				book.add(searchArray[i]);
-			} 
+			else if (strings.length <= 1) {
+				searchArray=library.search(myview.getTextSearch(), myview.getSearchCategory());
+				for(int i =0; i<searchArray.length; i++) {
+					book.add(searchArray[i]);
+				} 
+			}	
 		}
 		else if (!searchMethod) {
 			searchArray=library.getTop10();
