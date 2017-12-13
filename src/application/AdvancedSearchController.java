@@ -32,50 +32,30 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class AdvancedSearchController implements Initializable   {
-
-	
-	
 	static MyViewController myview ;
-	
 	Book bookClass;
 	static Database library ;
-	
-
     @FXML
     private AnchorPane rootPane;
-
 	@FXML
 	private MenuItem exit;
-
-	   @FXML
-	    private Button generateToplist;
-
+	@FXML
+	private Button generateToplist;
     @FXML
     private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks;
-    
-    
     @FXML
     private TextField SearchAuthor;
     @FXML
     private TextField Search;
-	
 	public String textSearch;
-	
-	
-	
-	   
-	
 	public String getTextSearch() {
 		return textSearch;
 	}
-
-
 
 	public void setTextSearch(String textSearch) {
 		this.textSearch = textSearch;
 	}
 	@FXML private TableView<Book> result;
-	
     @FXML private TableColumn<Book, String> TitleCol;
     @FXML private TableColumn<Book, String> AuthorCol;
     @FXML private TableColumn<Book, String> GenreCol;
@@ -90,9 +70,9 @@ public class AdvancedSearchController implements Initializable   {
  
     @FXML
     void SearchAuthor(ActionEvent event) throws IOException {
-    	 setTextSearch(Search.getText());
-    	 
+    	 setTextSearch(Search.getText()); 
     }
+    
     @FXML
     void exitProgram(ActionEvent event) {
     }
@@ -116,7 +96,6 @@ public class AdvancedSearchController implements Initializable   {
 	    	}
 	    	result.setItems(getBook(true));
 	    	//initialize(null, null);
-
     }
 
     @FXML
@@ -160,7 +139,6 @@ public class AdvancedSearchController implements Initializable   {
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	app_stage.setScene(Toplist_scene);
     	app_stage.show();
-
     }
 
     @FXML
@@ -170,30 +148,28 @@ public class AdvancedSearchController implements Initializable   {
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	app_stage.setScene(CheckOut_scene);
     	app_stage.show();
-
     }
 
     public void genToplistInit() {
 
     	try {
     		library = new Database ();
-    		 myview = new MyViewController();
-    		
+    		myview = new MyViewController();
+
     	} catch (SQLException e1) {
     		// TODO Auto-generated catch block
     		e1.printStackTrace();
-    	}
-    		
-    		//set up the columns in the table
-    		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-    		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
-    		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
-    		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-    		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
-    		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
-    		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
-    		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-    		/* try {
+    	}	
+    	//set up the columns in the table
+    	TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+    	AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+    	GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+    	PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
+    	PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
+    	ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+    	QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+    	Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
+    	/* try {
     			result.setItems(getToplist());
     		} catch (SQLException e) {
     			// TODO Auto-generated catch block
@@ -201,38 +177,35 @@ public class AdvancedSearchController implements Initializable   {
     }*/
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			library = new Database ();
-			 myview = new MyViewController();
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//set up the columns in the table
-		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
-		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
-		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
-		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
-		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
-		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-		RatingCol.setCellValueFactory(new PropertyValueFactory<Book, Double>("rating"));
-		
-		try {
-			result.setItems(getBook(true));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-	
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    	try {
+    		library = new Database ();
+    		myview = new MyViewController();
+
+    	} catch (SQLException e1) {
+    		// TODO Auto-generated catch block
+    		e1.printStackTrace();
+    	}
+    	//set up the columns in the table
+    	TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+    	AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+    	GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+    	PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
+    	PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
+    	ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+    	QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+    	Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
+    	RatingCol.setCellValueFactory(new PropertyValueFactory<Book, Double>("rating"));
+
+    	try {
+    		result.setItems(getBook(true));
+    	} catch (SQLException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    }
+    
 	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws SQLException{
 		Book [] searchArray;
 		ObservableList<Book> book = FXCollections.observableArrayList();
@@ -254,7 +227,6 @@ public class AdvancedSearchController implements Initializable   {
 				book.add(searchArray[i]);
 			}
 		}
-		
 		return book;
 	}
 	/* public ObservableList<Book> getToplist() throws SQLException{
