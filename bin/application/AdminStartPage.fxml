@@ -25,14 +25,14 @@
             <Image url="@fpmwlddibizqewcyodnb.png" />
          </image>
       </ImageView>
-      <Button fx:id="logOut" defaultButton="true" layoutX="913.0" layoutY="90.0" mnemonicParsing="false" onAction="#logOut" opacity="0.86" text="Log out" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="logOut" defaultButton="true" layoutX="986.0" layoutY="137.0" mnemonicParsing="false" onAction="#logOut" opacity="0.86" text="Log out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="870.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="934.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="manageCostumer" text="Manage Costumer">
+          <Tab fx:id="manageCustomer" text="Manage Costumer">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -52,6 +52,7 @@
                            </font>
                         </Text>
                         <TextField fx:id="costumerIdUpdate" layoutX="488.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Enter Custmer's Card ID" />
+                        <Button fx:id="addCustomerButton" defaultButton="true" layoutX="138.0" layoutY="344.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
                      </children>
                   </AnchorPane>
             </content>
@@ -61,7 +62,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="addTitle" layoutX="20.0" layoutY="90.0" prefHeight="27.0" prefWidth="317.0" promptText="Title" />
-                        <Text layoutX="126.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Book">
+                        <Text layoutX="556.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove Book">
                            <font>
                               <Font name="Heiti TC Light" size="24.0" />
                            </font>
@@ -71,7 +72,37 @@
                         <TextField fx:id="addPublisher" layoutX="20.0" layoutY="240.0" prefHeight="27.0" prefWidth="317.0" promptText="Publisher" />
                         <TextField fx:id="addPages" layoutX="20.0" layoutY="290.0" prefHeight="27.0" prefWidth="317.0" promptText="Pages" />
                         <TextField fx:id="addQuantity" layoutX="20.0" layoutY="340.0" prefHeight="27.0" prefWidth="317.0" promptText="Quantity" />
-                        <TextField fx:id="addISBN" layoutX="20.0" layoutY="390.0" prefHeight="27.0" prefWidth="317.0" promptText="ISBN" />
+                        <TextField fx:id="addISBN" layoutX="20.0" layoutY="440.0" prefHeight="27.0" prefWidth="317.0" promptText="ISBN" />
+                        <Text layoutX="136.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Book">
+                           <font>
+                              <Font name="Heiti TC Light" size="24.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="textSearchRemove" layoutX="478.0" layoutY="90.0" prefHeight="27.0" prefWidth="317.0" />
+                        <HBox layoutX="478.0" layoutY="123.0" prefHeight="34.0" prefWidth="242.0" spacing="20.0">
+                           <children>
+                              <RadioButton fx:id="titleSelected" mnemonicParsing="false" selected="true" text="Title">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="removeBookCategory" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="isbnSelected" mnemonicParsing="false" text="ISBN" toggleGroup="$removeBookCategory" />
+                           </children>
+                        </HBox>
+                        <TableView fx:id="removeResult" layoutX="371.0" layoutY="161.0" prefHeight="259.0" prefWidth="541.0">
+                          <columns>
+                            <TableColumn fx:id="titleCol" prefWidth="191.0" text="Title" />
+                            <TableColumn fx:id="authorCol" minWidth="8.0" prefWidth="113.0" text="Author" />
+                              <TableColumn fx:id="quantityCol" prefWidth="90.0" text="Quantity" />
+                              <TableColumn fx:id="isbnCol" minWidth="0.0" prefWidth="90.0" text="ISBN" />
+                              <TableColumn fx:id="bookIDCol" prefWidth="56.0" text="Book ID" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="searchRemove" defaultButton="true" layoutX="590.0" layoutY="454.0" mnemonicParsing="false" onAction="#searchRemoveButton" text="Remove Book" />
+                        <Button fx:id="addBook" defaultButton="true" layoutX="146.0" layoutY="497.0" mnemonicParsing="false" onAction="#addBook" text="Add Book" />
+                        <TextField fx:id="addShelf" layoutX="20.0" layoutY="390.0" prefHeight="27.0" prefWidth="317.0" promptText="Shelf" />
+                        <Button fx:id="searchRemove" defaultButton="true" layoutX="816.0" layoutY="90.0" mnemonicParsing="false" onAction="#searchRemoveBook" text="Search" />
+                        <Button fx:id="clearAddBookForm" defaultButton="true" layoutX="14.0" layoutY="497.0" mnemonicParsing="false" onAction="#clearAddBookForm" text="Clear" />
                      </children>
                   </AnchorPane>
             </content>

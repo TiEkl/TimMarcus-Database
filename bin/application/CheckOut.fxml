@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -55,8 +56,8 @@
       </Button>
       <TableView fx:id="result" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0">
          <columns>
-            <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
             <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
+            <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
             <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
             <TableColumn fx:id="PagesCol" prefWidth="63.0" text="Pages" />
             <TableColumn fx:id="PublisherCol" prefWidth="112.0" text="Publisher" />
@@ -66,5 +67,9 @@
             <TableColumn fx:id="Book_idCol" minWidth="0.0" prefWidth="0.0" text="Book ID" />
          </columns>
       </TableView>
+      <Button fx:id="borrowBooks" defaultButton="true" layoutX="914.0" layoutY="327.0" mnemonicParsing="false" onAction="#borrowBooksButton" prefHeight="27.0" prefWidth="115.0" text="Borrow books" />
+      <Button fx:id="removeSelected" defaultButton="true" layoutX="725.0" layoutY="327.0" mnemonicParsing="false" onAction="#removeSelectedBook" text="Remove selected book" />
+      <TextField fx:id="IDScanText" layoutX="789.0" layoutY="262.0" promptText="Scan your ID Card" />
+      <Button fx:id="IDScan" defaultButton="true" layoutX="972.0" layoutY="262.0" mnemonicParsing="false" onAction="#IDScanButton" text="Scan" />
    </children>
 </AnchorPane>

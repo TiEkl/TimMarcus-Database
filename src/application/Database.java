@@ -133,19 +133,20 @@ public class Database  {
 		PreparedUpdate(sql, title, author, genre, shelf, publisher, quantity, pages, isbn);
 
 	}
-	public void addCustomer(int card_id, String name, String address, String phone_nr) throws SQLException {
+	public void addCustomer(int card_id, String name, String city, String street, String phone_nr) throws SQLException {
 		
 		String sqlCustomer = "INSERT INTO customer " +
-				"(card_id, name, address, phone_nr) " +
+				"(card_id, name, city, street, phone_nr) " +
 				"VALUES " +
-				"(?,?,?,?)";
-		PreparedUpdate(sqlCustomer, card_id, name, address, phone_nr);
+				"(?,?,?,?,?)";
+		PreparedUpdate(sqlCustomer, card_id, name, city, street, phone_nr);
 		String sqlDebt ="INSERT INTO customer_debt" +
 				"(card_id) " +
 				"VALUES " +
 				"(?);";
 		PreparedUpdate(sqlDebt, card_id);
 	}
+	
 	public void removeCustomer(int card_id) throws SQLException {
 		String sql = "DELETE FROM customer WHERE card_id = ?";
 		PreparedUpdate(sql, card_id);
@@ -645,38 +646,41 @@ public class Database  {
 		//}	
 	}
 	public void PreparedUpdate(String update, Object...objects) throws SQLException {
-		try (PreparedStatement pstmt = conn.prepareStatement(update)) {
-			for(int i = 0; i < objects.length; i++) {
-				Object obj = objects[i];
-				String check = obj.getClass().getSimpleName();
-				switch(check) {
-				case "Integer":
-					pstmt.setInt(i+1, (int)obj);
-					break;
-				case "Double":
-					pstmt.setDouble(i+1, (double)obj);
-					break;
-				case "String":
-					pstmt.setString(i+1, (String)obj);
-					break;
-				case "Long":
-					pstmt.setLong(i+1, (Long)obj);
-					break;
-				default:
-					System.out.println("Magic type, no idea!");
-					break;
-				}
+		PreparedStatement pstmt = conn.prepareStatement(update);
+		for(int i = 0; i < objects.length; i++) {
+			Object obj = objects[i];
+			String check = obj.getClass().getSimpleName();
+			switch(check) {
+			case "Integer":
+				pstmt.setInt(i+1, (int)obj);
+				break;
+			case "Double":
+				pstmt.setDouble(i+1, (double)obj);
+				break;
+			case "String":
+				pstmt.setString(i+1, (String)obj);
+				break;
+			case "Long":
+				pstmt.setLong(i+1, (Long)obj);
+				break;
+			default:
+				System.out.println("Magic type, no idea!");
+				break;
 			}
-		pstmt.executeUpdate();
-		pstmt.close();
-		}	
-	}
+		}
+	pstmt.executeUpdate();
+	pstmt.close();	
+}
+	public void closeConn() throws SQLException {
+		conn.close();
+	}		
+	
 	public void PreparedExecute(String sql) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.execute();
 		pstmt.close();
 	}
-public String getCustomer(int card_id) throws SQLException {
+	public String getCustomer(int card_id) throws SQLException {
 		
 		
 		String sql = "SELECT * FROM customer " +

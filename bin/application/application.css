@@ -3,14 +3,26 @@
     -fx-background-image : url("/application/bgimage.jpg")
     /* others properties */
 }
-.jfx-tab-pane .headers-region
-{
--fx-background-color: #8caefd;
--fx-text-fill: #000000;
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
 }
 
-.jfx-tab-pane .tab-header-background
+.tab-pane
 {
--fx-background-color: #8caefd;
--fx-text-fill: #000000;
+    -fx-tab-min-width:90px;
 }
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #e6e6e6;
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #A0A0A0;
+    
+    }

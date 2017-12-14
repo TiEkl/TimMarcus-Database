@@ -2,9 +2,12 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -16,7 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginController implements Initializable {
 	Database library;
 	
 	@FXML
@@ -46,10 +49,11 @@ public class LoginController {
 	
 	   @FXML
 	    void AdminLoginButton(ActionEvent event) throws SQLException, IOException {
+		  
 		   String userName = adminUserName.getText();
 		   String password = adminPassword.getText();
 		   
-		   Database loginData = new Database();
+		   library.closeConn();
 		  //boolean loginChecker = loginData.verifyLogin(userName, password);
 		  
 		  //if(loginChecker) {
@@ -75,4 +79,17 @@ public class LoginController {
 	    	app_stage.setScene(My_View_scene);
 	    	app_stage.show();
 	    }
+
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+	try {
+		library = new Database();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		
+	}
 }

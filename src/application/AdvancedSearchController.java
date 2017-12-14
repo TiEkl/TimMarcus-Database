@@ -49,7 +49,7 @@ public class AdvancedSearchController implements Initializable   {
 
 
     @FXML
-    private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, addCheckOut, generateToplist;
+    private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, AddCheckOut, generateToplist;
    
     
     @FXML
@@ -187,33 +187,7 @@ public class AdvancedSearchController implements Initializable   {
 
     }
 
-    public void genToplistInit() {
-
-    	try {
-    		library = new Database ();
-    		 myview = new MyViewController();
-    		
-    	} catch (SQLException e1) {
-    		// TODO Auto-generated catch block
-    		e1.printStackTrace();
-    	}
-    		
-    		//set up the columns in the table
-    		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-    		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
-    		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
-    		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-    		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
-    		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
-    		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
-    		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-    		/* try {
-    			result.setItems(getToplist());
-    		} catch (SQLException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace(); 
-    }*/
-    }
+  
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

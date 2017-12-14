@@ -75,7 +75,7 @@ public class MyViewController implements Initializable {
 
 
 	@FXML
-    private ToggleGroup RadioOption;
+    private ToggleGroup radioOption;
    
 
 
@@ -113,7 +113,8 @@ public class MyViewController implements Initializable {
     
    
     @FXML
-    void GoToAdminLogin(ActionEvent event) throws IOException {
+    void GoToAdminLogin(ActionEvent event) throws IOException, SQLException {
+    	library.closeConn();
     	Parent Admin_Login_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
     	Scene Admin_Login_scene = new Scene(Admin_Login_parent);
     	
@@ -124,13 +125,14 @@ public class MyViewController implements Initializable {
     }
 
   @FXML 
-  public void onEnter(ActionEvent ae) throws IOException {
+  public void onEnter(ActionEvent ae) throws IOException, SQLException {
 	  SearchButton(ae);
   }
 
     @FXML
-    void SearchButton(ActionEvent event) throws IOException{
-   setTextSearch(Search.getText());
+    void SearchButton(ActionEvent event) throws IOException, SQLException{
+    	library.closeConn();
+    	setTextSearch(Search.getText());
    
 	if(RadioTitle.isSelected()) {
 		setSearchCategory("title");
@@ -143,7 +145,8 @@ public class MyViewController implements Initializable {
 	}
    
    FXMLLoader loader = new FXMLLoader(getClass().getResource("AdvancedSearch.fxml"));
-    	Parent root = (Parent) loader.load();
+    	
+   Parent root = (Parent) loader.load();
    
     	Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
    
@@ -171,8 +174,8 @@ public class MyViewController implements Initializable {
    
     
     @FXML
-    void AdvSearch(ActionEvent event) throws IOException {
-     	
+    void AdvSearch(ActionEvent event) throws IOException, SQLException {
+    	library.closeConn();	
     	
     	Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
     	Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
@@ -182,7 +185,8 @@ public class MyViewController implements Initializable {
      
     }
     @FXML
-    void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
+    void EnterMyBorrowedBooks(ActionEvent event) throws IOException, SQLException {
+    	library.closeConn();
     	Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
     	Scene My_Books_scene = new Scene(My_Books_parent);
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -210,7 +214,8 @@ public class MyViewController implements Initializable {
 
     }
     @FXML
-    void EnterAdminLogin(ActionEvent event) throws IOException {
+    void EnterAdminLogin(ActionEvent event) throws IOException, SQLException {
+    	library.closeConn();
     	Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
     	Scene CheckOut_scene = new Scene(CheckOut_parent);
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
