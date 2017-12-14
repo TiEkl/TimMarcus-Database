@@ -7,11 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,72 +37,64 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class AdvancedSearchController implements Initializable   {
-
-	
-	
 	static MyViewController myview ;
-	
 	Book bookClass;
 	static Database library ;
-	
-
-    @FXML
-    private AnchorPane rootPane;
-
+	@FXML
+	private AnchorPane rootPane;
 	@FXML
 	private MenuItem exit;
+	
+	@FXML
+	private TextField Search, SearchAuthor;
+	
+	private static String searchCategory;
+	
+	public String textSearch;
 
+	@FXML private TableView<Book> result;
+	@FXML private TableColumn<Book, String> TitleCol;
+	@FXML private TableColumn<Book, String> AuthorCol;
+	@FXML private TableColumn<Book, String> GenreCol;
+	@FXML private TableColumn<Book, Integer> PagesCol;
+	@FXML private TableColumn<Book, String> PublisherCol;
+	@FXML private TableColumn<Book, Long> ISBNCol;
+	@FXML private TableColumn<Book, Integer> QuantityCol;
+	@FXML private TableColumn<Book, Integer> Book_idCol;
+	@FXML private TableColumn<Book, Double> RatingCol;
 
     @FXML
     private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, AddCheckOut, generateToplist;
    
     
-    @FXML
-    private TextField Search, SearchAuthor;
+    
 	
-	public String textSearch;
 	
 	
 	
 	   
 	
+
+	//final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
 	public String getTextSearch() {
 		return textSearch;
 	}
 
-
-
 	public void setTextSearch(String textSearch) {
 		this.textSearch = textSearch;
 	}
-	@FXML private TableView<Book> result;
 	
-    @FXML private TableColumn<Book, String> TitleCol;
-    @FXML private TableColumn<Book, String> AuthorCol;
-    @FXML private TableColumn<Book, String> GenreCol;
-    @FXML private TableColumn<Book, Integer> PagesCol;
-    @FXML private TableColumn<Book, String> PublisherCol;
-    @FXML private TableColumn<Book, Long> ISBNCol;
-    @FXML private TableColumn<Book, Integer> QuantityCol;
-    @FXML private TableColumn<Book, Integer> Book_idCol;
-    @FXML private TableColumn<Book, Double> RatingCol;
+
 
     //final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
  
-    @FXML
-    void SearchAuthor(ActionEvent event) throws IOException {
-    	 setTextSearch(Search.getText());
-    	 
-    }
+   
    
     @FXML
     void exitProgram(ActionEvent event) {
     }
     
-    @FXML 
-    public void onEnter(ActionEvent ae) throws IOException, SQLException {
-  	  SearchButton(ae);
-    }
+   
 
     @FXML
     void SearchButton(ActionEvent event) throws SQLException {
@@ -126,75 +123,110 @@ public class AdvancedSearchController implements Initializable   {
 
     }
 
-    @FXML
-    void AddToCheckOut(ActionEvent event) {
-
-    }
     
- 
-
-    @FXML
-    void generateToplist(ActionEvent event) throws SQLException {
-    		result.setItems(getBook(false));
-    }
-    @FXML
-    void Search(ActionEvent event) {
-
-    }
-    @FXML
-    void GoBack(ActionEvent event) throws IOException {
-     	Parent  My_View_parent = FXMLLoader.load(getClass().getResource("MyView.fxml"));
-    	Scene My_View_scene = new Scene(My_View_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(My_View_scene);
-    	app_stage.show();
-    }
-    @FXML
-    void AdvSearch(ActionEvent event) throws IOException {
-    	Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
-    	Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(Advanced_Search_scene);
-    	app_stage.show();
   
-    }
-    @FXML
-    void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
-    	Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
-    	Scene My_Books_scene = new Scene(My_Books_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(My_Books_scene);
-    	app_stage.show();
-    }
-    
-    @FXML
-    void GoToToplist(ActionEvent event) throws IOException {
-    	Parent Toplist_parent = FXMLLoader.load(getClass().getResource("Toplist.fxml"));
-    	Scene Toplist_scene = new Scene(Toplist_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(Toplist_scene);
-    	app_stage.show();
 
-    }
+	@FXML
+	void SearchAuthor(ActionEvent event) throws IOException {
+		setTextSearch(Search.getText()); 
+	}
 
-    @FXML
-    void GoToCheckOut(ActionEvent event)  throws IOException {
-    	Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("CheckOut.fxml"));
-    	Scene CheckOut_scene = new Scene(CheckOut_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(CheckOut_scene);
-    	app_stage.show();
 
-    }
+	@FXML 
+	public void onEnter(ActionEvent ae) throws IOException, SQLException {
+		SearchButton(ae);
+	}
 
-  
+	
+
+	@FXML
+	void AddToCheckOut(ActionEvent event) throws SQLException {
+		Book aBook = result.getSelectionModel().getSelectedItem();
+		System.out.println(aBook);
+		library.addToCheckout(aBook);
+	}
+	@FXML
+	void generateToplist(ActionEvent event) throws SQLException {
+		result.setItems(getBook(false));
+	}
+	@FXML
+	void Search(ActionEvent event) {
+
+	}
+	@FXML
+	void GoBack(ActionEvent event) throws IOException {
+		Parent  My_View_parent = FXMLLoader.load(getClass().getResource("MyView.fxml"));
+		Scene My_View_scene = new Scene(My_View_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(My_View_scene);
+		app_stage.show();
+	}
+	@FXML
+	void AdvSearch(ActionEvent event) throws IOException {
+		Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
+		Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(Advanced_Search_scene);
+		app_stage.show();
+
+	}
+	@FXML
+	void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
+		Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
+		Scene My_Books_scene = new Scene(My_Books_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(My_Books_scene);
+		app_stage.show();
+	}
+
+	@FXML
+	void GoToToplist(ActionEvent event) throws IOException {
+		Parent Toplist_parent = FXMLLoader.load(getClass().getResource("Toplist.fxml"));
+		Scene Toplist_scene = new Scene(Toplist_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(Toplist_scene);
+		app_stage.show();
+	}
+
+	@FXML
+	void GoToCheckOut(ActionEvent event)  throws IOException, SQLException {
+		Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("CheckOut.fxml"));
+		Scene CheckOut_scene = new Scene(CheckOut_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOut.fxml"));
+		app_stage.setScene(CheckOut_scene);
+		CheckOutController checkOut = loader.<CheckOutController>getController();
+		checkOut.initData(library.getCheckoutList());
+		app_stage.show();
+	}
+
+	public void genToplistInit() {
+
+		try {
+			library = new Database ();
+			myview = new MyViewController();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		//set up the columns in the table
+		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
+		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
+		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			library = new Database ();
-			 myview = new MyViewController();
-			
+			myview = new MyViewController();
+
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -216,13 +248,10 @@ public class AdvancedSearchController implements Initializable   {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-	
 	}
+
 	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws SQLException{
-		
+
 		Book [] searchArray;
 		ObservableList<Book> book = FXCollections.observableArrayList();
 		if (searchMethod) {
@@ -245,49 +274,35 @@ public class AdvancedSearchController implements Initializable   {
 				book.add(searchArray[i]);
 			}
 		}
-		
 		return book;
 	}
 	/* public ObservableList<Book> getToplist() throws SQLException{
-		
 		ObservableList<Book> book = FXCollections.observableArrayList();
-		
-		
-	
 		} 
-	
-		
 		return book;
 	}
-	*/
-	
+	 */
+
 	public void setStringResultAuthor(String text) {
-		
-	SearchAuthor.setText(text);	
-	//setTextSearch(text) ;
-	//setSearchCategory("author");
-	
+		SearchAuthor.setText(text);	
+
 	}
+
 	public void setStringResultTitle(String text) {
-		
 		Search.setText(text);
-		//setTextSearch(text) ;
-		//setSearchCategory("title");
-		}
-	
-	private static String searchCategory;
+
+	}
 
 	public  String getSearchCategory() {
 		return searchCategory;
 	}
 
-
 	public void setSearchCategory(String searchCategory) {
 		AdvancedSearchController.searchCategory = searchCategory;
 	}
-	
+
 	/*
-    
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Title.setCellValueFactory(new PropertyValueFactory<Database, String>("id"));
@@ -297,7 +312,7 @@ public class AdvancedSearchController implements Initializable   {
 		Publisher.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
 		Quantity.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
 		ISBN.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-        
+
 	}
 
 
@@ -307,13 +322,13 @@ public class AdvancedSearchController implements Initializable   {
 		ResultSet rs;
 		Statement stmt;
 		try {
-			
+
 			Connection conn = DriverManager.getConnection(Database.dbUrl);
 
-		      
+
 		     stmt = conn.createStatement();
 		       rs = stmt.executeQuery("SELECT title, author, genre, pages, shelf  FROM books WHERE title LIKE '%two%'");
-		      
+
 		      while (rs.next()) {
 		    	  String title = rs.getString("title");
 		    	  String author = rs.getString("author");
@@ -322,8 +337,8 @@ public class AdvancedSearchController implements Initializable   {
 		    	  String publisher = rs.getString("Publisher");
 		    	  String Quantity = rs.getString("Quantity");
 		    	  String ISBN = rs.getString("ISBN");
-		    	  
-		    	  
+
+
 		return null;
 	}
 		}

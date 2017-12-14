@@ -36,31 +36,21 @@ import javafx.stage.Stage;
 import javafx.application.*;
 
 public class MyViewController implements Initializable {
-	
-   
-	
-   
-    
+
 	Book book;
 	AdvancedSearchController advsearch;
 	static Database library;
-	
-	String searchResultText;
-	
-	
+	String searchResultText;	
 	private static String textSearch;
-	
 	private static String searchCategory = "title";
 
 	public String getTextSearch() {
 		return textSearch;
 	}
-	
+
 	public void setTextSearch(String textSearch) {
 		MyViewController.textSearch = textSearch;
 	}
-
-	
 
 	public  String getSearchCategory() {
 		return searchCategory;
@@ -70,46 +60,29 @@ public class MyViewController implements Initializable {
 		MyViewController.searchCategory = searchCategory;
 	}
 
-	
+	@FXML
+	private ToggleGroup RadioOption;
+	@FXML
+	private RadioButton RadioAuthor, RadioTitle;
+	@FXML
+	private Button Toplist, AdvSearch, CheckOut, SearchButton, MyBooks, GoToAdminLogin;
+	@FXML
+	private AnchorPane rootView;
+	@FXML
+	private MenuItem exit, EnterAdminLogin;
+	@FXML TextField Search;
 
-
+	@FXML
+	void Search(ActionEvent event) {
+		advsearch.setTextSearch(Search.getText()) ;
+	}
 
 	@FXML
     private ToggleGroup radioOption;
    
-
-
-	@FXML
-    private RadioButton RadioAuthor, RadioTitle;
 	
 
-	@FXML
-	private Button Toplist, AdvSearch, CheckOut, SearchButton, MyBooks, GoToAdminLogin;
-	    
-	   
-	 @FXML
-	 private AnchorPane rootView;
-	
-	  
-	
-    @FXML
-    private MenuItem exit, EnterAdminLogin;
-    
-    
-
-    @FXML TextField Search;
-
-   
-    
-   
-    @FXML
-    void Search(ActionEvent event) {
-    	advsearch.setTextSearch(Search.getText()) ;
-
-   
 		
-		
-		}
     
    
     @FXML
@@ -124,10 +97,13 @@ public class MyViewController implements Initializable {
     	app_stage.show();
     }
 
+
   @FXML 
   public void onEnter(ActionEvent ae) throws IOException, SQLException {
 	  SearchButton(ae);
   }
+	
+
 
     @FXML
     void SearchButton(ActionEvent event) throws IOException, SQLException{
@@ -173,15 +149,35 @@ public class MyViewController implements Initializable {
     }
    
     
+
+	
     @FXML
     void AdvSearch(ActionEvent event) throws IOException, SQLException {
     	library.closeConn();	
     	
+		if(RadioTitle.isSelected()) {
+			setSearchCategory("title");
+		}
+		else if(RadioAuthor.isSelected()) {
+			setSearchCategory("author");
+		}
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("AdvancedSearch.fxml"));
+		Parent root = (Parent) loader.load();
+
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+		stage.setScene(new Scene(root));
+		stage.show();
+		/*
+
     	Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
     	Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
+
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
     	app_stage.setScene(Advanced_Search_scene);
     	app_stage.show();
+<<<<<<< HEAD
      
     }
     @FXML
@@ -201,28 +197,12 @@ public class MyViewController implements Initializable {
     	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	app_stage.setScene(Toplist_scene);
     	app_stage.show();
+=======
+		 */
+	}
 
-    }
 
-    @FXML
-    void GoToCheckOut(ActionEvent event)  throws IOException {
-    	Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("CheckOut.fxml"));
-    	Scene CheckOut_scene = new Scene(CheckOut_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(CheckOut_scene);
-    	app_stage.show();
 
-    }
-    @FXML
-    void EnterAdminLogin(ActionEvent event) throws IOException, SQLException {
-    	library.closeConn();
-    	Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
-    	Scene CheckOut_scene = new Scene(CheckOut_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	 
-    	app_stage.setScene(CheckOut_scene);
-    	app_stage.show();
-    }
     
     public void RadioButtons() {
     	 ToggleGroup toggleGroup = new ToggleGroup();
@@ -231,6 +211,55 @@ public class MyViewController implements Initializable {
 		  RadioTitle.setToggleGroup(toggleGroup);
     		  
     }
+
+	
+	
+	@FXML
+	void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
+		Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
+		Scene My_Books_scene = new Scene(My_Books_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(My_Books_scene);
+		app_stage.show();
+		
+	}
+
+	@FXML
+	void GoToToplist(ActionEvent event) throws IOException {
+		Parent Toplist_parent = FXMLLoader.load(getClass().getResource("Toplist.fxml"));
+		Scene Toplist_scene = new Scene(Toplist_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(Toplist_scene);
+		app_stage.show();
+
+	}
+
+	@FXML
+	void GoToCheckOut(ActionEvent event)  throws IOException {
+		Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("CheckOut.fxml"));
+		Scene CheckOut_scene = new Scene(CheckOut_parent);
+		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(CheckOut_scene);
+		app_stage.show();
+
+	}
+	
+	
+
+@FXML
+void EnterAdminLogin(ActionEvent event) throws IOException, SQLException {
+	library.closeConn();
+	Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
+	Scene CheckOut_scene = new Scene(CheckOut_parent);
+	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	 
+	app_stage.setScene(CheckOut_scene);
+	app_stage.show();
+}
+	
+
+	
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			library = new Database();
@@ -238,7 +267,5 @@ public class MyViewController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-   
 }
