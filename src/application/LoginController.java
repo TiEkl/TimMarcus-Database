@@ -48,6 +48,7 @@ public class LoginController implements Initializable {
 		//boolean loginChecker = library.verifyLogin(userName, password);
 
 		if(library.verifyLogin(adminUserName.getText(), adminPassword.getText())) {
+			//library.closeConn();
 			Parent Admin_parent = FXMLLoader.load(getClass().getResource("AdminStartPage.fxml"));
 			Scene Admin_scene = new Scene(Admin_parent);
 			Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,7 +63,9 @@ public class LoginController implements Initializable {
 			incorrect.showAndWait();
 		}
 	}
-	
+
+
+
 	@FXML
 	void GoBack(ActionEvent event) throws IOException {
 		Parent  My_View_parent = FXMLLoader.load(getClass().getResource("MyView.fxml"));
@@ -71,13 +74,19 @@ public class LoginController implements Initializable {
 		app_stage.setScene(My_View_scene);
 		app_stage.show();
 	}
+
+
+
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1)  {
+	public void initialize(URL location, ResourceBundle resources) {
 		try {
 			library = new Database();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
+
 	}
 }

@@ -44,11 +44,12 @@ public class AdvancedSearchController implements Initializable   {
 	private AnchorPane rootPane;
 	@FXML
 	private MenuItem exit;
-	@FXML
-	private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, addCheckOut, generateToplist;
+	
 	@FXML
 	private TextField Search, SearchAuthor;
+	
 	private static String searchCategory;
+	
 	public String textSearch;
 
 	@FXML private TableView<Book> result;
@@ -62,6 +63,18 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML private TableColumn<Book, Integer> Book_idCol;
 	@FXML private TableColumn<Book, Double> RatingCol;
 
+    @FXML
+    private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, AddCheckOut, generateToplist;
+   
+    
+    
+	
+	
+	
+	
+	   
+	
+
 	//final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
 	public String getTextSearch() {
 		return textSearch;
@@ -71,42 +84,60 @@ public class AdvancedSearchController implements Initializable   {
 		this.textSearch = textSearch;
 	}
 	
+
+
+    //final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
+ 
+   
+   
+    @FXML
+    void exitProgram(ActionEvent event) {
+    }
+    
+   
+
+    @FXML
+    void SearchButton(ActionEvent event) throws SQLException {
+    		
+    	MyViewController MyViewCo = new MyViewController();
+    
+	    	if(Search.getText().trim().isEmpty()){
+	    		MyViewCo.setSearchCategory("author");
+	    		MyViewCo.setTextSearch(SearchAuthor.getText());
+	    	}
+	    	else if(SearchAuthor.getText().trim().isEmpty()) {
+	    		MyViewCo.setSearchCategory("title");
+	    		MyViewCo.setTextSearch(Search.getText());
+	    	}
+	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {
+	    		
+	    		
+	    		String titleText = Search.getText();
+	    		String authorText = SearchAuthor.getText();
+	    		
+	    		result.setItems(getBook(true, titleText, authorText));
+	    		return;
+	    	}
+	    	result.setItems(getBook(true));
+	    	//initialize(null, null);
+
+    }
+
+    
+  
+
 	@FXML
 	void SearchAuthor(ActionEvent event) throws IOException {
 		setTextSearch(Search.getText()); 
 	}
-	@FXML
-	void exitProgram(ActionEvent event) {
-	}
+
 
 	@FXML 
 	public void onEnter(ActionEvent ae) throws IOException, SQLException {
 		SearchButton(ae);
 	}
 
-	@FXML
-	void SearchButton(ActionEvent event) throws SQLException {
-
-		MyViewController MyViewCo = new MyViewController();
-
-		if(Search.getText().trim().isEmpty()){
-			MyViewCo.setSearchCategory("author");
-			MyViewCo.setTextSearch(SearchAuthor.getText());
-		}
-		else if(SearchAuthor.getText().trim().isEmpty()) {	
-			MyViewCo.setSearchCategory("title");
-			MyViewCo.setTextSearch(Search.getText());
-		}
-		else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {
-			String titleText = Search.getText();
-			String authorText = SearchAuthor.getText();
-
-			result.setItems(getBook(true, titleText, authorText));
-			return;
-		}
-		result.setItems(getBook(true));
-		//initialize(null, null);
-	}
+	
 
 	@FXML
 	void AddToCheckOut(ActionEvent event) throws SQLException {
@@ -195,9 +226,10 @@ public class AdvancedSearchController implements Initializable   {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		myview = new MyViewController();
 		try {
 			library = new Database ();
-			myview = new MyViewController();
+
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -228,20 +260,20 @@ public class AdvancedSearchController implements Initializable   {
 		ObservableList<Book> book = FXCollections.observableArrayList();
 		if (searchMethod) {
 			if (strings.length >= 2) {
-				searchArray = Main.library.searchAuthorTitle(strings[0], strings[1]);
+				searchArray = library.searchAuthorTitle(strings[0], strings[1]);
 				for(int i = 0; i < searchArray.length; i++) {
 					book.add(searchArray[i]);
 				}
 			}
 			else if (strings.length <= 1) {
-				searchArray=Main.library.search(myview.getTextSearch(), myview.getSearchCategory());
+				searchArray=library.search(myview.getTextSearch(), myview.getSearchCategory());
 				for(int i =0; i<searchArray.length; i++) {
 					book.add(searchArray[i]);
 				} 
 			}	
 		}
 		else if (!searchMethod) {
-			searchArray=Main.library.getTop10();
+			searchArray=library.getTop10();
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}
