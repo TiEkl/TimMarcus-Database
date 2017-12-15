@@ -53,6 +53,28 @@
                         </Text>
                         <TextField fx:id="costumerIdUpdate" layoutX="488.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Enter Custmer's Card ID" />
                         <Button fx:id="addCustomerButton" defaultButton="true" layoutX="138.0" layoutY="344.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
+                        <TableView fx:id="updateCustomerTable" layoutX="386.0" layoutY="159.0" prefHeight="78.0" prefWidth="522.0">
+                          <columns>
+                            <TableColumn fx:id="nameCustomer" prefWidth="132.0" text="Name" />
+                            <TableColumn fx:id="phoneCustomer" prefWidth="161.0" text="Phone Number" />
+                              <TableColumn fx:id="cityCustomer" text="City" />
+                              <TableColumn fx:id="streetCustomer" prefWidth="68.0" text="Street" />
+                              <TableColumn fx:id="cardIDCustomer" text="Card ID" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="showCustomerName" layoutX="608.0" layoutY="290.0" prefHeight="27.0" prefWidth="300.0" />
+                        <TextField fx:id="showCustomerPhone" layoutX="608.0" layoutY="330.0" prefHeight="27.0" prefWidth="300.0" />
+                        <TextField fx:id="showCustomerCity" layoutX="608.0" layoutY="370.0" prefHeight="27.0" prefWidth="300.0" />
+                        <TextField fx:id="showCustomerStreet" layoutX="608.0" layoutY="410.0" prefHeight="27.0" prefWidth="300.0" />
+                        <TextField fx:id="showCustomerCardID" layoutX="608.0" layoutY="450.0" prefHeight="27.0" prefWidth="300.0" />
+                        <Text layoutX="537.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                        <Text layoutX="509.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+                        <Text layoutX="542.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
+                        <Text layoutX="533.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street" />
+                        <Text layoutX="531.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card ID" />
+                        <Button fx:id="selectCustomer" defaultButton="true" layoutX="788.0" layoutY="248.0" mnemonicParsing="false" onAction="#selectCustomer" text="Select Customer" />
+                        <Button fx:id="searchUpdateCustomer" defaultButton="true" layoutX="746.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchUpdateCustomer" text="Search" />
+                        <Button defaultButton="true" layoutX="787.0" layoutY="498.0" mnemonicParsing="false" text="Confirm changes" />
                      </children>
                   </AnchorPane>
             </content>

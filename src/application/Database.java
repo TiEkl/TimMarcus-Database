@@ -524,6 +524,7 @@ public class Database  {
 		
 		
 	}
+	
 	public BorrowedBook[] getBorrowedArray(ResultSet borrowedSet, int card_id) throws SQLException {
 		
 		ArrayList<BorrowedBook> borrowed_list = new ArrayList<BorrowedBook>();

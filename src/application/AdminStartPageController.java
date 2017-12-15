@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 
 public class AdminStartPageController implements  Initializable {
 	 static Database library;
+	 static Customer customer;
 
 	 @FXML
 	 private ToggleGroup removeBookCategory;
@@ -46,12 +47,20 @@ public class AdminStartPageController implements  Initializable {
 
     @FXML
     private TextField addTitle, addStreet, addAuthor, costumerIdUpdate, addCustomerName, addCity,
-    addPhoneNr, addISBN, addPublisher, addQuantity, addCardID, addGenre, addPages, addShelf, textSearchRemove, selectedBook;
+    addPhoneNr, addISBN, addPublisher, addQuantity, addCardID, addGenre, addPages, addShelf, textSearchRemove, selectedBook,
+    showCustomerName, showCustomerPhone, showCustomerCity, showCustomerStreet, showCustomerCardID;
 
 
     @FXML
-    private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm;
+    private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer, searchUpdateCustomer;
 
+    @FXML
+    private TableView<Customer> updateCustomerTable;
+    @FXML private TableColumn<Customer, String> nameCustomer;
+    @FXML private TableColumn<Customer, String> phoneCustomer;
+    @FXML private TableColumn<Customer, String> cityCustomer;
+    @FXML private TableColumn<Customer, String> streetCustomer;
+    @FXML private TableColumn<Customer, String> cardIDCustomer;
 
     @FXML
     private TabPane adminManageTab;
@@ -75,6 +84,49 @@ void searchRemoveBook(ActionEvent event) throws SQLException {
 
 	removeResult.setItems(getBook());
 }
+@FXML
+void searchUpdateCustomer(ActionEvent event) throws SQLException {
+	nameCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+	phoneCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone_nr"));
+	cityCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("city"));
+	streetCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("street"));
+	cardIDCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("card_id"));
+
+	updateCustomerTable.setItems(getCustomer());
+	
+}
+
+
+
+@FXML
+void selectCustomer(ActionEvent event) throws SQLException {
+
+Customer customer =	updateCustomerTable.getSelectionModel().getSelectedItem();
+
+showCustomerName.setText(customer.getName());
+showCustomerPhone.setText(customer.getPhoneNr());
+showCustomerCity.setText(customer.getCity());
+showCustomerStreet.setText(customer.getStreet());
+showCustomerCardID.setText(String.valueOf(customer.getCard_id()));
+}
+
+
+
+
+public ObservableList<Customer> getCustomer() throws SQLException {
+	
+	
+	int card_id  = Integer.valueOf(costumerIdUpdate.getText());
+	
+	
+	Customer current = library.getCustomer(card_id);
+	ObservableList<Customer> customer = FXCollections.observableArrayList();
+	
+		customer.addAll(current);
+	
+	return customer;
+}
+
 
 public ObservableList<Book> getBook() throws SQLException {
 	String searchField = textSearchRemove.getText();
@@ -111,6 +163,14 @@ addShelf.clear();
 	
 }
 
+public void clearCustomerForm() {
+	addCustomerName.clear();
+	addPhoneNr.clear();
+	addCity.clear();
+	addCardID.clear();
+	addStreet.clear();
+}
+
     
     @FXML
     void addBook(ActionEvent event) throws SQLException {
@@ -141,8 +201,15 @@ addShelf.clear();
     String city = addCity.getText();
     String phone_nr = addPhoneNr.getText();
     
-    	
+
     	library.addCustomer(card_id, name, city, street, phone_nr );
+    	Alert addCustomer = new Alert(AlertType.INFORMATION);
+   
+    	addCustomer.setTitle("New Customer");
+    	addCustomer.setHeaderText("Customer successfully added");
+    	addCustomer.setContentText( name + " was added as a customer, with Card ID: " + card_id);
+    	addCustomer.showAndWait();
+    	clearCustomerForm();
     	
     }
     @FXML

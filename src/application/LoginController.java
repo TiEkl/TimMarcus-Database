@@ -45,14 +45,15 @@ public class LoginController implements Initializable {
 		boolean loginChecker = false;
 		//boolean loginChecker = library.verifyLogin(userName, password);
 		
-		if(library.verifyLogin(adminUserName.getText(), adminPassword.getText())) {
+		//if(library.verifyLogin(adminUserName.getText(), adminPassword.getText())) {
+		library.closeConn();
 			Parent Admin_parent = FXMLLoader.load(getClass().getResource("AdminStartPage.fxml"));
 			Scene Admin_scene = new Scene(Admin_parent);
 			Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			app_stage.setScene(Admin_scene);
 			app_stage.show();
 		}
-		else  {
+		/* else  {
 			System.out.println("wrong password");
 		}
 	}
