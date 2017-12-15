@@ -111,8 +111,9 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML
 	void AddToCheckOut(ActionEvent event) throws SQLException {
 		Book aBook = result.getSelectionModel().getSelectedItem();
-		System.out.println(aBook);
-		library.addToCheckout(aBook);
+		int book_id = aBook.getBook_ID();
+		System.out.println(book_id);
+		Main.library.addToCheckout(book_id);
 	}
 	@FXML
 	void generateToplist(ActionEvent event) throws SQLException {
@@ -164,8 +165,10 @@ public class AdvancedSearchController implements Initializable   {
 		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOut.fxml"));
 		app_stage.setScene(CheckOut_scene);
+		loader.load();
 		CheckOutController checkOut = loader.<CheckOutController>getController();
-		checkOut.initData(library.getCheckoutList());
+		//ArrayList<Book> booklist = library.getCheckoutList();
+		//checkOut.initData(booklist);
 		app_stage.show();
 	}
 
@@ -225,20 +228,20 @@ public class AdvancedSearchController implements Initializable   {
 		ObservableList<Book> book = FXCollections.observableArrayList();
 		if (searchMethod) {
 			if (strings.length >= 2) {
-				searchArray = library.searchAuthorTitle(strings[0], strings[1]);
+				searchArray = Main.library.searchAuthorTitle(strings[0], strings[1]);
 				for(int i = 0; i < searchArray.length; i++) {
 					book.add(searchArray[i]);
 				}
 			}
 			else if (strings.length <= 1) {
-				searchArray=library.search(myview.getTextSearch(), myview.getSearchCategory());
+				searchArray=Main.library.search(myview.getTextSearch(), myview.getSearchCategory());
 				for(int i =0; i<searchArray.length; i++) {
 					book.add(searchArray[i]);
 				} 
 			}	
 		}
 		else if (!searchMethod) {
-			searchArray=library.getTop10();
+			searchArray=Main.library.getTop10();
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}

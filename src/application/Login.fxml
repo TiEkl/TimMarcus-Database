@@ -28,8 +28,13 @@
             </Menu>
          </menus>
       </MenuBar>
-      <PasswordField fx:id="adminPassword" layoutX="412.0" layoutY="402.0" prefHeight="27.0" prefWidth="257.0" promptText="Password" />
+      <Button fx:id="GoBack" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Go Back" textOverrun="CENTER_ELLIPSIS">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
       <TextField fx:id="adminUserName" layoutX="412.0" layoutY="361.0" prefHeight="27.0" prefWidth="257.0" promptText="Username" />
+      <PasswordField fx:id="adminPassword" layoutX="412.0" layoutY="402.0" prefHeight="27.0" prefWidth="257.0" promptText="Password" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="465.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@fpmwlddibizqewcyodnb.png" />
@@ -44,11 +49,6 @@
          <font>
             <Font name="Avenir Next Condensed Medium" size="13.0" />
          </font>
-      </Button>
-      <Button fx:id="GoBack" defaultButton="true" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Go Back" textOverrun="CENTER_ELLIPSIS">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
       </Button>
    </children>
 </AnchorPane>

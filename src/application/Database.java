@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class Database  {
-	static ArrayList<Book> checkoutList = new ArrayList<Book>();
+	ArrayList<Book> checkoutList;
 	private static Book[] top10Array = new Book[10];
 	static final String dbUrl = "jdbc:sqlite:./sqlite/db/library.db";
 	final String EOL = System.lineSeparator();
@@ -35,6 +35,7 @@ public class Database  {
 		createHistoryTable();
 		createAdminTable();
 		createDebtTable();
+		checkoutList = new ArrayList<Book>();
 		top10Array = createTop10();
 		/*createAdmin("tiEkl", "hejhej123");
 		createAdmin("maDan", "password");
@@ -133,13 +134,13 @@ public class Database  {
 		PreparedUpdate(sql, title, author, genre, shelf, publisher, quantity, pages, isbn);
 
 	}
-	public void addCustomer(int card_id, String name, String address, String phone_nr) throws SQLException {
+	public void addCustomer(int card_id, String name, String city, String street, String phone_nr) throws SQLException {
 		
 		String sqlCustomer = "INSERT INTO customer " +
-				"(card_id, name, address, phone_nr) " +
+				"(card_id, name, city, street, phone_nr) " +
 				"VALUES " +
-				"(?,?,?,?)";
-		PreparedUpdate(sqlCustomer, card_id, name, address, phone_nr);
+				"(?,?,?,?,?)";
+		PreparedUpdate(sqlCustomer, card_id, name, city,street, phone_nr);
 		String sqlDebt ="INSERT INTO customer_debt" +
 				"(card_id) " +
 				"VALUES " +
@@ -342,7 +343,7 @@ public class Database  {
 	}
 	public Book[] search(String search, String category) throws SQLException  {
 		
-		ArrayList<Book> searchedBooks = new ArrayList<Book>();
+		//ArrayList<Book> searchedBooks = new ArrayList<Book>();
 		
 		String sql = "SELECT * FROM books " +
 				"WHERE " + category + " LIKE ?";

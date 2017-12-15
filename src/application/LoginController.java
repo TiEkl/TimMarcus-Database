@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
@@ -40,9 +42,9 @@ public class LoginController implements Initializable {
 	}
 	@FXML
 	void AdminLoginButton(ActionEvent event) throws SQLException, IOException {
-		String userName = adminUserName.getText();
-		String password = adminPassword.getText();
-		boolean loginChecker = false;
+		//String userName = adminUserName.getText();
+		//String password = adminPassword.getText();
+		//boolean loginChecker = false;
 		//boolean loginChecker = library.verifyLogin(userName, password);
 
 		if(library.verifyLogin(adminUserName.getText(), adminPassword.getText())) {
@@ -53,7 +55,11 @@ public class LoginController implements Initializable {
 			app_stage.show();
 		}
 		else  {
-			System.out.println("wrong password");
+			Alert incorrect = new Alert(AlertType.INFORMATION);
+			incorrect.setTitle("Failed login");
+			incorrect.setHeaderText(null);
+			incorrect.setContentText("Incorrect login-credentials!");
+			incorrect.showAndWait();
 		}
 	}
 	

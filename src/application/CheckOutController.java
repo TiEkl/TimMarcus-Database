@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,11 +22,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class CheckOutController {
+public class CheckOutController implements Initializable {
 	@FXML
 	private MenuItem exit;
 	private static Database library;
-	static ArrayList<Book> checkoutList = new ArrayList<Book>();
+	private final ObservableList<Book> checkoutData = FXCollections.observableArrayList();
 	// Event Listener on MenuItem[#exit].onAction
 	@FXML
 	public void exitProgram(ActionEvent event) {
@@ -34,7 +35,7 @@ public class CheckOutController {
 	@FXML
 	private Button AdvSearch, Toplist, CheckOut, GoBack, MyBooks;
 
-	@FXML private TableView<Book> result;
+	@FXML private TableView<Book> checkoutTable;
 	@FXML private TableColumn<Book, String> TitleCol;
 	@FXML private TableColumn<Book, String> AuthorCol;
 	@FXML private TableColumn<Book, String> GenreCol;
@@ -92,7 +93,7 @@ public class CheckOutController {
 
 	}
 	
-	static void setList(ArrayList<Book> list) {
+	/*static void setList(ArrayList<Book> list) {
 		checkoutList = list;
 	}
 	
@@ -104,8 +105,17 @@ public class CheckOutController {
 		}
 		//book.addAll(checkoutList);
 		return book;
+	}*/
+	public ObservableList<Book> getCheckoutData() {
+		return checkoutData;
 	}
-	public void initialize(URL location, ResourceBundle resources) throws SQLException {
+	public void setCheckoutData() {
+		ArrayList<Book> checkoutList = Main.library.getCheckoutList();
+		for(int i = 0; i < checkoutList.size(); i++) {
+			checkoutData.add(checkoutList.get(i));
+		}
+	}
+	public void initialize(URL location, ResourceBundle resources) {
 		//set up the columns in the table
 		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
@@ -117,7 +127,8 @@ public class CheckOutController {
 		
 		try {
 			library = new Database();
-			result.setItems(getCheckout());
+			setCheckoutData();
+			checkoutTable.setItems(getCheckoutData());
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -125,6 +136,9 @@ public class CheckOutController {
 		}
 	}
 	void initData(ArrayList<Book> list) throws SQLException {
-		result.setItems(getCheckout());
+		
+		for(int i = 0; i < list.size(); i++) {
+			checkoutData.add(list.get(i));
+		}
 	}
 }

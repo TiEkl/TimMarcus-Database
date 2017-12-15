@@ -53,7 +53,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TableView fx:id="result" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0">
+      <TableView fx:id="checkoutTable" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0" >
          <columns>
             <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
             <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
