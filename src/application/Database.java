@@ -512,7 +512,6 @@ public class Database  {
 		String getQuantity = "SELECT quantity FROM books WHERE book_id = ?";
 		ResultSet tableQuantity = PreparedQuery(getQuantity, book_id);
 		int quantity = tableQuantity.getInt(1);
-	
 		if(quantity - change <= 0) {
 			removeBook(book_id);
 		}

@@ -52,7 +52,8 @@ public class AdminStartPageController implements  Initializable {
 
 
     @FXML
-    private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer, searchUpdateCustomer;
+    private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer,
+    searchUpdateCustomer, confirmUpdateCustomer;
 
     @FXML
     private TableView<Customer> updateCustomerTable;
@@ -74,6 +75,19 @@ public class AdminStartPageController implements  Initializable {
     @FXML private TableColumn<Book, Integer> quantityCol;
     @FXML private TableColumn<Book, Integer> bookIDCol;
   
+    
+@FXML 
+void confirmUpdateCustomer(ActionEvent event) throws SQLException{
+	
+	int card_id = Integer.valueOf(showCustomerCardID.getText());
+	library.updateCustomer("name", showCustomerName.getText(), card_id);
+	library.updateCustomer("phone_nr", showCustomerPhone.getText(), card_id);
+	library.updateCustomer("city", showCustomerCity.getText(), card_id);
+	library.updateCustomer("street", showCustomerStreet.getText(), card_id);
+	
+}
+    
+    
 @FXML
 void searchRemoveBook(ActionEvent event) throws SQLException {
 	titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
