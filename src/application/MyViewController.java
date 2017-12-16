@@ -261,11 +261,6 @@ public class MyViewController implements Initializable {
 
 
 	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			library = new Database();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 }

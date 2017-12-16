@@ -75,7 +75,7 @@ public class AdminStartPageController implements  Initializable {
 	@FXML private TableColumn<Book, Integer> bookIDCol;
 
 	@FXML
-	void searchRemoveBook(ActionEvent event) throws SQLException {
+	void searchRemoveBook(ActionEvent event) throws Exception {
 		titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
 		isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
@@ -85,7 +85,7 @@ public class AdminStartPageController implements  Initializable {
 		removeResult.setItems(getBook());
 	}
 	@FXML
-	void searchUpdateCustomer(ActionEvent event) throws SQLException {
+	void searchUpdateCustomer(ActionEvent event) throws Exception {
 		nameCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
 		phoneCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone_nr"));
 		cityCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("city"));
@@ -106,21 +106,23 @@ public class AdminStartPageController implements  Initializable {
 		showCustomerStreet.setText(customer.getStreet());
 		showCustomerCardID.setText(String.valueOf(customer.getCard_id()));
 	}
-	public ObservableList<Customer> getCustomer() throws SQLException {
+	public ObservableList<Customer> getCustomer() throws Exception {
 		int card_id  = Integer.valueOf(costumerIdUpdate.getText());
-		Customer current = Main.library.getCustomer(card_id);
 		ObservableList<Customer> customer = FXCollections.observableArrayList();
+		try(Database db = new Database()) {
+			Customer current = db.getCustomer(card_id);
 
-		customer.addAll(current);
+			customer.addAll(current);
 
+		}
 		return customer;
 	}
 
 
-	public ObservableList<Book> getBook() throws SQLException {
+	public ObservableList<Book> getBook() throws Exception {
 		String searchField = textSearchRemove.getText();
 		String category="";
-
+		ObservableList<Book> book = FXCollections.observableArrayList();
 
 		if(isbnSelected.isSelected()) {
 			category = "isbn";
@@ -130,11 +132,12 @@ public class AdminStartPageController implements  Initializable {
 			category = "title";
 
 		}
+		try(Database db = new Database()) {
 
-		Book [] searchArray = Main.library.search(searchField, category);
-		ObservableList<Book> book = FXCollections.observableArrayList();
-		for(int i = 0; i < searchArray.length; i++) {
-			book.add(searchArray[i]);
+			Book [] searchArray = db.search(searchField, category);
+			for(int i = 0; i < searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
 		}
 		return book;
 
@@ -162,7 +165,7 @@ public class AdminStartPageController implements  Initializable {
 
 
 	@FXML
-	void addBook(ActionEvent event) throws SQLException {
+	void addBook(ActionEvent event) throws Exception {
 		String isbn =addISBN.getText();
 		String title = addTitle.getText();
 		String author = addAuthor.getText();
@@ -172,17 +175,18 @@ public class AdminStartPageController implements  Initializable {
 		int quantity = Integer.valueOf(addQuantity.getText());
 		int pages = Integer.valueOf(addPages.getText());
 
+		try(Database db = new Database()) {
+			db.addBook(isbn, title, author, genre, shelf, publisher, quantity, pages);
+		}
 		Alert addBook = new Alert(AlertType.INFORMATION);
 		addBook.setTitle("New Book");
 		addBook.setHeaderText("The book was successfully added to the library");
 		addBook.setContentText("Title: " + title);
 		addBook.showAndWait();
-
-		Main.library.addBook(isbn, title, author, genre, shelf, publisher, quantity, pages);
 		clearAddBookForm(event);
 	}
 	@FXML
-	void addCustomer(ActionEvent event) throws SQLException {
+	void addCustomer(ActionEvent event) throws Exception {
 
 		int card_id = Integer.valueOf(addCardID.getText());
 		String name = addCustomerName.getText();
@@ -190,8 +194,10 @@ public class AdminStartPageController implements  Initializable {
 		String city = addCity.getText();
 		String phone_nr = addPhoneNr.getText();
 
+		try(Database db = new Database()) {
+			db.addCustomer(card_id, name, city, street, phone_nr );	
+		}
 
-		Main.library.addCustomer(card_id, name, city, street, phone_nr );
 		Alert addCustomer = new Alert(AlertType.INFORMATION);
 
 		addCustomer.setTitle("New Customer");
@@ -202,7 +208,7 @@ public class AdminStartPageController implements  Initializable {
 
 	}
 	@FXML
-	void searchRemoveButton(ActionEvent event) throws SQLException {
+	void searchRemoveButton(ActionEvent event) throws Exception {
 		Book book = removeResult.getSelectionModel().getSelectedItem();
 		String title = book.getTitle();
 		int book_id =book.getBook_ID();
@@ -212,8 +218,10 @@ public class AdminStartPageController implements  Initializable {
 		remove.setContentText("title: " + title);
 		Optional<ButtonType> result = remove.showAndWait();
 		if (result.get() == ButtonType.OK){
-			Main.library.removeBook(book_id);
-			
+
+			try(Database db = new Database()) {
+				db.removeBook(book_id);
+			}
 			searchRemoveBook(event);
 		} else if ((result.get() == ButtonType.CANCEL)) {
 
@@ -231,8 +239,10 @@ public class AdminStartPageController implements  Initializable {
 		}*/
 	}
 
-	public void removeBook(int book_id) throws SQLException {
-		Main.library.removeBook(book_id);
+	public void removeBook(int book_id) throws Exception {
+		try(Database db = new Database()) {
+			db.removeBook(book_id);
+		}
 	}
 	@FXML
 	void logOut(ActionEvent event) throws IOException {

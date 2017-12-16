@@ -55,14 +55,15 @@ public class MyBooksController {
 
 
 	@FXML
-	void enterCardIDButton(ActionEvent event) throws SQLException {
+	void enterCardIDButton(ActionEvent event) throws Exception {
 		String IDScanString= IDScan.getText();
 		IDScanNumber = Integer.valueOf(IDScanString);
 
 		result.setItems(getBorrowedBook());
-		Customer current = Main.library.getCustomer(IDScanNumber);
-		nameInfo.setText(current.getName());
-		
+		try(Database db = new Database()) {
+			Customer current = db.getCustomer(IDScanNumber);
+			nameInfo.setText(current.getName());
+		}
 		initialize(null, null);
 
 	}
@@ -143,16 +144,19 @@ public class MyBooksController {
 
 	}
 
-	public ObservableList<Book> getBorrowedBook() throws SQLException{
+	public ObservableList<Book> getBorrowedBook() throws Exception{
 		ObservableList<Book> book = FXCollections.observableArrayList();
-		Database data = new Database();
-		//Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
 
-		Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
-
-		for(int i =0; i<searchArray.length; i++) {
-			book.add(searchArray[i]);
+		//
+		try(Database data = new Database()) {
+			Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
 		}
+		//Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
+
+
 		return book; 
 	}
 

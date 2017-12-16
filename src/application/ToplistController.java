@@ -109,7 +109,7 @@ public class ToplistController {
 
  }
  
- public void initialize(URL location, ResourceBundle resources) {
+ public void initialize(URL location, ResourceBundle resources)  {
 		
 		
 		//set up the columns in the table
@@ -123,7 +123,8 @@ public class ToplistController {
 		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
 		try {
 			result.setItems(getToplist());
-		} catch (SQLException e) {
+		} 
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -132,28 +133,17 @@ public class ToplistController {
 		
 	
 	}
-	public ObservableList<Book> getToplist() throws SQLException{
+	public ObservableList<Book> getToplist() throws Exception{
 		
 		ObservableList<Book> book = FXCollections.observableArrayList();
-		Database data = new Database();
 		
+		try (Database db = new Database()) {
+			Book [] searchArray=db.getTop10();
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			} 
 		
-		
-		
-		
-		
-		
-		Book [] searchArray=data.getTop10();
-		
-		for(int i =0; i<searchArray.length; i++) {
-			
-			
-			
-			book.add(searchArray[i]);
-			
-		} 
-		
-		
+		}
 		return book;
 	}
 }

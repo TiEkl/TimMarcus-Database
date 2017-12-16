@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class Database  {
+public class Database implements AutoCloseable {
 	ArrayList<Book> checkoutList;
 	private static Book[] top10Array = new Book[10];
 	static final String dbUrl = "jdbc:sqlite:./sqlite/db/library.db";
@@ -210,11 +210,11 @@ public class Database  {
 				"(?,?,?,?);";
 		PreparedUpdate(sql, book_id, card_id, unixBorrowed, unixReturn);
 	}
-	public String addBorrowedList(ArrayList<Book> checkOut,int card_id, int nrWeeks) throws SQLException {
-
+	public String addBorrowedList(int card_id, int nrWeeks) throws SQLException {
+		
 		long unixBorrowed = System.currentTimeMillis() / 1000L;
 		long unixReturn = unixBorrowed + (UNIXWEEK * nrWeeks);
-		int length = checkOut.size();
+		int length = Main.checkoutData.getCheckoutSize();
 		int book_id;
 		String result;
 		String sql = "INSERT INTO borrowed_books" +
@@ -222,7 +222,7 @@ public class Database  {
 				"VALUES "+
 				"(?,?,?,?)";
 		for(int i = 0; i < length; i++) {
-			book_id = checkOut.get(i).getBook_ID();
+			book_id = Main.checkoutData.getCheckoutList().get(i).getBook_ID();
 			if(checkIfAlreadyBorrowed(book_id, card_id)) {
 				result = searchOneBook(book_id).alreadyBorrowed();
 				return result;
@@ -230,10 +230,10 @@ public class Database  {
 			PreparedUpdate(sql, book_id, card_id, unixBorrowed, unixReturn);
 		}
 		result = "You have successfully borrowed the following book(s): " + EOL;
-		for(Book borrowed : checkOut) {
+		for(Book borrowed : Main.checkoutData.getCheckoutList()) {
 			result+= borrowed.successBorrow() + EOL;
 		}
-		checkoutList.clear();
+		Main.checkoutData.clearCheckoutList();
 		return result;
 	}
 	public  ArrayList<Book> getCheckoutList() {
@@ -641,11 +641,25 @@ public class Database  {
 
 
 	}*/
-	public void addToCheckout(Book addition) {
-		checkoutList.add(addition);
+	public boolean addToCheckout(Book addition) {
+		
+		if(!Main.checkoutData.checkoutContains(addition)) {
+			Main.checkoutData.addToCheckoutList(addition);
+			return true;
+		}
+		else { 
+			return false;
+		}
 	}
-	public void addToCheckout(int book_id) throws SQLException {
-		checkoutList.add(searchOneBook(book_id));
+	public boolean addToCheckout(int book_id) throws SQLException {
+		
+		if(!Main.checkoutData.checkoutContains(searchOneBook(book_id))) {
+			Main.checkoutData.addToCheckoutList(searchOneBook(book_id));
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	public void setCheckout(ArrayList<Book> list) {
 		checkoutList = list;
@@ -714,6 +728,11 @@ public class Database  {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.execute();
 		pstmt.close();
+	}
+	@Override
+	public void close() throws Exception {
+		// TODO Auto-generated method stub
+		conn.close();
 	}
 
 }
