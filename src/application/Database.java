@@ -340,10 +340,12 @@ public class Database implements AutoCloseable {
 		boolean result = false;
 		String sql = "SELECT * FROM admin WHERE username = ?";
 		ResultSet rs = PreparedQuery(sql, username);
-		String hashed = rs.getString("password");
-		if (BCrypt.checkpw(password, hashed)) {
-			result = true;
-		}		
+		if (rs.isBeforeFirst()) {
+			String hashed = rs.getString("password");
+			if (BCrypt.checkpw(password, hashed)) {
+				result = true;
+			}	
+		}
 		return result;
 	}
 	public Book[] search(String search, String category) throws SQLException  {
