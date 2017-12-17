@@ -75,15 +75,16 @@ public class AdminStartPageController implements  Initializable {
 	@FXML private TableColumn<Book, Long> isbnCol;
 	@FXML private TableColumn<Book, Integer> quantityCol;
 	@FXML private TableColumn<Book, Integer> bookIDCol;
-	@FXML private TableColumn<BorrowedBook, String> delayedTitleCol, delayedAuthorCol, borrowedByTitleCol, borrowedByAuthorCol, borrowedByGenreCol;
-	@FXML private TableColumn<BorrowedBook, String> allBorrowedtitleCol, allBorrowedauhtorCol, allBorrowedgenreCol;
-	@FXML private TableColumn<BorrowedBook, Long> borrowedByIsbnCol,allBorrowedisbnCol;
-	@FXML private TableColumn<BorrowedBook, Integer> borrowedByQuantityCol, borrowedByBookIDCol, allBorrowedquantityCol, allBorrowedbookIDCol;
+	@FXML private TableColumn<BorrowedBook, String> delayedTitleCol, delayedReturnCol ,borrowedByTitleCol, borrowedByAuthorCol, borrowedByGenreCol;
+	@FXML private TableColumn<BorrowedBook, String> allBorrowedTitleCol, allBorrowedBorrowedDateCol, allBorrowedReturnCol;
+	@FXML private TableColumn<BorrowedBook, Long> borrowedByIsbnCol;
+	@FXML private TableColumn<BorrowedBook, Integer> borrowedByQuantityCol, borrowedByBookIDCol, allBorrowedCardCol, allBorrowedDaysCol, allBorrowedbookIDCol, delayedCardCol, delayedDaysCol;
 
 	@FXML
 	void searchRemoveBook(ActionEvent event) throws Exception {
 
 		removeResult.setItems(getBook());
+		
 	}
 
 	@FXML 
@@ -154,6 +155,7 @@ public class AdminStartPageController implements  Initializable {
 
 			}
 		}
+		
 	}
 
 
@@ -189,6 +191,18 @@ public class AdminStartPageController implements  Initializable {
 			borrowedName.setText(current.getName());
 
 		}
+	}
+	public ObservableList<BorrowedBook> getAllBorrowedBooks() throws Exception{
+		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
+
+
+		try(Database data = new Database()) {
+			BorrowedBook [] searchArray=data.getBorrowedBooks();
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
+		}
+		return book; 
 	}
 	public ObservableList<BorrowedBook> getBorrowedBook() throws Exception{
 		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
@@ -287,6 +301,7 @@ public class AdminStartPageController implements  Initializable {
 	}
 	@FXML
 	void searchRemoveButton(ActionEvent event) throws Exception {
+		
 		Book book = removeResult.getSelectionModel().getSelectedItem();
 		String title = book.getTitle();
 		int book_id =book.getBook_ID();
@@ -299,6 +314,7 @@ public class AdminStartPageController implements  Initializable {
 
 			try(Database db = new Database()) {
 				db.removeBook(book_id);
+				
 			}
 			searchRemoveBook(event);
 		} else if ((result.get() == ButtonType.CANCEL)) {
@@ -310,6 +326,7 @@ public class AdminStartPageController implements  Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Remove book-table Cell factories
+		
 		titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
 		isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
@@ -328,14 +345,24 @@ public class AdminStartPageController implements  Initializable {
 		borrowedByQuantityCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("quantity"));
 		borrowedByBookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
 		//All delayed-table Cell factories
+		delayedCardCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("card_id"));
 		delayedTitleCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("title"));
-		delayedAuthorCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("author"));
+		delayedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
+		delayedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		//All borrowed-table Cell factories
-		allBorrowedtitleCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("title"));
-		allBorrowedauhtorCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("author"));
-		allBorrowedisbnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Long>("isbn"));
-		allBorrowedquantityCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("quantity"));
+		allBorrowedCardCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("card_id"));
+		allBorrowedTitleCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("title"));
+		allBorrowedBorrowedDateCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("borrowedDate"));
+		allBorrowedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
+		allBorrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		allBorrowedbookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
+	
+		try {
+			allBorrowedTable.setItems(getAllBorrowedBooks());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void removeBook(int book_id) throws Exception {

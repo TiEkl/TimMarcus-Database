@@ -142,11 +142,11 @@
                                        <children>
                                           <TableView fx:id="allBorrowedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
                                             <columns>
-                                              <TableColumn fx:id="allBorrowedtitleCol" prefWidth="214.0" text="Title" />
-                                              <TableColumn fx:id="allBorrowedauhtorCol" prefWidth="142.0" text="Author" />
-                                                <TableColumn fx:id="allBorrowedgenreCol" prefWidth="150.0" text="Genre" />
-                                                <TableColumn fx:id="allBorrowedisbnCol" prefWidth="175.0" text="ISBN" />
-                                                <TableColumn fx:id="allBorrowedquantityCol" prefWidth="61.0" text="Quantity" />
+                                              <TableColumn fx:id="allBorrowedCardCol" prefWidth="214.0" text="CardID" />
+                                              <TableColumn fx:id="allBorrowedTitleCol" prefWidth="142.0" text="Title" />
+                                                <TableColumn fx:id="allBorrowedBorrowedDateCol" prefWidth="150.0" text="Borrowed Date" />
+                                                <TableColumn fx:id="allBorrowedReturnCol" prefWidth="175.0" text="Return Date" />
+                                                <TableColumn fx:id="allBorrowedDaysCol" prefWidth="61.0" text="Days left / overdue" />
                                                 <TableColumn fx:id="allBorrowedbookIDCol" prefWidth="83.0" text="Book ID" />
                                             </columns>
                                           </TableView>
@@ -160,8 +160,10 @@
                                        <children>
                                           <TableView fx:id="allDelayedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
                                             <columns>
+                                              <TableColumn fx:id="delayedCardCol" prefWidth="75.0" text="CardID" />
                                               <TableColumn fx:id="delayedTitleCol" prefWidth="75.0" text="Title" />
-                                              <TableColumn fx:id="delayedAuthorCol" prefWidth="75.0" text="Author" />
+											  <TableColumn fx:id="delayedReturnCol" prefWidth="75.0" text="Return Date" />							
+											  <TableColumn fx:id="delayedDaysCol" prefWidth="75.0" text="Days Delayed" />											  											  											  
                                             </columns>
                                           </TableView>
                                           <Button fx:id="getAllDelayedButton" defaultButton="true" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#getAllDelayedButton" text="Get list" />

@@ -258,9 +258,12 @@ public class Database implements AutoCloseable {
 		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
 		return borrowedArray;
 	}
-
-	
-
+	public BorrowedBook[] getBorrowedBooks() throws SQLException {
+		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)";
+		ResultSet borrowedSet = PreparedQuery(sql);		
+		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
+		return borrowedArray;
+	}
 	public Book searchOneBook(int book_id) throws SQLException {
 
 		String title, author, genre, publisher;
@@ -296,7 +299,7 @@ public class Database implements AutoCloseable {
 
 		ResultSet books = PreparedQuery(sql, todayEpoch);
 		BorrowedBook[] result = getBorrowedArray(books);
-		while(books.next()) {
+		/*while(books.next()) {
 			book_id = books.getInt("book_id");
 			borrowed_epoch = books.getLong("borrowed_epoch");
 			return_epoch = books.getLong("return_epoch");
@@ -309,13 +312,9 @@ public class Database implements AutoCloseable {
 			card_id = books.getInt("card_id");
 			BorrowedBook temp = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);
 			delayedList.add(temp);
-		}
-
-		
-
+		}*/
 		return result;
 	}
-
 
 	public boolean verifyLogin(String username, String password) throws SQLException {
 
@@ -332,14 +331,15 @@ public class Database implements AutoCloseable {
 	}
 	public Book[] search(String search, String category) throws SQLException  {
 
-		//ArrayList<Book> searchedBooks = new ArrayList<Book>();
-
 		String sql = "SELECT * FROM books " +
 				"WHERE " + category + " LIKE ?";
 		ResultSet rs = PreparedQuery(sql ,"%"+ search+"%");
 
+
 	
 		Book[] searchedArray = getBookArray(rs);
+
+
 		return searchedArray;
 	}
 	public Book[] searchAuthorTitle(String title, String author) throws SQLException {
@@ -527,8 +527,6 @@ public class Database implements AutoCloseable {
 
 
 	}
-
-
 	public BorrowedBook[] getBorrowedArray(ResultSet borrowedSet) throws SQLException {
 
 		ArrayList<BorrowedBook> borrowed_list = new ArrayList<BorrowedBook>();
