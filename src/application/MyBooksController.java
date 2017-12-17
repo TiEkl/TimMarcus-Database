@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 public class MyBooksController implements Initializable {
 	@FXML
 	private MenuItem exit;
-	Database library;
 
 	// Event Listener on MenuItem[#exit].onAction
 	@FXML
@@ -116,7 +115,6 @@ public class MyBooksController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-
 		//set up the columns in the table
 		borrowedTitleCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("title"));
 		borrowedDateCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("borrowedDate"));
@@ -124,35 +122,17 @@ public class MyBooksController implements Initializable {
 		borrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		borrowedBookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
 
-		/*try {
-
-			//result.setItems(getBorrowedBook());
-			library = new Database();
-
-			//Customer current = library.getCustomer(IDScanNumber);
-			//nameInfo.setText(current.getName());
-
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-
 	}
 
 	public ObservableList<BorrowedBook> getBorrowedBook() throws Exception{
 		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
 
-		//
 		try(Database data = new Database()) {
 			BorrowedBook [] searchArray=data.getBorrowedBooks(IDScanNumber);
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}
 		}
-		//Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
-
-
 		return book; 
 	}
 
