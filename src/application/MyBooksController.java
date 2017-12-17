@@ -35,7 +35,7 @@ public class MyBooksController {
 	}
 	@FXML
 	private Button AdvSearch, Toplist, CheckOut, GoBack, MyBooks, enterCardIDButton;
-	
+
 	@FXML
 	private TextField nameInfo, IDScan;
 
@@ -49,18 +49,21 @@ public class MyBooksController {
 	@FXML private TableColumn<Book, Long> ISBNCol;
 	@FXML private TableColumn<Book, Integer> QuantityCol;
 	@FXML private TableColumn<Book, Integer> Book_idCol;
-	
-	
+
+
 	int IDScanNumber;
 
-	
+
 	@FXML
-	void enterCardIDButton(ActionEvent event) throws SQLException {
+	void enterCardIDButton(ActionEvent event) throws Exception {
 		String IDScanString= IDScan.getText();
 		IDScanNumber = Integer.valueOf(IDScanString);
-		
+
 		result.setItems(getBorrowedBook());
-		
+		try(Database db = new Database()) {
+			Customer current = db.getCustomer(IDScanNumber);
+			nameInfo.setText(current.getName());
+		}
 		initialize(null, null);
 
 	}
@@ -83,7 +86,7 @@ public class MyBooksController {
 		app_stage.show();
 
 	}
-	
+
 	@FXML
 	void EnterMyBorrowedBooks(ActionEvent event) throws IOException {
 		Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
@@ -112,10 +115,10 @@ public class MyBooksController {
 		app_stage.show();
 
 	}
-	
-public void initialize(URL location, ResourceBundle resources) throws SQLException {
-	
-		
+
+	public void initialize(URL location, ResourceBundle resources) throws SQLException {
+
+
 		//set up the columns in the table
 		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
@@ -125,30 +128,36 @@ public void initialize(URL location, ResourceBundle resources) throws SQLExcepti
 		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
 		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
 
-		try {
-			
-			result.setItems(getBorrowedBook());
-			Database lib = new Database();
-			
-			Customer current=lib.getCustomer(IDScanNumber);
-			nameInfo.setText(current.getName());
-			
-		
+		/*try {
+
+			//result.setItems(getBorrowedBook());
+			library = new Database();
+
+			//Customer current = library.getCustomer(IDScanNumber);
+			//nameInfo.setText(current.getName());
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	
-}
+		}*/
 
-	public ObservableList<Book> getBorrowedBook() throws SQLException{
+	}
+
+	public ObservableList<Book> getBorrowedBook() throws Exception{
 		ObservableList<Book> book = FXCollections.observableArrayList();
-		Database data = new Database();
-		Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
-		for(int i =0; i<searchArray.length; i++) {
-			book.add(searchArray[i]);
+
+		//
+		try(Database data = new Database()) {
+			Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
 		}
+		//Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
+
+
 		return book; 
 	}
-	
+
 }

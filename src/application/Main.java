@@ -12,10 +12,12 @@ import javafx.scene.Scene;
 
 
 public class Main extends Application {
-	
+	//static Database library;
+	static staticData checkoutData;
 	public void start(Stage primaryStage) {
 		try {
-			
+			//library = new Database();
+			checkoutData = new staticData();
 			Parent root = FXMLLoader.load(getClass().getResource("/application/MyView.fxml"));
 			Scene scene = new Scene(root,1080,750);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

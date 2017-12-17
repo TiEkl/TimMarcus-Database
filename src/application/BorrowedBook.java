@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BorrowedBook extends Book {
 	private long epoch_borrowed, epoch_return;
-	private int card_id;
+	private int card_id, days;
 	String borrowedDate, returnDate;
 	
 
@@ -19,6 +19,12 @@ public class BorrowedBook extends Book {
 		this.card_id = card_id;
 		this.borrowedDate = formatEpoch(epoch_borrowed);
 		this.returnDate = formatEpoch(epoch_return);
+		if((System.currentTimeMillis() / 1000L) < this.epoch_return) {
+			this.days = getDaysDue();
+		}
+		else if ((System.currentTimeMillis() / 1000L) > this.epoch_return) {
+			this.days = this.getDaysOver();
+		}
 	}
 	public  String formatEpoch(long epoch) {
 		 Date date = new Date(epoch * 1000L);
@@ -46,7 +52,7 @@ public class BorrowedBook extends Book {
 		int due, now;
 		now = (int) TimeUnit.SECONDS.toDays(System.currentTimeMillis() / 1000L);
 		due = (int) TimeUnit.SECONDS.toDays(this.epoch_return);
-		return (now - due) * -1;
+		return (now - due);
 	}
 	public boolean onTime() {
 

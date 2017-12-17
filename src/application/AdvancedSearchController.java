@@ -65,17 +65,7 @@ public class AdvancedSearchController implements Initializable   {
 
     @FXML
     private Button AdvSearch, Toplist, CheckOut, SearchButton, GoBack, MyBooks, AddSelectedBook, AddCheckOut, generateToplist;
-   
-    
-    
-	
-	
-	
-	
-	   
-	
 
-	//final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
 	public String getTextSearch() {
 		return textSearch;
 	}
@@ -83,21 +73,13 @@ public class AdvancedSearchController implements Initializable   {
 	public void setTextSearch(String textSearch) {
 		this.textSearch = textSearch;
 	}
-	
-
-
-    //final ObservableList<Book> data = FXCollections.observableArrayList(book1, book2);
  
-   
-   
     @FXML
     void exitProgram(ActionEvent event) {
     }
     
-   
-
     @FXML
-    void SearchButton(ActionEvent event) throws SQLException {
+    void SearchButton(ActionEvent event) throws Exception {
     		
     	MyViewController MyViewCo = new MyViewController();
     
@@ -119,12 +101,8 @@ public class AdvancedSearchController implements Initializable   {
 	    		return;
 	    	}
 	    	result.setItems(getBook(true));
-	    	//initialize(null, null);
 
     }
-
-    
-  
 
 	@FXML
 	void SearchAuthor(ActionEvent event) throws IOException {
@@ -133,7 +111,7 @@ public class AdvancedSearchController implements Initializable   {
 
 
 	@FXML 
-	public void onEnter(ActionEvent ae) throws IOException, SQLException {
+	public void onEnter(ActionEvent ae) throws Exception {
 		SearchButton(ae);
 	}
 
@@ -142,11 +120,12 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML
 	void AddToCheckOut(ActionEvent event) throws SQLException {
 		Book aBook = result.getSelectionModel().getSelectedItem();
-		System.out.println(aBook);
-		library.addToCheckout(aBook);
+		int book_id = aBook.getBook_ID();
+		System.out.println(book_id);
+		Main.checkoutData.addToCheckoutList(aBook);
 	}
 	@FXML
-	void generateToplist(ActionEvent event) throws SQLException {
+	void generateToplist(ActionEvent event) throws Exception {
 		result.setItems(getBook(false));
 	}
 	@FXML
@@ -195,12 +174,14 @@ public class AdvancedSearchController implements Initializable   {
 		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOut.fxml"));
 		app_stage.setScene(CheckOut_scene);
+		loader.load();
 		CheckOutController checkOut = loader.<CheckOutController>getController();
-		checkOut.initData(library.getCheckoutList());
+		//ArrayList<Book> booklist = library.getCheckoutList();
+		//checkOut.initData(booklist);
 		app_stage.show();
 	}
 
-	public void genToplistInit() {
+	/*public void genToplistInit() {
 
 		try {
 			library = new Database ();
@@ -219,18 +200,11 @@ public class AdvancedSearchController implements Initializable   {
 		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
 		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
 		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-	}
+	}*/
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			library = new Database ();
-			myview = new MyViewController();
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		myview = new MyViewController();
 		//set up the columns in the table
 		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
@@ -244,34 +218,41 @@ public class AdvancedSearchController implements Initializable   {
 		
 		try {
 			result.setItems(getBook(true));
-		} catch (SQLException e) {
+		} 
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws SQLException{
+	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws Exception{
 
 		Book [] searchArray;
 		ObservableList<Book> book = FXCollections.observableArrayList();
 		if (searchMethod) {
 			if (strings.length >= 2) {
-				searchArray = library.searchAuthorTitle(strings[0], strings[1]);
-				for(int i = 0; i < searchArray.length; i++) {
-					book.add(searchArray[i]);
+				try(Database db = new Database()) {
+					searchArray = db.searchAuthorTitle(strings[0], strings[1]);
+					for(int i = 0; i < searchArray.length; i++) {
+						book.add(searchArray[i]);
+					}
 				}
 			}
 			else if (strings.length <= 1) {
-				searchArray=library.search(myview.getTextSearch(), myview.getSearchCategory());
-				for(int i =0; i<searchArray.length; i++) {
-					book.add(searchArray[i]);
-				} 
+				try(Database db = new Database()) {
+					searchArray = db.search(myview.getTextSearch(), myview.getSearchCategory());
+					for(int i =0; i<searchArray.length; i++) {
+						book.add(searchArray[i]);
+					} 
+				}
 			}	
 		}
 		else if (!searchMethod) {
-			searchArray=library.getTop10();
-			for(int i =0; i<searchArray.length; i++) {
-				book.add(searchArray[i]);
+			try (Database db = new Database()) {
+				searchArray = db.getTop10();
+				for(int i =0; i<searchArray.length; i++) {
+					book.add(searchArray[i]);
+				}
 			}
 		}
 		return book;

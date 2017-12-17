@@ -75,6 +75,7 @@
                         <Button fx:id="selectCustomer" defaultButton="true" layoutX="788.0" layoutY="248.0" mnemonicParsing="false" onAction="#selectCustomer" text="Select Customer" />
                         <Button fx:id="searchUpdateCustomer" defaultButton="true" layoutX="746.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchUpdateCustomer" text="Search" />
                         <Button fx:id="confirmUpdateCustomer" defaultButton="true" layoutX="787.0" layoutY="498.0" mnemonicParsing="false" onAction="#confirmUpdateCustomer" text="Confirm changes" />
+                        <Button fx:id="removeCustomer" defaultButton="true" layoutX="627.0" layoutY="498.0" mnemonicParsing="false" onAction="#removeCustomer" text="Remove Customer" />
                      </children>
                   </AnchorPane>
             </content>
@@ -129,6 +130,74 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab fx:id="borrowedBooks" text="Borrowed books">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane fx:id="borrowedBooksTab" layoutX="-3.0" layoutY="27.0" prefHeight="536.0" prefWidth="940.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab fx:id="allBorrowedBooks" text="All borrowed books">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="allBorrowedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
+                                            <columns>
+                                              <TableColumn fx:id="titleCol" prefWidth="214.0" text="Title" />
+                                              <TableColumn fx:id="auhtorCol" prefWidth="142.0" text="Author" />
+                                                <TableColumn fx:id="genreCol" prefWidth="150.0" text="Genre" />
+                                                <TableColumn fx:id="isbnCol" prefWidth="175.0" text="ISBN" />
+                                                <TableColumn fx:id="quantityCol" prefWidth="61.0" text="Quantity" />
+                                                <TableColumn fx:id="bookIDCol" prefWidth="83.0" text="Book ID" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab fx:id="allDelayedBooks" onSelectionChanged="#allDelayedBooks" text="All delayed books">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView fx:id="allDelayedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
+                                            <columns>
+                                              <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
+                                              <TableColumn fx:id="authorCol" prefWidth="75.0" text="Author" />
+                                            </columns>
+                                          </TableView>
+                                          <Button fx:id="getAllDelayedButton" defaultButton="true" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#getAllDelayedButton" text="Get list" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                              <Tab fx:id="borrowedBy" text="Borrowed by ">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="IDScan" layoutX="14.0" layoutY="33.0" prefHeight="27.0" prefWidth="291.0" promptText="Search" />
+                                          <RadioButton layoutX="14.0" layoutY="77.0" mnemonicParsing="false" text="Card ID" />
+                                          <RadioButton layoutX="93.0" layoutY="77.0" mnemonicParsing="false" text="Name" />
+                                          <Button fx:id="searchBorrowedByButton" defaultButton="true" layoutX="244.0" layoutY="73.0" mnemonicParsing="false" onAction="#searchBorrowedByButton" text="Search" />
+                                          <TextField fx:id="borrowedName" layoutX="648.0" layoutY="33.0" prefHeight="27.0" prefWidth="252.0" />
+                                          <TableView fx:id="borrowedByTable" layoutX="14.0" layoutY="121.0" prefHeight="336.0" prefWidth="838.0">
+                                             <columns>
+                                                <TableColumn fx:id="titleCol" prefWidth="214.0" text="Title" />
+                                                <TableColumn fx:id="authorCol" prefWidth="142.0" text="Author" />
+                                                <TableColumn fx:id="genreCol" prefWidth="150.0" text="Genre" />
+                                                <TableColumn fx:id="isbnCol" prefWidth="175.0" text="ISBN" />
+                                                <TableColumn fx:id="quantityCol" prefWidth="61.0" text="Quantity" />
+                                                <TableColumn fx:id="bookIDCol" prefWidth="83.0" text="Book ID" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
