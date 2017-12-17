@@ -2,6 +2,7 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MyBooksController {
+public class MyBooksController implements Initializable {
 	@FXML
 	private MenuItem exit;
 	Database library;
@@ -40,15 +41,12 @@ public class MyBooksController {
 	private TextField nameInfo, IDScan;
 
 
-	@FXML private TableView<Book> result;
-	@FXML private TableColumn<Book, String> TitleCol;
-	@FXML private TableColumn<Book, String> AuthorCol;
-	@FXML private TableColumn<Book, String> GenreCol;
-	@FXML private TableColumn<Book, Integer> PagesCol;
-	@FXML private TableColumn<Book, String> PublisherCol;
-	@FXML private TableColumn<Book, Long> ISBNCol;
-	@FXML private TableColumn<Book, Integer> QuantityCol;
-	@FXML private TableColumn<Book, Integer> Book_idCol;
+	@FXML private TableView<BorrowedBook> result;
+	@FXML private TableColumn<BorrowedBook, String> borrowedTitleCol;
+	@FXML private TableColumn<BorrowedBook, String> borrowedDateCol;
+	@FXML private TableColumn<BorrowedBook, String> borrowedReturnCol;
+	@FXML private TableColumn<BorrowedBook, Integer> borrowedDaysCol;
+	@FXML private TableColumn<BorrowedBook, Integer> borrowedBookIDCol;
 
 
 	int IDScanNumber;
@@ -64,7 +62,7 @@ public class MyBooksController {
 			Customer current = db.getCustomer(IDScanNumber);
 			nameInfo.setText(current.getName());
 		}
-		initialize(null, null);
+
 
 	}
 
@@ -116,17 +114,15 @@ public class MyBooksController {
 
 	}
 
-	public void initialize(URL location, ResourceBundle resources) throws SQLException {
+	public void initialize(URL location, ResourceBundle resources) {
 
 
 		//set up the columns in the table
-		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
-		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
-		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
-		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
-		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+		borrowedTitleCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("title"));
+		borrowedDateCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("borrowedDate"));
+		borrowedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
+		borrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
+		borrowedBookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
 
 		/*try {
 
@@ -144,12 +140,12 @@ public class MyBooksController {
 
 	}
 
-	public ObservableList<Book> getBorrowedBook() throws Exception{
-		ObservableList<Book> book = FXCollections.observableArrayList();
+	public ObservableList<BorrowedBook> getBorrowedBook() throws Exception{
+		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
 
 		//
 		try(Database data = new Database()) {
-			Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
+			BorrowedBook [] searchArray=data.getBorrowedBooks(IDScanNumber);
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}

@@ -9,9 +9,19 @@ public class BorrowedBook extends Book {
 	private long epoch_borrowed, epoch_return;
 	private int card_id, days;
 	String borrowedDate, returnDate;
-	
 
-	
+	public long getEpoch_borrowed() {
+		return epoch_borrowed;
+	}
+	public long getEpoch_return() {
+		return epoch_return;
+	}
+	public int getCard_id() {
+		return card_id;
+	}
+	public int getDays() {
+		return days;
+	}
 	public BorrowedBook(int book_id, String title, String author, String genre, String publisher, int pages, long isbn, long epoch_borrowed, long epoch_return, int card_id) {
 		super(title, author, genre, publisher, pages, isbn, book_id, card_id);
 		this.epoch_borrowed = epoch_borrowed;
