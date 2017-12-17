@@ -146,7 +146,7 @@ public class Database implements AutoCloseable {
 		String sqlDebt ="INSERT INTO customer_debt" +
 				"(card_id) " +
 				"VALUES " +
-				"(?);";
+				"(? f);";
 		PreparedUpdate(sqlDebt, card_id);
 	}
 
@@ -258,26 +258,9 @@ public class Database implements AutoCloseable {
 		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
 		return borrowedArray;
 	}
-	public BorrowedBook getOneBorrowedBook(int card_id, int book_id) throws SQLException {
 
-		String title, author, genre, publisher;
-		long isbn, borrowed_epoch, return_epoch;
-		int pages;
-		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)"
-				+ " WHERE card_id = ? AND book_id = ?";
-		ResultSet rs2 = PreparedQuery(sql, card_id, book_id);		
-		borrowed_epoch = rs2.getLong("borrowed_epoch");
-		return_epoch = rs2.getLong("return_epoch");
-		title = rs2.getString("title");
-		author = rs2.getString("author");
-		genre = rs2.getString("genre");
-		publisher = rs2.getString("publisher");
-		isbn = rs2.getLong("isbn");
-		pages = rs2.getInt("pages");
-		BorrowedBook result = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);	
+	
 
-		return result;
-	}
 	public Book searchOneBook(int book_id) throws SQLException {
 
 		String title, author, genre, publisher;
@@ -332,6 +315,8 @@ public class Database implements AutoCloseable {
 
 		return result;
 	}
+
+
 	public boolean verifyLogin(String username, String password) throws SQLException {
 
 		boolean result = false;
@@ -499,6 +484,26 @@ public class Database implements AutoCloseable {
 		PreparedUpdate(deleteBorrowed, card_id, book_id);
 		createTop10();
 	}
+	public BorrowedBook getOneBorrowedBook(int card_id, int book_id) throws SQLException {
+
+		String title, author, genre, publisher;
+		long isbn, borrowed_epoch, return_epoch;
+		int pages;
+		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)"
+				+ " WHERE card_id = ? AND book_id = ?";
+		ResultSet rs2 = PreparedQuery(sql, card_id, book_id);		
+		borrowed_epoch = rs2.getLong("borrowed_epoch");
+		return_epoch = rs2.getLong("return_epoch");
+		title = rs2.getString("title");
+		author = rs2.getString("author");
+		genre = rs2.getString("genre");
+		publisher = rs2.getString("publisher");
+		isbn = rs2.getLong("isbn");
+		pages = rs2.getInt("pages");
+		BorrowedBook result = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);	
+
+		return result;
+	}
 	public boolean checkIfAvailable(int book_id) throws SQLException {
 		boolean result = false;
 		int quantity, borrowed;
@@ -525,6 +530,7 @@ public class Database implements AutoCloseable {
 		ResultSet tableQuantity = PreparedQuery(getQuantity, book_id);
 		int quantity = tableQuantity.getInt(1);
 
+
 		if(quantity - change <= 0) {
 			removeBook(book_id);
 		}
@@ -536,7 +542,6 @@ public class Database implements AutoCloseable {
 
 
 	}
-
 	public BorrowedBook[] getBorrowedArray(ResultSet borrowedSet) throws SQLException {
 
 		ArrayList<BorrowedBook> borrowed_list = new ArrayList<BorrowedBook>();

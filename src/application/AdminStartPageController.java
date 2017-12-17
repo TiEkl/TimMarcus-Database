@@ -35,44 +35,48 @@ import javafx.stage.Stage;
 public class AdminStartPageController implements  Initializable {
 	static Database library;
 	static Customer customer;
+	 
 
-	@FXML
-	private ToggleGroup removeBookCategory;
+	 @FXML
+	 private ToggleGroup removeBookCategory;
+	 
+	 @FXML RadioButton isbnSelected, titleSelected;
+	 
+	
+    @FXML
+    private Tab manageCustomer, manageBooks, borrowedBooks, BorrowedBy, allBorrowedBooks, allDelayedBooks;
 
-	@FXML RadioButton isbnSelected, titleSelected;
+    @FXML
+    private TextField addTitle, addStreet, addAuthor, costumerIdUpdate, addCustomerName, addCity,
+    addPhoneNr, addISBN, addPublisher, addQuantity, addCardID, addGenre, addPages, addShelf, textSearchRemove, selectedBook,
+    showCustomerName, showCustomerPhone, showCustomerCity, showCustomerStreet, showCustomerCardID, IDScan, borrowedName;
 
 
-	@FXML
-	private Tab manageCustomer, manageBooks;
+    @FXML
+    private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer,
+    searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer, getAllDelayedButton;
 
-	@FXML
-	private TextField addTitle, addStreet, addAuthor, costumerIdUpdate, addCustomerName, addCity,
-	addPhoneNr, addISBN, addPublisher, addQuantity, addCardID, addGenre, addPages, addShelf, textSearchRemove, selectedBook,
-	showCustomerName, showCustomerPhone, showCustomerCity, showCustomerStreet, showCustomerCardID;
+    @FXML
+    private TableView<Customer> updateCustomerTable;
+    @FXML private TableColumn<Customer, String> nameCustomer;
+    @FXML private TableColumn<Customer, String> phoneCustomer;
+    @FXML private TableColumn<Customer, String> cityCustomer;
+    @FXML private TableColumn<Customer, String> streetCustomer;
+    @FXML private TableColumn<Customer, String> cardIDCustomer;
 
+    @FXML
+    private TabPane adminManageTab, borrowedBooksTab;
 
-	@FXML
-	private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer, searchUpdateCustomer;
-
-	@FXML
-	private TableView<Customer> updateCustomerTable;
-	@FXML private TableColumn<Customer, String> nameCustomer;
-	@FXML private TableColumn<Customer, String> phoneCustomer;
-	@FXML private TableColumn<Customer, String> cityCustomer;
-	@FXML private TableColumn<Customer, String> streetCustomer;
-	@FXML private TableColumn<Customer, String> cardIDCustomer;
-
-	@FXML
-	private TabPane adminManageTab;
-
-	@FXML private TableView<Book> removeResult;
-
-	@FXML private TableColumn<Book, String> titleCol;
-	@FXML private TableColumn<Book, String> authorCol;
-	@FXML private TableColumn<Book, String> genreCol;
-	@FXML private TableColumn<Book, Long> isbnCol;
-	@FXML private TableColumn<Book, Integer> quantityCol;
-	@FXML private TableColumn<Book, Integer> bookIDCol;
+	@FXML private TableView<Book> removeResult, borrowedByTable, allDelayedTable;
+	
+    @FXML private TableColumn<Book, String> titleCol;
+    @FXML private TableColumn<Book, String> authorCol;
+    @FXML private TableColumn<Book, String> genreCol;
+    @FXML private TableColumn<Book, Long> isbnCol;
+    @FXML private TableColumn<Book, Integer> quantityCol;
+    @FXML private TableColumn<Book, Integer> bookIDCol;
+    
+    
 
 	@FXML
 	void searchRemoveBook(ActionEvent event) throws Exception {
@@ -84,38 +88,166 @@ public class AdminStartPageController implements  Initializable {
 
 		removeResult.setItems(getBook());
 	}
-	@FXML
-	void searchUpdateCustomer(ActionEvent event) throws Exception {
-		nameCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
-		phoneCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("phone_nr"));
-		cityCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("city"));
-		streetCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("street"));
-		cardIDCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("card_id"));
+    
+@FXML 
+void confirmUpdateCustomer(ActionEvent event) throws Exception{
+	try(Database db = new Database()) {
+		int card_id = Integer.valueOf(showCustomerCardID.getText());
+		db.updateCustomer("name", showCustomerName.getText(), card_id);
+		db.updateCustomer("phone_nr", showCustomerPhone.getText(), card_id);
+		db.updateCustomer("city", showCustomerCity.getText(), card_id);
+		db.updateCustomer("street", showCustomerStreet.getText(), card_id);
+	
+		searchUpdateCustomer(event);
+	}
+	
+}
 
-		updateCustomerTable.setItems(getCustomer());
+@FXML
+void searchUpdateCustomer(ActionEvent event) throws Exception {
+	nameCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+	phoneCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNr"));
+	cityCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("city"));
+	streetCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("street"));
+	cardIDCustomer.setCellValueFactory(new PropertyValueFactory<Customer, String>("card_id"));
+
+	updateCustomerTable.setItems(getCustomer());
+
+}
+
+@FXML
+void selectCustomer(ActionEvent event) throws SQLException {
+
+	Customer customer =	updateCustomerTable.getSelectionModel().getSelectedItem();
+
+	showCustomerName.setText(customer.getName());
+	showCustomerPhone.setText(customer.getPhoneNr());
+	showCustomerCity.setText(customer.getCity());
+	showCustomerStreet.setText(customer.getStreet());
+	showCustomerCardID.setText(String.valueOf(customer.getCard_id()));
+}
+
+public ObservableList<Customer> getCustomer() throws Exception {
+	int card_id  = Integer.valueOf(costumerIdUpdate.getText());
+	ObservableList<Customer> customer = FXCollections.observableArrayList();
+	try(Database db = new Database()) {
+		Customer current = db.getCustomer(card_id);
+
+		customer.addAll(current);
 
 	}
-	@FXML
-	void selectCustomer(ActionEvent event) throws SQLException {
+	return customer;
+}
 
-		Customer customer =	updateCustomerTable.getSelectionModel().getSelectedItem();
+@FXML
+void removeCustomer(ActionEvent event) throws Exception {
+	try(Database db = new Database()) {
+		int card_id = Integer.valueOf(showCustomerCardID.getText());
+		String name = showCustomerName.getText();
+		Alert remove = new Alert(AlertType.CONFIRMATION);
+		remove.setTitle("You're about to delete a customer from the system");
+		remove.setHeaderText("Are you sure you want to delete this customer?");
+		remove.setContentText("Name: " + name + " with Card ID : " + card_id);
+		Optional<ButtonType> result = remove.showAndWait();
+		if (result.get() == ButtonType.OK){
 
-		showCustomerName.setText(customer.getName());
-		showCustomerPhone.setText(customer.getPhoneNr());
-		showCustomerCity.setText(customer.getCity());
-		showCustomerStreet.setText(customer.getStreet());
-		showCustomerCardID.setText(String.valueOf(customer.getCard_id()));
-	}
-	public ObservableList<Customer> getCustomer() throws Exception {
-		int card_id  = Integer.valueOf(costumerIdUpdate.getText());
-		ObservableList<Customer> customer = FXCollections.observableArrayList();
-		try(Database db = new Database()) {
-			Customer current = db.getCustomer(card_id);
+			db.removeCustomer(card_id);
+			showCustomerName.clear();
+			showCustomerPhone.clear();
+			showCustomerCity.clear();
+			showCustomerStreet.clear();
+			showCustomerCardID.clear();
+			costumerIdUpdate.clear();
 
-			customer.addAll(current);
+		} else if ((result.get() == ButtonType.CANCEL)) {
 
 		}
-		return customer;
+	}
+}
+
+
+
+@FXML
+void getAllDelayedButton(ActionEvent event) throws SQLException, Exception {
+	titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+	authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+	genreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+	isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+	quantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+	
+	try(Database db = new Database()) {
+		
+		borrowedByTable.setItems(getDelayedBook());	
+}
+	}
+@FXML
+void allDelayedBooks() throws Exception {
+	try(Database db = new Database()) {
+		
+	
+		titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+		authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+		genreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+		isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+		quantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+		db.getDelayedBooksList();
+		borrowedByTable.setItems(getDelayedBook());
+		
+	 
+	} 
+}
+
+
+
+int IDScanNumber;
+
+@FXML
+void searchBorrowedByButton (ActionEvent event) throws SQLException, Exception  {
+	titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+	authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+	genreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
+	isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
+	quantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+	
+	
+	String IDScanString= IDScan.getText();
+	IDScanNumber = Integer.valueOf(IDScanString);
+
+	borrowedByTable.setItems(getBorrowedBook());
+	try(Database db = new Database()) {
+		Customer current = db.getCustomer(IDScanNumber);
+		borrowedName.setText(current.getName());
+	
+}
+	}
+	public ObservableList<Book> getBorrowedBook() throws Exception{
+		ObservableList<Book> book = FXCollections.observableArrayList();
+
+		//
+		try(Database data = new Database()) {
+			Book [] searchArray=data.getBorrowedBooks(IDScanNumber);
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
+		}
+		//Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
+
+
+		return book; 
+	}
+	
+	 public ObservableList<Book> getDelayedBook() throws Exception{
+		ObservableList<Book> book = FXCollections.observableArrayList();
+
+		//
+		try(Database data = new Database()) {
+			Book [] searchArray=data.getDelayedBooksList();
+			for(int i =0; i<searchArray.length; i++) {
+				book.add(searchArray[i]);
+			}
+			}
+		//Book [] searchArray = Main.library.getBorrowedBooks(IDScanNumber);
+		return book; 
 	}
 
 
@@ -141,26 +273,6 @@ public class AdminStartPageController implements  Initializable {
 		}
 		return book;
 
-	}
-	@FXML
-	void clearAddBookForm(ActionEvent event) {
-		addTitle.clear();
-		addAuthor.clear();
-		addGenre.clear();
-		addPublisher.clear();
-		addPages.clear();
-		addQuantity.clear();
-		addISBN.clear();
-		addShelf.clear();
-
-	}
-
-	public void clearCustomerForm() {
-		addCustomerName.clear();
-		addPhoneNr.clear();
-		addCity.clear();
-		addCardID.clear();
-		addStreet.clear();
 	}
 
 
@@ -260,4 +372,26 @@ public class AdminStartPageController implements  Initializable {
 		titleSelected.setToggleGroup(toggleGroup);
 
 	}
+	
+	@FXML
+	void clearAddBookForm(ActionEvent event) {
+		addTitle.clear();
+		addAuthor.clear();
+		addGenre.clear();
+		addPublisher.clear();
+		addPages.clear();
+		addQuantity.clear();
+		addISBN.clear();
+		addShelf.clear();
+
+	}
+
+	public void clearCustomerForm() {
+		addCustomerName.clear();
+		addPhoneNr.clear();
+		addCity.clear();
+		addCardID.clear();
+		addStreet.clear();
+	}
+
 }
