@@ -255,7 +255,7 @@ public class Database implements AutoCloseable {
 		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)"
 				+ " WHERE card_id = ?";
 		ResultSet borrowedSet = PreparedQuery(sql, card_id);		
-		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet, card_id);
+		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
 		return borrowedArray;
 	}
 	public BorrowedBook getOneBorrowedBook(int card_id, int book_id) throws SQLException {
@@ -302,10 +302,9 @@ public class Database implements AutoCloseable {
 		stmt.close();
 		return result;
 	}
-	public String getDelayedBooksList() throws SQLException {
+	public BorrowedBook[] getDelayedBooksList() throws SQLException {
 
 		long todayEpoch = System.currentTimeMillis() / 1000L;
-		String result= "";
 		String title, author, genre, publisher;
 		long isbn, borrowed_epoch, return_epoch;
 		int pages, book_id, card_id;
@@ -313,7 +312,7 @@ public class Database implements AutoCloseable {
 		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)  WHERE return_epoch < ? ORDER BY card_id asc";
 
 		ResultSet books = PreparedQuery(sql, todayEpoch);
-
+		BorrowedBook[] result = getBorrowedArray(books);
 		while(books.next()) {
 			book_id = books.getInt("book_id");
 			borrowed_epoch = books.getLong("borrowed_epoch");
@@ -329,9 +328,7 @@ public class Database implements AutoCloseable {
 			delayedList.add(temp);
 		}
 
-		for(BorrowedBook delayedBook : delayedList) {
-			result+= delayedBook.delayedString() + EOL;
-		}
+		
 
 		return result;
 	}
@@ -540,15 +537,16 @@ public class Database implements AutoCloseable {
 
 	}
 
-	public BorrowedBook[] getBorrowedArray(ResultSet borrowedSet, int card_id) throws SQLException {
+	public BorrowedBook[] getBorrowedArray(ResultSet borrowedSet) throws SQLException {
 
 		ArrayList<BorrowedBook> borrowed_list = new ArrayList<BorrowedBook>();
 		String title, author, genre, publisher;
 		long isbn, borrowed_epoch, return_epoch;
-		int pages, book_id;
+		int pages, book_id, card_id;
 
 		while (borrowedSet.next()) {
 			book_id = borrowedSet.getInt("book_id");
+			card_id = borrowedSet.getInt("card_id");
 			borrowed_epoch = borrowedSet.getLong("borrowed_epoch");
 			return_epoch = borrowedSet.getLong("return_epoch");
 			title = borrowedSet.getString("title");
