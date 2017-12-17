@@ -338,23 +338,8 @@ public class Database implements AutoCloseable {
 				"WHERE " + category + " LIKE ?";
 		ResultSet rs = PreparedQuery(sql ,"%"+ search+"%");
 
-		/*while (rs.next()) {
-				String title = rs.getString("title");
-				String author = rs.getString("author");
-				String genre = rs.getString("genre");
-				String publisher = rs.getString("publisher");
-				int pages = rs.getInt("pages");
-				int shelf = rs.getInt("shelf");	  
-				int book_id = rs.getInt("book_id");
-				long isbn = rs.getLong("isbn");
-				int quantity = getNumberAvailable(book_id);
-				double rating = getRating(book_id);
-				Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf);	
-				searchedBooks.add(temp);
-			}*/
-		//stmt2.close();
+	
 		Book[] searchedArray = getBookArray(rs);
-		//Book[] searchedArray = searchedBooks.toArray(new Book[searchedBooks.size()]);
 		return searchedArray;
 	}
 	public Book[] searchAuthorTitle(String title, String author) throws SQLException {
