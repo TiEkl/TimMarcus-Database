@@ -33,7 +33,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class AdminStartPageController implements  Initializable {
-	static Database library;
 	static Customer customer;
 
 
@@ -80,6 +79,8 @@ public class AdminStartPageController implements  Initializable {
 	@FXML private TableColumn<BorrowedBook, Long> borrowedByIsbnCol;
 	@FXML private TableColumn<BorrowedBook, Integer> borrowedByQuantityCol, borrowedByBookIDCol, allBorrowedCardCol, allBorrowedDaysCol, allBorrowedbookIDCol, delayedCardCol, delayedDaysCol;
 
+	Customer selectedCustomer;
+
 	@FXML
 	void searchRemoveBook(ActionEvent event) throws Exception {
 
@@ -89,16 +90,29 @@ public class AdminStartPageController implements  Initializable {
 
 	@FXML 
 	void confirmUpdateCustomer(ActionEvent event) throws Exception{
-		try(Database db = new Database()) {
-			int card_id = Integer.valueOf(showCustomerCardID.getText());
-			db.updateCustomer("name", showCustomerName.getText(), card_id);
-			db.updateCustomer("phone_nr", showCustomerPhone.getText(), card_id);
-			db.updateCustomer("city", showCustomerCity.getText(), card_id);
-			db.updateCustomer("street", showCustomerStreet.getText(), card_id);
+		int card_id = Integer.valueOf(showCustomerCardID.getText());
 
-			searchUpdateCustomer(event);
+		if(!selectedCustomer.getName().equals(showCustomerName.getText())) {
+			try(Database db = new Database()) {
+				db.updateCustomer("name", showCustomerName.getText(), card_id);
+			}
 		}
-
+		if(!selectedCustomer.getPhoneNr().equals(showCustomerPhone.getText())) {
+			try(Database db = new Database()) {
+				db.updateCustomer("phone_nr", showCustomerPhone.getText(), card_id);
+			}
+		}
+		if(!selectedCustomer.getCity().equals(showCustomerCity.getText())) {
+			try(Database db = new Database()) {
+				db.updateCustomer("city", showCustomerCity.getText(), card_id);
+			}
+		}
+		if(!selectedCustomer.getStreet().equals(showCustomerStreet.getText())) {
+			try(Database db = new Database()) {
+				db.updateCustomer("street", showCustomerStreet.getText(), card_id);
+			}
+		}
+		searchUpdateCustomer(event);
 	}
 
 	@FXML
@@ -110,25 +124,23 @@ public class AdminStartPageController implements  Initializable {
 	@FXML
 	void selectCustomer(ActionEvent event) throws SQLException {
 
-		Customer customer =	updateCustomerTable.getSelectionModel().getSelectedItem();
-
-		showCustomerName.setText(customer.getName());
-		showCustomerPhone.setText(customer.getPhoneNr());
-		showCustomerCity.setText(customer.getCity());
-		showCustomerStreet.setText(customer.getStreet());
-		showCustomerCardID.setText(String.valueOf(customer.getCard_id()));
+		selectedCustomer =	updateCustomerTable.getSelectionModel().getSelectedItem();
+		showCustomerName.setText(selectedCustomer.getName());
+		showCustomerPhone.setText(selectedCustomer.getPhoneNr());
+		showCustomerCity.setText(selectedCustomer.getCity());
+		showCustomerStreet.setText(selectedCustomer.getStreet());
+		showCustomerCardID.setText(String.valueOf(selectedCustomer.getCard_id()));
 	}
 
 	public ObservableList<Customer> getCustomer() throws Exception {
 		int card_id  = Integer.valueOf(costumerIdUpdate.getText());
-		ObservableList<Customer> customer = FXCollections.observableArrayList();
+		ObservableList<Customer> customerList = FXCollections.observableArrayList();
 		try(Database db = new Database()) {
 			Customer current = db.getCustomer(card_id);
-
-			customer.addAll(current);
+			customerList.addAll(current);
 
 		}
-		return customer;
+		return customerList;
 	}
 
 	@FXML
@@ -197,7 +209,7 @@ public class AdminStartPageController implements  Initializable {
 
 
 		try(Database data = new Database()) {
-			BorrowedBook [] searchArray=data.getBorrowedBooks();
+			BorrowedBook [] searchArray = data.getBorrowedBooks();
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}
@@ -207,9 +219,8 @@ public class AdminStartPageController implements  Initializable {
 	public ObservableList<BorrowedBook> getBorrowedBook() throws Exception{
 		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
 
-
 		try(Database data = new Database()) {
-			BorrowedBook [] searchArray=data.getBorrowedBooks(IDScanNumber);
+			BorrowedBook [] searchArray = data.getBorrowedBooks(IDScanNumber);
 			for(int i =0; i<searchArray.length; i++) {
 				book.add(searchArray[i]);
 			}
@@ -356,13 +367,13 @@ public class AdminStartPageController implements  Initializable {
 		allBorrowedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
 		allBorrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		allBorrowedbookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
-	
-		try {
+
+		/*try {
 			allBorrowedTable.setItems(getAllBorrowedBooks());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public void removeBook(int book_id) throws Exception {

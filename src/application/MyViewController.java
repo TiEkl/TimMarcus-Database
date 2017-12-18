@@ -39,7 +39,6 @@ public class MyViewController implements Initializable {
 
 	Book book;
 	AdvancedSearchController advsearch;
-	static Database library;
 	String searchResultText;	
 	private static String textSearch;
 	private static String searchCategory = "title";
@@ -79,12 +78,6 @@ public class MyViewController implements Initializable {
 
 	@FXML
 	private ToggleGroup radioOption;
-
-
-
-
-
-
 	@FXML
 	void GoToAdminLogin(ActionEvent event) throws IOException, SQLException {
 		//library.closeConn();
@@ -128,15 +121,6 @@ public class MyViewController implements Initializable {
 
 		stage.setScene(new Scene(root));
 		stage.show();
-		/*
-    	Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
-    	Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
-
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-    	app_stage.setScene(Advanced_Search_scene);
-    	app_stage.show();
-		 */
 	}
 
 
@@ -153,7 +137,6 @@ public class MyViewController implements Initializable {
 
 	@FXML
 	void AdvSearch(ActionEvent event) throws IOException, SQLException {
-		//library.closeConn();	
 
 		if(RadioTitle.isSelected()) {
 			setSearchCategory("title");
@@ -168,37 +151,6 @@ public class MyViewController implements Initializable {
 
 		stage.setScene(new Scene(root));
 		stage.show();
-		/*
-
-    	Parent Advanced_Search_parent = FXMLLoader.load(getClass().getResource("AdvancedSearch.fxml"));
-    	Scene Advanced_Search_scene = new Scene(Advanced_Search_parent);
-
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-    	app_stage.setScene(Advanced_Search_scene);
-    	app_stage.show();
-<<<<<<< HEAD
-
-    }
-    @FXML
-    void EnterMyBorrowedBooks(ActionEvent event) throws IOException, SQLException {
-    	library.closeConn();
-    	Parent My_Books_parent = FXMLLoader.load(getClass().getResource("MyBooks.fxml"));
-    	Scene My_Books_scene = new Scene(My_Books_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(My_Books_scene);
-    	app_stage.show();
-    }
-
-    @FXML
-    void GoToToplist(ActionEvent event) throws IOException {
-    	Parent Toplist_parent = FXMLLoader.load(getClass().getResource("Toplist.fxml"));
-    	Scene Toplist_scene = new Scene(Toplist_parent);
-    	Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    	app_stage.setScene(Toplist_scene);
-    	app_stage.show();
-=======
-		 */
 	}
 
 
@@ -248,7 +200,6 @@ public class MyViewController implements Initializable {
 
 	@FXML
 	void EnterAdminLogin(ActionEvent event) throws IOException, SQLException {
-		library.closeConn();
 		Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
 		Scene CheckOut_scene = new Scene(CheckOut_parent);
 		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -256,9 +207,6 @@ public class MyViewController implements Initializable {
 		app_stage.setScene(CheckOut_scene);
 		app_stage.show();
 	}
-
-
-
 
 	public void initialize(URL location, ResourceBundle resources) {
 		

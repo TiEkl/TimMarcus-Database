@@ -291,28 +291,11 @@ public class Database implements AutoCloseable {
 	public BorrowedBook[] getDelayedBooksList() throws SQLException {
 
 		long todayEpoch = System.currentTimeMillis() / 1000L;
-		String title, author, genre, publisher;
-		long isbn, borrowed_epoch, return_epoch;
-		int pages, book_id, card_id;
-		ArrayList<BorrowedBook> delayedList = new ArrayList<BorrowedBook>();
 		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)  WHERE return_epoch < ? ORDER BY card_id asc";
 
 		ResultSet books = PreparedQuery(sql, todayEpoch);
 		BorrowedBook[] result = getBorrowedArray(books);
-		/*while(books.next()) {
-			book_id = books.getInt("book_id");
-			borrowed_epoch = books.getLong("borrowed_epoch");
-			return_epoch = books.getLong("return_epoch");
-			title = books.getString("title");
-			author = books.getString("author");
-			genre = books.getString("genre");
-			publisher = books.getString("publisher");
-			isbn = books.getLong("isbn");
-			pages = books.getInt("pages");
-			card_id = books.getInt("card_id");
-			BorrowedBook temp = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);
-			delayedList.add(temp);
-		}*/
+
 		return result;
 	}
 
@@ -347,32 +330,14 @@ public class Database implements AutoCloseable {
 		String sql = "SELECT * FROM books " +
 				"WHERE title LIKE ? AND author LIKE ?" ;
 		ResultSet rs = PreparedQuery(sql ,"%"+ title +"%", "%" + author + "%");
-
-		/*while (rs.next()) {
-				String title = rs.getString("title");
-				String author = rs.getString("author");
-				String genre = rs.getString("genre");
-				String publisher = rs.getString("publisher");
-				int pages = rs.getInt("pages");
-				int shelf = rs.getInt("shelf");	  
-				int book_id = rs.getInt("book_id");
-				long isbn = rs.getLong("isbn");
-				int quantity = getNumberAvailable(book_id);
-				double rating = getRating(book_id);
-				Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf);	
-				searchedBooks.add(temp);
-			}*/
-		//stmt2.close();
 		Book[] searchedArray = getBookArray(rs);
-		//Book[] searchedArray = searchedBooks.toArray(new Book[searchedBooks.size()]);
 		return searchedArray;
 
 	}
 	public Book[] createTop10() throws SQLException {
 		ArrayList<Book> searchedBooks = new ArrayList<Book>();
 		String sql = "SELECT * FROM books";
-		//try {
-		//Statement stmt2 = conn.createStatement();
+
 		ResultSet rs = PreparedQuery(sql);
 		while (rs.next()) {
 			String title = rs.getString("title");
@@ -389,34 +354,20 @@ public class Database implements AutoCloseable {
 			searchedBooks.add(temp);
 		}
 		Collections.sort(searchedBooks);
-		//stmt2.close();
 		Book[] returnArray = new Book[10];
 		for(int i = 0; i < 10; i++) {
 			returnArray[i] = searchedBooks.get(i);
 		}
 		
 		return returnArray;
-		//}
 	}
 	public double[] getRating(Book[] searchedArray) throws SQLException {
 
 		double[] ratingArray = new double[searchedArray.length];
 
 		for(int i = 0; i < searchedArray.length; i++) {
-			/*double count = 0, sum = 0;
-			String sqlCount = "SELECT count(*) FROM history WHERE book_id =? AND rating > 0";
-			String sqlSum = "SELECT sum(rating) FROM history WHERE book_id =?";*/ 
-
 			ratingArray[i] = getRating(searchedArray[i].getBook_ID());
 
-			/*ResultSet rsCount = PreparedQuery(sqlCount, searchedArray[i].getBook_ID());
-			count = rsCount.getDouble(1);
-			ResultSet rsSum = PreparedQuery(sqlSum, searchedArray[i].getBook_ID());
-			sum = rsSum.getDouble(1);
-			rsCount.close();
-			rsSum.close();
-			double rating = sum / count; 
-			ratingArray[i] = rating;*/
 		}
 
 		return ratingArray;
@@ -619,18 +570,11 @@ public class Database implements AutoCloseable {
 					//insertIntoTop10(i, candidate);
 					top10Array[i] = candidate;
 				}
-				/*else if(candidateRating < top10i && candidateRating > top10minus) {
-					top10Array[i-1] = candidate;
-				}*/
+
 			}
 		}
 	}
-	/*public Book[] insertIntoTop10(int candidateIndex, Book candidate) {
 
-
-
-
-	}*/
 	public boolean addToCheckout(Book addition) {
 		
 		if(!Main.checkoutData.checkoutContains(addition)) {
@@ -681,7 +625,6 @@ public class Database implements AutoCloseable {
 			}
 		}
 		ResultSet result = pstmt.executeQuery();
-		//pstmt.close();
 		return result;	
 	}
 	public void PreparedUpdate(String update, Object...objects) throws SQLException {
@@ -719,10 +662,9 @@ public class Database implements AutoCloseable {
 		pstmt.execute();
 		pstmt.close();
 	}
+	
 	@Override
 	public void close() throws Exception {
-		// TODO Auto-generated method stub
 		conn.close();
 	}
-
 }
