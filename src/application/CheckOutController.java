@@ -82,6 +82,10 @@ public class CheckOutController implements Initializable {
 		checkoutTable.getItems().remove(removal);
 		Main.checkoutData.removeFromCheckout(removal);
 
+		try (Database db = new Database()) {
+			Main.checkoutData.removeFromCheckout(removal);
+		}
+
 	}
 	
 	@FXML

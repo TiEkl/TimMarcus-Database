@@ -17,13 +17,13 @@
 }
 .tab-pane .tab
 {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: #cbe1ec;
 
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: #A0A0A0;
+    -fx-background-color: #a1cade;
     
     }
  .root {
