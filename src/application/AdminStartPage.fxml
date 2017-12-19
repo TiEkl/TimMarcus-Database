@@ -66,7 +66,7 @@
                         <TextField fx:id="showCustomerPhone" layoutX="608.0" layoutY="330.0" prefHeight="27.0" prefWidth="300.0" />
                         <TextField fx:id="showCustomerCity" layoutX="608.0" layoutY="370.0" prefHeight="27.0" prefWidth="300.0" />
                         <TextField fx:id="showCustomerStreet" layoutX="608.0" layoutY="410.0" prefHeight="27.0" prefWidth="300.0" />
-                        <TextField fx:id="showCustomerCardID" editable="false" layoutX="608.0" layoutY="450.0" prefHeight="27.0" prefWidth="300.0" />
+                        <TextField fx:id="showCustomerCardID" editable="false" layoutX="608.0" layoutY="450.0" prefHeight="27.0" prefWidth="300.0" stylesheets="@applicationButton.css" />
                         <Text layoutX="537.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
                         <Text layoutX="509.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
                         <Text layoutX="542.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />

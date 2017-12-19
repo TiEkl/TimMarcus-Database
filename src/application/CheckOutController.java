@@ -15,13 +15,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.stage.Stage;
@@ -34,7 +35,8 @@ public class CheckOutController implements Initializable {
 	// Event Listener on MenuItem[#exit].onAction
     private Button AdvSearch, Toplist, CheckOut, GoBack, MyBooks, removeSelected, borrowBooks, IDScan;
     private int cardID;
- 	@FXML TextField IDScanText;
+ 	@FXML TextField IDScanText, showNameField;
+
 	@FXML private TableView<Book> checkoutTable;
 	@FXML private TableColumn<Book, String> TitleCol;
 	@FXML private TableColumn<Book, String> AuthorCol;
@@ -54,13 +56,24 @@ public class CheckOutController implements Initializable {
 	void borrowBooksButton(ActionEvent event) throws Exception {
 		try(Database db = new Database()) {
 			db.addBorrowedList(Integer.valueOf(IDScanText.getText()), 4);
+			
+			
+			Alert addBook = new Alert(AlertType.INFORMATION);
+			addBook.setTitle("Borrow Books");
+			addBook.setHeaderText("The books were successfully borrowed");
+			addBook.showAndWait();
+			
 		}
 		
 	}
 	    
 	@FXML 
-	void  IDScanButton(ActionEvent event){
+	void  IDScanButton(ActionEvent event) throws Exception{
 		cardID =  Integer.valueOf(IDScanText.getText());
+		try (Database db = new Database()) {
+		Customer current = db.getCustomer(cardID);
+		showNameField.setText(current.getName());
+		}
 	}
 	    
 	@FXML
