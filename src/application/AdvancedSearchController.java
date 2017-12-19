@@ -91,8 +91,7 @@ public class AdvancedSearchController implements Initializable   {
 	    		MyViewCo.setSearchCategory("title");
 	    		MyViewCo.setTextSearch(Search.getText());
 	    	}
-	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {
-	    		
+	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {		
 	    		
 	    		String titleText = Search.getText();
 	    		String authorText = SearchAuthor.getText();
@@ -101,7 +100,6 @@ public class AdvancedSearchController implements Initializable   {
 	    		return;
 	    	}
 	    	result.setItems(getBook(true));
-
     }
 
 	@FXML
@@ -109,13 +107,10 @@ public class AdvancedSearchController implements Initializable   {
 		setTextSearch(Search.getText()); 
 	}
 
-
 	@FXML 
 	public void onEnter(ActionEvent ae) throws Exception {
 		SearchButton(ae);
 	}
-
-	
 
 	@FXML
 	void AddToCheckOut(ActionEvent event) throws SQLException {
@@ -175,9 +170,7 @@ public class AdvancedSearchController implements Initializable   {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOut.fxml"));
 		app_stage.setScene(CheckOut_scene);
 		loader.load();
-		CheckOutController checkOut = loader.<CheckOutController>getController();
-		//ArrayList<Book> booklist = library.getCheckoutList();
-		//checkOut.initData(booklist);
+
 		app_stage.show();
 	}
 

@@ -37,7 +37,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="AdvSearch" defaultButton="true" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" opacity="0.86" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="AdvSearch" defaultButton="true" disable="true" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

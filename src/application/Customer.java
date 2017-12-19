@@ -3,7 +3,7 @@ package application;
 public class Customer {
 	
 	private String city, street, phoneNr, name;
-	private int card_id;
+	private int card_id, debt;
 	
 	public Customer(String name,String city, String street, String phoneNr, int card_id ) {
 		
@@ -12,6 +12,15 @@ public class Customer {
 		this.street = street;
 		this.phoneNr = phoneNr;
 		this.card_id = card_id;
+	}
+	public Customer(String name,String city, String street, String phoneNr, int card_id, int debt ) {
+		this.name = name;
+		this.city = city;
+		this.street = street;
+		this.phoneNr = phoneNr;
+		this.card_id = card_id;
+		this.debt = debt;
+		
 	}
 	
 	public String getCity() {

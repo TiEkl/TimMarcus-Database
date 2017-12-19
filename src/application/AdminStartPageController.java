@@ -85,6 +85,7 @@ public class AdminStartPageController implements  Initializable {
 	void searchRemoveBook(ActionEvent event) throws Exception {
 
 		removeResult.setItems(getBook());
+		
 	}
 
 	@FXML 
@@ -166,6 +167,7 @@ public class AdminStartPageController implements  Initializable {
 
 			}
 		}
+		
 	}
 
 
@@ -180,7 +182,7 @@ public class AdminStartPageController implements  Initializable {
 	void allDelayedBooks() throws Exception {
 		//try(Database db = new Database()) {
 			//db.getDelayedBooksList();
-			allDelayedTable.setItems(getDelayedBook());
+			//allDelayedTable.setItems(getDelayedBook());
 
 		//}
 	
@@ -290,20 +292,20 @@ public class AdminStartPageController implements  Initializable {
 	@FXML
 	void addCustomer(ActionEvent event) throws Exception {
 
-		int card_id = Integer.valueOf(addCardID.getText());
+		int card_id;
 		String name = addCustomerName.getText();
 		String street = addStreet.getText();
 		String city = addCity.getText();
 		String phone_nr = addPhoneNr.getText();
 
 		try(Database db = new Database()) {
-			db.addCustomer(card_id, name, city, street, phone_nr );	
+			card_id = db.addCustomer(name, city, street, phone_nr );	
 		}
 
 		Alert addCustomer = new Alert(AlertType.INFORMATION);
-
-		addCustomer.setTitle("New Customer");
-		addCustomer.setHeaderText("Customer successfully added");
+		addCardID.setText(Integer.toString(card_id));
+		addCustomer.setTitle("Customer succesfully added!");
+		addCustomer.setHeaderText(null);
 		addCustomer.setContentText( name + " was added as a customer, with Card ID: " + card_id);
 		addCustomer.showAndWait();
 		clearCustomerForm();
@@ -311,6 +313,7 @@ public class AdminStartPageController implements  Initializable {
 	}
 	@FXML
 	void searchRemoveButton(ActionEvent event) throws Exception {
+		
 		Book book = removeResult.getSelectionModel().getSelectedItem();
 		String title = book.getTitle();
 		int book_id =book.getBook_ID();
@@ -323,6 +326,7 @@ public class AdminStartPageController implements  Initializable {
 
 			try(Database db = new Database()) {
 				db.removeBook(book_id);
+				
 			}
 			searchRemoveBook(event);
 		} else if ((result.get() == ButtonType.CANCEL)) {
@@ -334,6 +338,7 @@ public class AdminStartPageController implements  Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Remove book-table Cell factories
+		
 		titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
 		authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
 		isbnCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
