@@ -92,7 +92,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="updateCustomerTable1" layoutX="14.0" layoutY="74.0" prefHeight="429.0" prefWidth="896.0" stylesheets="@tableView.css">
+                                    <TableView fx:id="customerListTable" layoutX="14.0" layoutY="74.0" prefHeight="429.0" prefWidth="896.0" stylesheets="@tableView.css">
                                        <columns>
                                           <TableColumn fx:id="customerListName" prefWidth="196.0" text="Name" />
                                           <TableColumn fx:id="customerListPhone" prefWidth="135.0" text="Phone Number" />
@@ -102,6 +102,8 @@
                                           <TableColumn fx:id="customerListDebt" prefWidth="102.0" text="Debt" />
                                        </columns>
                                     </TableView>
+                                    <Button fx:id="getCustomerList" defaultButton="true" layoutX="14.0" layoutY="34.0" mnemonicParsing="false" onAction="#getCustomerList" text="Get customer list" />
+                                    <Button fx:id="acceptPaymentButton" defaultButton="true" layoutX="153.0" layoutY="34.0" mnemonicParsing="false" onAction="#acceptPayment" text="Accept Payment" />
                                  </children>
                               </AnchorPane>
                         </content>

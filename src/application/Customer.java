@@ -38,7 +38,9 @@ public class Customer {
 	public String getName() {
 		return name;
 	}
-
+	public int getDebt() {
+		return debt;
+	}
 	public int getCard_id() {
 		return card_id;
 	}
