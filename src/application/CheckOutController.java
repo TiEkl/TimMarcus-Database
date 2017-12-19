@@ -79,6 +79,7 @@ public class CheckOutController implements Initializable {
 	@FXML
 	void removeSelectedBook(ActionEvent event) throws SQLException, Exception {
 		Book removal = checkoutTable.getSelectionModel().getSelectedItem();
+		checkoutTable.getItems().remove(removal);
 		try (Database db = new Database()) {
 			Main.checkoutData.removeFromCheckout(removal);
 		}
