@@ -172,17 +172,18 @@ public class AdminStartPageController implements  Initializable {
 
 	@FXML
 	void getAllDelayedButton(ActionEvent event) throws SQLException, Exception {
-		try(Database db = new Database()) {
+		//try(Database db = new Database()) {
 			allDelayedTable.setItems(getDelayedBook());	
-		}
+		//}
 	}
 	@FXML
 	void allDelayedBooks() throws Exception {
-		try(Database db = new Database()) {
+		//try(Database db = new Database()) {
 			//db.getDelayedBooksList();
 			allDelayedTable.setItems(getDelayedBook());
 
-		} 
+		//}
+	
 	}
 
 
@@ -227,8 +228,8 @@ public class AdminStartPageController implements  Initializable {
 	}
 
 	public ObservableList<BorrowedBook> getDelayedBook() throws Exception{
+		
 		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
-
 		try(Database data = new Database()) {
 			BorrowedBook [] searchArray = data.getDelayedBooksList();
 			for(int i = 0; i<searchArray.length; i++) {

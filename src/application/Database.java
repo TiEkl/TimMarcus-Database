@@ -405,7 +405,7 @@ public class Database implements AutoCloseable {
 			debt = book.getDaysOver() * 2;
 			addDebt(card_id, debt);
 		}
-		String onTime =book.returnOnTime();
+		String onTime = book.returnOnTime();
 		String insertHistory = "INSERT INTO history " +
 				"(card_id, book_id, returned_on_time, rating)" +
 				"VALUES " +
