@@ -16,7 +16,7 @@
    <children>
       <ImageView fitHeight="800.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@bgimage.jpg" />
+            <Image url="@bgimage2.jpg" />
          </image>
       </ImageView>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
@@ -32,53 +32,85 @@
       </Button>
       <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="934.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="manageCustomer" text="Manage Costumer">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="addCustomerName" layoutX="33.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Full name" />
-                        <TextField fx:id="addPhoneNr" layoutX="33.0" layoutY="133.0" prefHeight="27.0" prefWidth="317.0" promptText="Phone number" />
-                        <TextField fx:id="addCity" layoutX="33.0" layoutY="184.0" prefHeight="27.0" prefWidth="317.0" promptText="City" />
-                        <TextField fx:id="addStreet" layoutX="33.0" layoutY="234.0" prefHeight="27.0" prefWidth="317.0" promptText="Street" />
-                        <TextField fx:id="addCardID" layoutX="33.0" layoutY="288.0" prefHeight="27.0" prefWidth="317.0" promptText="Card ID" />
-                        <Text layoutX="110.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Customer">
-                           <font>
-                              <Font name="Heiti TC Light" size="23.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="547.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Customer">
-                           <font>
-                              <Font name="Heiti TC Light" size="23.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="costumerIdUpdate" layoutX="488.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Enter Custmer's Card ID" />
-                        <Button fx:id="addCustomerButton" defaultButton="true" layoutX="138.0" layoutY="344.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
-                        <TableView fx:id="updateCustomerTable" layoutX="386.0" layoutY="159.0" prefHeight="78.0" prefWidth="524.0">
-                          <columns>
-                            <TableColumn fx:id="nameCustomer" prefWidth="132.0" text="Name" />
-                            <TableColumn fx:id="phoneCustomer" prefWidth="161.0" text="Phone Number" />
-                              <TableColumn fx:id="cityCustomer" text="City" />
-                              <TableColumn fx:id="streetCustomer" prefWidth="68.0" text="Street" />
-                              <TableColumn fx:id="cardIDCustomer" text="Card ID" />
-                          </columns>
-                        </TableView>
-                        <TextField fx:id="showCustomerName" layoutX="608.0" layoutY="290.0" prefHeight="27.0" prefWidth="300.0" />
-                        <TextField fx:id="showCustomerPhone" layoutX="608.0" layoutY="330.0" prefHeight="27.0" prefWidth="300.0" />
-                        <TextField fx:id="showCustomerCity" layoutX="608.0" layoutY="370.0" prefHeight="27.0" prefWidth="300.0" />
-                        <TextField fx:id="showCustomerStreet" layoutX="608.0" layoutY="410.0" prefHeight="27.0" prefWidth="300.0" />
-                        <TextField fx:id="showCustomerCardID" editable="false" layoutX="608.0" layoutY="450.0" prefHeight="27.0" prefWidth="300.0" />
-                        <Text layoutX="537.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-                        <Text layoutX="509.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
-                        <Text layoutX="542.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
-                        <Text layoutX="533.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street" />
-                        <Text layoutX="531.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card ID" />
-                        <Button fx:id="selectCustomer" defaultButton="true" layoutX="788.0" layoutY="248.0" mnemonicParsing="false" onAction="#selectCustomer" text="Select Customer" />
-                        <Button fx:id="searchUpdateCustomer" defaultButton="true" layoutX="746.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchUpdateCustomer" text="Search" />
-                        <Button fx:id="confirmUpdateCustomer" defaultButton="true" layoutX="787.0" layoutY="498.0" mnemonicParsing="false" onAction="#confirmUpdateCustomer" text="Confirm changes" />
-                        <Button fx:id="removeCustomer" defaultButton="true" layoutX="627.0" layoutY="498.0" mnemonicParsing="false" onAction="#removeCustomer" text="Remove Customer" />
-                     </children>
-                  </AnchorPane>
-            </content>
+          <Tab fx:id="manageCustomer" text=" Costumer">
+               <content>
+                  <TabPane prefHeight="558.0" prefWidth="891.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Manage Customer">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="addCustomerName" layoutX="33.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Full name" />
+                                          <TextField fx:id="addPhoneNr" layoutX="33.0" layoutY="133.0" prefHeight="27.0" prefWidth="317.0" promptText="Phone number" />
+                                          <TextField fx:id="addCity" layoutX="33.0" layoutY="184.0" prefHeight="27.0" prefWidth="317.0" promptText="City" />
+                                          <TextField fx:id="addStreet" layoutX="33.0" layoutY="234.0" prefHeight="27.0" prefWidth="317.0" promptText="Street" />
+                                          <TextField fx:id="addCardID" editable="false" layoutX="33.0" layoutY="288.0" prefHeight="27.0" prefWidth="317.0" promptText="Card ID" stylesheets="@applicationButton.css" />
+                                          <Text layoutX="110.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Customer">
+                                             <font>
+                                                <Font name="Heiti TC Light" size="23.0" />
+                                             </font>
+                                          </Text>
+                                          <Text layoutX="547.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Customer">
+                                             <font>
+                                                <Font name="Heiti TC Light" size="23.0" />
+                                             </font>
+                                          </Text>
+                                          <TextField fx:id="costumerIdUpdate" layoutX="488.0" layoutY="86.0" prefHeight="27.0" prefWidth="317.0" promptText="Enter Custmer's Card ID" />
+                                          <Button fx:id="addCustomerButton" defaultButton="true" layoutX="138.0" layoutY="344.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
+                                          <TableView fx:id="updateCustomerTable" layoutX="386.0" layoutY="159.0" prefHeight="78.0" prefWidth="524.0" stylesheets="@tableView.css">
+                                             <columns>
+                                                <TableColumn fx:id="nameCustomer" prefWidth="132.0" text="Name" />
+                                                <TableColumn fx:id="phoneCustomer" prefWidth="161.0" text="Phone Number" />
+                                                <TableColumn fx:id="cityCustomer" text="City" />
+                                                <TableColumn fx:id="streetCustomer" prefWidth="68.0" text="Street" />
+                                                <TableColumn fx:id="cardIDCustomer" text="Card ID" />
+                                             </columns>
+                                          </TableView>
+                                          <TextField fx:id="showCustomerName" layoutX="608.0" layoutY="290.0" prefHeight="27.0" prefWidth="300.0" />
+                                          <TextField fx:id="showCustomerPhone" layoutX="608.0" layoutY="330.0" prefHeight="27.0" prefWidth="300.0" />
+                                          <TextField fx:id="showCustomerCity" layoutX="608.0" layoutY="370.0" prefHeight="27.0" prefWidth="300.0" />
+                                          <TextField fx:id="showCustomerStreet" layoutX="608.0" layoutY="410.0" prefHeight="27.0" prefWidth="300.0" />
+                                          <TextField fx:id="showCustomerCardID" editable="false" layoutX="608.0" layoutY="450.0" prefHeight="27.0" prefWidth="300.0" stylesheets="@applicationButton.css" />
+                                          <Text layoutX="537.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                                          <Text layoutX="509.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+                                          <Text layoutX="542.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="City" />
+                                          <Text layoutX="533.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Street" />
+                                          <Text layoutX="531.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card ID" />
+                                          <Button fx:id="selectCustomer" defaultButton="true" layoutX="788.0" layoutY="248.0" mnemonicParsing="false" onAction="#selectCustomer" text="Select Customer" />
+                                          <Button fx:id="searchUpdateCustomer" defaultButton="true" layoutX="746.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchUpdateCustomer" text="Search" />
+                                          <Button fx:id="confirmUpdateCustomer" defaultButton="true" layoutX="787.0" layoutY="498.0" mnemonicParsing="false" onAction="#confirmUpdateCustomer" text="Confirm changes" />
+                                          <Button fx:id="removeCustomer" defaultButton="true" layoutX="627.0" layoutY="498.0" mnemonicParsing="false" onAction="#removeCustomer" text="Remove Customer" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Customer List">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="customerListTable" layoutX="14.0" layoutY="74.0" prefHeight="429.0" prefWidth="896.0" stylesheets="@tableView.css">
+                                       <columns>
+                                          <TableColumn fx:id="customerListName" prefWidth="196.0" text="Name" />
+                                          <TableColumn fx:id="customerListPhone" prefWidth="135.0" text="Phone Number" />
+                                          <TableColumn fx:id="customerListCity" prefWidth="180.0" text="City" />
+                                          <TableColumn fx:id="customerListStreet" prefWidth="166.0" text="Street" />
+                                          <TableColumn fx:id="customerListCardID" prefWidth="116.0" text="Card ID" />
+                                          <TableColumn fx:id="customerListDebt" prefWidth="102.0" text="Debt" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="getCustomerList" defaultButton="true" layoutX="14.0" layoutY="34.0" mnemonicParsing="false" onAction="#getCustomerList" text="Get customer list" />
+                                    <Button fx:id="acceptPaymentButton" defaultButton="true" layoutX="153.0" layoutY="34.0" mnemonicParsing="false" onAction="#acceptPayment" text="Accept Payment" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </content>
           </Tab>
           <Tab fx:id="manageBooks" text="Manage Books">
             <content>
@@ -112,7 +144,7 @@
                               <RadioButton fx:id="isbnSelected" mnemonicParsing="false" text="ISBN" toggleGroup="$removeBookCategory" />
                            </children>
                         </HBox>
-                        <TableView fx:id="removeResult" layoutX="371.0" layoutY="161.0" prefHeight="259.0" prefWidth="541.0">
+                        <TableView fx:id="removeResult" layoutX="371.0" layoutY="161.0" prefHeight="259.0" prefWidth="541.0" stylesheets="@tableView.css">
                           <columns>
                             <TableColumn fx:id="titleCol" prefWidth="191.0" text="Title" />
                             <TableColumn fx:id="authorCol" minWidth="8.0" prefWidth="113.0" text="Author" />
@@ -140,7 +172,7 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="allBorrowedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
+                                          <TableView fx:id="allBorrowedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0" stylesheets="@tableView.css">
                                             <columns>
                                               <TableColumn fx:id="allBorrowedCardCol" prefWidth="214.0" text="CardID" />
                                               <TableColumn fx:id="allBorrowedTitleCol" prefWidth="142.0" text="Title" />
@@ -158,12 +190,12 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="allDelayedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0">
+                                          <TableView fx:id="allDelayedTable" layoutX="29.0" layoutY="63.0" prefHeight="393.0" prefWidth="826.0" stylesheets="@tableView.css">
                                             <columns>
-                                              <TableColumn fx:id="delayedCardCol" prefWidth="75.0" text="CardID" />
-                                              <TableColumn fx:id="delayedTitleCol" prefWidth="75.0" text="Title" />
-											  <TableColumn fx:id="delayedReturnCol" prefWidth="75.0" text="Return Date" />							
-											  <TableColumn fx:id="delayedDaysCol" prefWidth="75.0" text="Days Delayed" />											  											  											  
+                                              <TableColumn fx:id="delayedCardCol" prefWidth="122.0" text="CardID" />
+                                              <TableColumn fx:id="delayedTitleCol" prefWidth="361.0" text="Title" />
+											  <TableColumn fx:id="delayedReturnCol" minWidth="0.0" prefWidth="235.0" text="Return Date" />							
+											  <TableColumn fx:id="delayedDaysCol" prefWidth="107.0" text="Days Delayed" />											  											  											  
                                             </columns>
                                           </TableView>
                                           <Button fx:id="getAllDelayedButton" defaultButton="true" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#getAllDelayedButton" text="Get list" />

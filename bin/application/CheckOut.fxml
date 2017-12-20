@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -12,7 +13,7 @@
    <children>
       <ImageView fitHeight="800.0" fitWidth="1080.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@bgimage.jpg" />
+            <Image url="@bgimage2.jpg" />
          </image>
       </ImageView>
       <MenuBar layoutY="-1.0" prefHeight="29.0" prefWidth="1080.0">
@@ -34,7 +35,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="CheckOut" defaultButton="true" layoutX="778.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" opacity="0.86" text="Check Out" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="CheckOut" defaultButton="true" disable="true" layoutX="778.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" text="Check Out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -54,7 +55,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <TableView fx:id="checkoutTable" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0" >
+      <TableView fx:id="checkoutTable" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0" stylesheets="@tableView.css">
          <columns>
             <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
             <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
@@ -69,7 +70,12 @@
       </TableView>
       <Button fx:id="borrowBooks" defaultButton="true" layoutX="914.0" layoutY="327.0" mnemonicParsing="false" onAction="#borrowBooksButton" prefHeight="27.0" prefWidth="115.0" text="Borrow books" />
       <Button fx:id="removeSelected" defaultButton="true" layoutX="725.0" layoutY="327.0" mnemonicParsing="false" onAction="#removeSelectedBook" text="Remove selected book" />
-      <TextField fx:id="IDScanText" layoutX="789.0" layoutY="262.0" promptText="Scan your ID Card" />
-      <Button fx:id="IDScan" defaultButton="true" layoutX="972.0" layoutY="262.0" mnemonicParsing="false" onAction="#IDScanButton" text="Scan" />
+      <TextField fx:id="IDScanText" layoutX="789.0" layoutY="249.0" promptText="Scan your ID Card" />
+      <Button fx:id="IDScan" defaultButton="true" layoutX="972.0" layoutY="249.0" mnemonicParsing="false" onAction="#IDScanButton" text="Scan" />
+      <TextField fx:id="showNameField" blendMode="MULTIPLY" editable="false" layoutX="789.0" layoutY="288.0" prefHeight="27.0" prefWidth="236.0">
+         <effect>
+            <Blend />
+         </effect>
+      </TextField>
    </children>
 </AnchorPane>

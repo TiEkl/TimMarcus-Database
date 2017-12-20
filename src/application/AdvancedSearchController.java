@@ -18,6 +18,7 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,9 +30,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -91,8 +94,7 @@ public class AdvancedSearchController implements Initializable   {
 	    		MyViewCo.setSearchCategory("title");
 	    		MyViewCo.setTextSearch(Search.getText());
 	    	}
-	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {
-	    		
+	    	else if(!SearchAuthor.getText().trim().isEmpty() && !Search.getText().trim().isEmpty()) {		
 	    		
 	    		String titleText = Search.getText();
 	    		String authorText = SearchAuthor.getText();
@@ -101,7 +103,6 @@ public class AdvancedSearchController implements Initializable   {
 	    		return;
 	    	}
 	    	result.setItems(getBook(true));
-
     }
 
 	@FXML
@@ -109,13 +110,10 @@ public class AdvancedSearchController implements Initializable   {
 		setTextSearch(Search.getText()); 
 	}
 
-
 	@FXML 
 	public void onEnter(ActionEvent ae) throws Exception {
 		SearchButton(ae);
 	}
-
-	
 
 	@FXML
 	void AddToCheckOut(ActionEvent event) throws SQLException {
@@ -175,9 +173,7 @@ public class AdvancedSearchController implements Initializable   {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CheckOut.fxml"));
 		app_stage.setScene(CheckOut_scene);
 		loader.load();
-		CheckOutController checkOut = loader.<CheckOutController>getController();
-		//ArrayList<Book> booklist = library.getCheckoutList();
-		//checkOut.initData(booklist);
+
 		app_stage.show();
 	}
 
@@ -281,6 +277,11 @@ public class AdvancedSearchController implements Initializable   {
 	public void setSearchCategory(String searchCategory) {
 		AdvancedSearchController.searchCategory = searchCategory;
 	}
+	
+	
+				
+			
+	
 
 	/*
 

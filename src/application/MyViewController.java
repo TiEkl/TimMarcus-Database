@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
@@ -29,6 +30,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -68,7 +70,7 @@ public class MyViewController implements Initializable {
 	@FXML
 	private AnchorPane rootView;
 	@FXML
-	private MenuItem exit, EnterAdminLogin;
+	private MenuItem exit, EnterAdminLogin, about;
 	@FXML TextField Search;
 
 	@FXML
@@ -200,15 +202,20 @@ public class MyViewController implements Initializable {
 
 	@FXML
 	void EnterAdminLogin(ActionEvent event) throws IOException, SQLException {
-		Parent CheckOut_parent = FXMLLoader.load(getClass().getResource("Login.fxml"));
-		Scene CheckOut_scene = new Scene(CheckOut_parent);
-		Stage app_stage  = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-		app_stage.setScene(CheckOut_scene);
-		app_stage.show();
+		GoToAdminLogin(event);
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
+		
+	}
+	
+	@FXML
+	void aboutMenuButton(ActionEvent event) {
+		Alert addBook = new Alert(AlertType.INFORMATION);
+		addBook.setTitle("Library System");
+		addBook.setHeaderText("Tim Eklund & Marcus Danielsson");
+		addBook.setContentText("@Copyright");
+		addBook.showAndWait();
 		
 	}
 }

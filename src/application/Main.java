@@ -16,11 +16,14 @@ public class Main extends Application {
 	static staticData checkoutData;
 	public void start(Stage primaryStage) {
 		try {
-			//library = new Database();
+			try ( Database db = new Database()) {
+				db.createHistoryTable();
+			}
 			checkoutData = new staticData();
 			Parent root = FXMLLoader.load(getClass().getResource("/application/MyView.fxml"));
 			Scene scene = new Scene(root,1080,750);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("Library System");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

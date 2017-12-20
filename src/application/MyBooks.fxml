@@ -13,7 +13,7 @@
 	<children>
 		<ImageView fitHeight="800.0" fitWidth="1080.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
 			<image>
-				<Image url="@bgimage.jpg" />
+				<Image url="@bgimage2.jpg" />
 			</image>
 		</ImageView>
 		<MenuBar layoutY="-1.0" prefHeight="29.0" prefWidth="1080.0">
@@ -45,7 +45,7 @@
 				<Cursor fx:constant="DEFAULT" />
 			</cursor>
 		</Button>
-		<Button fx:id="MyBooks" defaultButton="true" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
+		<Button fx:id="MyBooks" defaultButton="true" disable="true" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
 			<cursor>
 				<Cursor fx:constant="DEFAULT" />
 			</cursor>
@@ -57,13 +57,13 @@
 		</Button>
 		<TextField fx:id="IDScan" layoutX="83.0" layoutY="274.0" prefHeight="27.0" prefWidth="162.0" />
 		<Text layoutX="85.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scan your Card ID" />
-		<TableView fx:id="result" layoutX="181.0" layoutY="374.0" prefHeight="345.0" prefWidth="718.0">
+		<TableView fx:id="result" layoutX="181.0" layoutY="374.0" prefHeight="345.0" prefWidth="718.0" stylesheets="@tableView.css">
 			<columns>
-				<TableColumn fx:id="borrowedTitleCol" prefWidth="142.0" text="Title" />
-				<TableColumn fx:id="borrowedDateCol" prefWidth="150.0" text="Borrowed Date" />
-				<TableColumn fx:id="borrowedReturnCol" prefWidth="175.0" text="Return Date" />
-				<TableColumn fx:id="borrowedDaysCol" prefWidth="61.0" text="Days left / overdue" />
-				<TableColumn fx:id="borrowedBookIDCol" prefWidth="83.0" text="Book ID" />
+				<TableColumn fx:id="borrowedTitleCol" prefWidth="182.0" text="Title" />
+				<TableColumn fx:id="borrowedDateCol" prefWidth="164.0" text="Borrowed Date" />
+				<TableColumn fx:id="borrowedReturnCol" prefWidth="159.0" text="Return Date" />
+				<TableColumn fx:id="borrowedDaysCol" prefWidth="137.0" text="Days left / overdue" />
+				<TableColumn fx:id="borrowedBookIDCol" prefWidth="74.0" text="Book ID" />
 			</columns>
 		</TableView>
 		<Button fx:id="enterCardIDButton" defaultButton="true" layoutX="83.0" layoutY="311.0" mnemonicParsing="false" onAction="#enterCardIDButton" text="Enter" />

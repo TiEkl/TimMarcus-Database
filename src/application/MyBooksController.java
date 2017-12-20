@@ -61,48 +61,45 @@ public class MyBooksController implements Initializable {
 	@FXML
 	void returnBookButton(ActionEvent event) throws SQLException, Exception {
 		Book aBook = result.getSelectionModel().getSelectedItem();
-		
+
 		int cardID =Integer.valueOf(IDScan.getText());
 		double returnRating;
 		String title = aBook.getTitle();
 		try(Database db = new Database()) {
-		
-		Alert remove = new Alert(AlertType.CONFIRMATION);
-		remove.setTitle("Return book");
-		remove.setHeaderText("Would you want to rate this title?");
-		remove.setContentText("title: " + title);
-		Optional<ButtonType> result = remove.showAndWait();
-		if (result.get() == ButtonType.OK){
+			Alert remove = new Alert(AlertType.CONFIRMATION);
+			remove.setTitle("Return book");
+			remove.setHeaderText("Would you want to rate this title?");
+			remove.setContentText("title: " + title);
+			Optional<ButtonType> result = remove.showAndWait();
+			if (result.get() == ButtonType.OK){
 
-			ArrayList<Integer> choices = new ArrayList<Integer>();
-			choices.add(1);
-			choices.add(2);
-			choices.add(3);
-			choices.add(4);
-			choices.add(5);
+				ArrayList<Integer> choices = new ArrayList<Integer>();
+				choices.add(1);
+				choices.add(2);
+				choices.add(3);
+				choices.add(4);
+				choices.add(5);
 
-			ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, choices);
-			dialog.setTitle("Rate");
-			dialog.setHeaderText("Set your rating");
-			dialog.setContentText("Rate between 1-5:");
+				ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, choices);
+				dialog.setTitle("Rate");
+				dialog.setHeaderText("Set your rating");
+				dialog.setContentText("Rate between 1-5:");
 
-			Optional<Integer> optionResult = dialog.showAndWait();
-			if (optionResult.isPresent()){
-			  int test = (optionResult.get()); 
-			   returnRating = ((double) test);
-			  
-			  db.returnBook(cardID, aBook.getBook_ID(), returnRating);
-			  enterCardIDButton(event);
-			}
-			else {
+				Optional<Integer> optionResult = dialog.showAndWait();
+				if (optionResult.isPresent()){
+					int test = (optionResult.get()); 
+					returnRating = ((double) test);
+
+					db.returnBook(cardID, aBook.getBook_ID(), returnRating);
+					enterCardIDButton(event);
+				}
+				else {
+					db.returnBook(cardID, aBook.getBook_ID(), 0);
+				}
+
+			} else if ((result.get() == ButtonType.CANCEL)) {
 				db.returnBook(cardID, aBook.getBook_ID(), 0);
 			}
-
-			
-			
-		} else if ((result.get() == ButtonType.CANCEL)) {
-			 db.returnBook(cardID, aBook.getBook_ID(), 0);
-		}
 		}
 	}
 	
