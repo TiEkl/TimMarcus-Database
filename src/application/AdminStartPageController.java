@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,8 +35,8 @@ import javafx.stage.Stage;
 
 public class AdminStartPageController implements  Initializable {
 	static Customer customer;
-
-
+	final String EOL = System.lineSeparator();
+	int IDScanNumber;
 	@FXML
 	private ToggleGroup removeBookCategory;
 
@@ -56,12 +57,14 @@ public class AdminStartPageController implements  Initializable {
 	searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer, getAllDelayedButton;
 
 	@FXML
-	private TableView<Customer> updateCustomerTable;
-	@FXML private TableColumn<Customer, String> nameCustomer;
-	@FXML private TableColumn<Customer, String> phoneCustomer;
-	@FXML private TableColumn<Customer, String> cityCustomer;
-	@FXML private TableColumn<Customer, String> streetCustomer;
-	@FXML private TableColumn<Customer, String> cardIDCustomer;
+	private TableView<Customer> updateCustomerTable, customerListTable;
+	@FXML private TableColumn<Customer, String> nameCustomer, customerListName;
+	@FXML private TableColumn<Customer, String> phoneCustomer, customerListPhone;
+	@FXML private TableColumn<Customer, String> cityCustomer, customerListCity;
+	@FXML private TableColumn<Customer, String> streetCustomer, customerListStreet;
+	@FXML private TableColumn<Customer, String> cardIDCustomer, customerListCardID;
+	@FXML private TableColumn<Customer, Integer> customerListDebt;
+	
 
 	@FXML
 	private TabPane adminManageTab, borrowedBooksTab;
@@ -170,26 +173,21 @@ public class AdminStartPageController implements  Initializable {
 		
 	}
 
-
-
 	@FXML
 	void getAllDelayedButton(ActionEvent event) throws SQLException, Exception {
-		try(Database db = new Database()) {
+		//try(Database db = new Database()) {
 			allDelayedTable.setItems(getDelayedBook());	
-		}
+		//}
 	}
 	@FXML
 	void allDelayedBooks() throws Exception {
-		try(Database db = new Database()) {
+		//try(Database db = new Database()) {
 			//db.getDelayedBooksList();
 			//allDelayedTable.setItems(getDelayedBook());
 
-		} 
+		//}
+	
 	}
-
-
-
-	int IDScanNumber;
 
 	@FXML
 	void searchBorrowedByButton (ActionEvent event) throws SQLException, Exception  {
@@ -229,8 +227,8 @@ public class AdminStartPageController implements  Initializable {
 	}
 
 	public ObservableList<BorrowedBook> getDelayedBook() throws Exception{
+		
 		ObservableList<BorrowedBook> book = FXCollections.observableArrayList();
-
 		try(Database data = new Database()) {
 			BorrowedBook [] searchArray = data.getDelayedBooksList();
 			for(int i = 0; i<searchArray.length; i++) {
@@ -291,20 +289,20 @@ public class AdminStartPageController implements  Initializable {
 	@FXML
 	void addCustomer(ActionEvent event) throws Exception {
 
-		int card_id = Integer.valueOf(addCardID.getText());
+		int card_id;
 		String name = addCustomerName.getText();
 		String street = addStreet.getText();
 		String city = addCity.getText();
 		String phone_nr = addPhoneNr.getText();
 
 		try(Database db = new Database()) {
-			db.addCustomer(card_id, name, city, street, phone_nr );	
+			card_id = db.addCustomer(name, city, street, phone_nr );	
 		}
 
 		Alert addCustomer = new Alert(AlertType.INFORMATION);
-
-		addCustomer.setTitle("New Customer");
-		addCustomer.setHeaderText("Customer successfully added");
+		addCardID.setText(Integer.toString(card_id));
+		addCustomer.setTitle("Customer succesfully added!");
+		addCustomer.setHeaderText(null);
 		addCustomer.setContentText( name + " was added as a customer, with Card ID: " + card_id);
 		addCustomer.showAndWait();
 		clearCustomerForm();
@@ -367,7 +365,14 @@ public class AdminStartPageController implements  Initializable {
 		allBorrowedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
 		allBorrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		allBorrowedbookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
-
+		//All Customers-table Cell factories
+		customerListName.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
+		customerListPhone.setCellValueFactory(new PropertyValueFactory<Customer, String>("phoneNr"));
+		customerListCity.setCellValueFactory(new PropertyValueFactory<Customer, String>("city"));
+		customerListStreet.setCellValueFactory(new PropertyValueFactory<Customer, String>("street"));
+		customerListCardID.setCellValueFactory(new PropertyValueFactory<Customer, String>("card_id"));
+		customerListDebt.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("debt"));
+		
 		/*try {
 			allBorrowedTable.setItems(getAllBorrowedBooks());
 		} catch (Exception e) {
@@ -418,5 +423,48 @@ public class AdminStartPageController implements  Initializable {
 		addCardID.clear();
 		addStreet.clear();
 	}
-
+	public ObservableList<Customer> getFullCustomerList() throws Exception {
+		ObservableList<Customer> customerList = FXCollections.observableArrayList();
+		try(Database db = new Database()) {
+			Customer[] allCustomers = db.getCustomerList();
+			customerList.addAll(allCustomers);
+		}
+		return customerList;
+	}
+	
+	public void getCustomerList(ActionEvent event) throws Exception {
+		customerListTable.setItems(getFullCustomerList());
+	}
+	public void acceptPayment(ActionEvent event) throws SQLException, Exception {
+		Customer current = customerListTable.getSelectionModel().getSelectedItem();
+		
+		TextInputDialog amountInput = new TextInputDialog("");
+		amountInput.setTitle("Text Input Dialog");
+		amountInput.setHeaderText(null);
+		amountInput.setContentText("Please enter the amount: " + EOL + "No more than " + current.getDebt());
+		Optional<String> amountText = amountInput.showAndWait();
+		
+		if (amountText.isPresent() && Integer.valueOf(amountText.get()) <= current.getDebt() * -1 ) {
+		
+		int amount = Integer.valueOf(amountText.get());
+		
+		try(Database db = new Database()) {
+			
+			db.payDebt(current.getCard_id(), amount);
+		}
+		
+		getCustomerList(event);
+		
+		}
+		else {
+			Alert paymentAlert = new Alert(AlertType.INFORMATION);
+			paymentAlert.setTitle("Payment error!");
+			paymentAlert.setHeaderText(null);
+			paymentAlert.setContentText("Something went wrong with the payment. It might have exceeded the debt.");
+			paymentAlert.showAndWait();
+		}
+		
+		
+	}
 }
+	

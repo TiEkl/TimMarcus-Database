@@ -54,15 +54,15 @@ public class CheckOutController implements Initializable {
 	    
 	@FXML
 	void borrowBooksButton(ActionEvent event) throws Exception {
+		
+		
 		try(Database db = new Database()) {
-			db.addBorrowedList(Integer.valueOf(IDScanText.getText()), 4);
-			
-			
+			String borrowSuccess = db.addBorrowedList(Integer.valueOf(IDScanText.getText()), 4);
 			Alert addBook = new Alert(AlertType.INFORMATION);
 			addBook.setTitle("Borrow Books");
-			addBook.setHeaderText("The books were successfully borrowed");
+			addBook.setHeaderText(null);
+			addBook.setContentText(borrowSuccess);
 			addBook.showAndWait();
-			
 		}
 		
 	}
@@ -80,11 +80,12 @@ public class CheckOutController implements Initializable {
 	void removeSelectedBook(ActionEvent event) throws SQLException, Exception {
 		Book removal = checkoutTable.getSelectionModel().getSelectedItem();
 		checkoutTable.getItems().remove(removal);
+		Main.checkoutData.removeFromCheckout(removal);
+
 		try (Database db = new Database()) {
 			Main.checkoutData.removeFromCheckout(removal);
 		}
 
-		//checkoutData.remove(removal);
 	}
 	
 	@FXML

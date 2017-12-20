@@ -137,7 +137,8 @@ public class Database implements AutoCloseable {
 		PreparedUpdate(sql, title, author, genre, shelf, publisher, quantity, pages, isbn);
 
 	}
-	public void addCustomer(int card_id, String name, String city, String street, String phone_nr) throws SQLException {
+	public int addCustomer(String name, String city, String street, String phone_nr) throws SQLException {
+		int card_id = genCardID();
 		String sqlCustomer = "INSERT INTO customer " +
 				"(card_id, name, city, street, phone_nr) " +
 				"VALUES " +
@@ -146,8 +147,9 @@ public class Database implements AutoCloseable {
 		String sqlDebt ="INSERT INTO customer_debt" +
 				"(card_id) " +
 				"VALUES " +
-				"(? f);";
+				"(?);";
 		PreparedUpdate(sqlDebt, card_id);
+		return card_id;
 	}
 
 	public void removeCustomer(int card_id) throws SQLException {
@@ -156,9 +158,9 @@ public class Database implements AutoCloseable {
 	}
 	public Customer[] getCustomerList() throws SQLException {
 
-		String sql = "SELECT * FROM customer";
+		String sql = "SELECT * FROM customer INNER JOIN customer_debt USING(card_id)";
 		ResultSet customerSet = PreparedQuery(sql);
-		Customer[] customerArray = rsToCustomerArray(customerSet);
+		Customer[] customerArray = rsToCustomerArrayPlus(customerSet);
 		return customerArray;
 	}
 	public Customer getCustomer(int card_id) throws SQLException {
@@ -180,6 +182,25 @@ public class Database implements AutoCloseable {
 			street = customerSet.getString("street");
 			card_id = customerSet.getInt("card_id");
 			Customer temp = new Customer(name, city, street, phoneNr, card_id);
+			customerList.add(temp);	
+		}
+		Customer[] customerArray = customerList.toArray(new Customer[customerList.size()]);
+		return customerArray;
+	}
+	public Customer[] rsToCustomerArrayPlus(ResultSet customerSet) throws SQLException {
+		ArrayList<Customer> customerList= new ArrayList<Customer>();
+		String name, city, street, phoneNr;
+		int card_id, debt, paid, fees;
+		while(customerSet.next()) {
+			name = customerSet.getString("name");
+			city = customerSet.getString("city");
+			phoneNr = customerSet.getString("phone_nr");
+			street = customerSet.getString("street");
+			card_id = customerSet.getInt("card_id");
+			paid = customerSet.getInt("paid");
+			fees = customerSet.getInt("accumulated_fees");
+			debt = fees + paid;
+			Customer temp = new Customer(name, city, street, phoneNr, card_id, debt);
 			customerList.add(temp);	
 		}
 		Customer[] customerArray = customerList.toArray(new Customer[customerList.size()]);
@@ -211,12 +232,12 @@ public class Database implements AutoCloseable {
 		PreparedUpdate(sql, book_id, card_id, unixBorrowed, unixReturn);
 	}
 	public String addBorrowedList(int card_id, int nrWeeks) throws SQLException {
-		
+		ArrayList<Book> duplicates = new ArrayList<Book>();
 		long unixBorrowed = System.currentTimeMillis() / 1000L;
 		long unixReturn = unixBorrowed + (UNIXWEEK * nrWeeks);
 		int length = Main.checkoutData.getCheckoutSize();
 		int book_id;
-		String result;
+		String result="";
 		String sql = "INSERT INTO borrowed_books" +
 				"(book_id, card_id, borrowed_epoch, return_epoch)"  +
 				"VALUES "+
@@ -224,9 +245,19 @@ public class Database implements AutoCloseable {
 		for(int i = 0; i < length; i++) {
 			book_id = Main.checkoutData.getCheckoutList().get(i).getBook_ID();
 			if(checkIfAlreadyBorrowed(book_id, card_id)) {
-				result = searchOneBook(book_id).alreadyBorrowed();
-				return result;
+				duplicates.add(Main.checkoutData.getCheckoutList().get(i));
 			}
+		}
+		if(duplicates.size() >= 1) {
+			result += "You have already borrowed the following books: " + EOL;
+			for(int i = 0; i < duplicates.size(); i++) {
+				result += duplicates.get(i).successBorrow() + EOL;
+			}
+			result += "Please remove them from the checkout.";
+			return result;
+		}
+		for(int i = 0; i < length; i++) {
+			book_id = Main.checkoutData.getCheckoutList().get(i).getBook_ID();
 			PreparedUpdate(sql, book_id, card_id, unixBorrowed, unixReturn);
 		}
 		result = "You have successfully borrowed the following book(s): " + EOL;
@@ -235,6 +266,16 @@ public class Database implements AutoCloseable {
 		}
 		Main.checkoutData.clearCheckoutList();
 		return result;
+	}
+	public int genCardID() throws SQLException {
+		
+		String sql = "SELECT  ABS(RANDOM() % (9999 - 1000) + 1000) AS random_num" +
+				" FROM customer "+
+				" WHERE random_num NOT IN (SELECT card_id FROM customer) " +
+				" LIMIT 1";
+		ResultSet randomSet = PreparedQuery(sql);
+		int randomNr = randomSet.getInt(1);
+		return randomNr;
 	}
 	public  ArrayList<Book> getCheckoutList() {
 		return checkoutList;
@@ -409,11 +450,11 @@ public class Database implements AutoCloseable {
 			debt = book.getDaysOver() * 2;
 			addDebt(card_id, debt);
 		}
-		String onTime =book.returnOnTime();
+		String onTime = book.returnOnTime();
 		String insertHistory = "INSERT INTO history " +
 				"(card_id, book_id, returned_on_time, rating)" +
 				"VALUES " +
-				"( ?, ?, ?, ?);";
+				"(?,?,?,?);";
 		PreparedUpdate(insertHistory, card_id, book_id, onTime, rating);
 
 		String deleteBorrowed =  "DELETE FROM borrowed_books WHERE card_id = ? AND book_id = ?";		
