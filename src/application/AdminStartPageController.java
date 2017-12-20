@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -39,7 +41,7 @@ public class AdminStartPageController implements  Initializable {
 	int IDScanNumber;
 	@FXML
 	private ToggleGroup removeBookCategory;
-
+	private String bookErrorText="";
 	@FXML RadioButton isbnSelected, titleSelected;
 
 
@@ -269,24 +271,61 @@ public class AdminStartPageController implements  Initializable {
 
 	@FXML
 	void addBook(ActionEvent event) throws Exception {
-		String isbn =addISBN.getText();
-		String title = addTitle.getText();
-		String author = addAuthor.getText();
-		String genre = addGenre.getText();
-		int shelf = Integer.valueOf(addShelf.getText());
-		String publisher = addPublisher.getText();
-		int quantity = Integer.valueOf(addQuantity.getText());
-		int pages = Integer.valueOf(addPages.getText());
+		
+		if(checkBookFields()) {
+			String isbn =addISBN.getText();
+			String title = addTitle.getText();
+			String author = addAuthor.getText();
+			String genre = addGenre.getText();
+			int shelf = Integer.valueOf(addShelf.getText());
+			String publisher = addPublisher.getText();
+			int quantity = Integer.valueOf(addQuantity.getText());
+			int pages = Integer.valueOf(addPages.getText());
 
-		try(Database db = new Database()) {
-			db.addBook(isbn, title, author, genre, shelf, publisher, quantity, pages);
+			try(Database db = new Database()) {
+				db.addBook(isbn, title, author, genre, shelf, publisher, quantity, pages);
+			}
+			Alert addBook = new Alert(AlertType.INFORMATION);
+			addBook.setTitle("New Book");
+			addBook.setHeaderText("The book was successfully added to the library");
+			addBook.setContentText("Title: " + title);
+			addBook.showAndWait();
+			clearAddBookForm(event);
 		}
-		Alert addBook = new Alert(AlertType.INFORMATION);
-		addBook.setTitle("New Book");
-		addBook.setHeaderText("The book was successfully added to the library");
-		addBook.setContentText("Title: " + title);
-		addBook.showAndWait();
-		clearAddBookForm(event);
+		else {
+			Alert errorBook = new Alert(AlertType.INFORMATION);
+			errorBook.setTitle("Missing information!");
+			errorBook.setHeaderText(null);
+			errorBook.setContentText(bookErrorText);
+			errorBook.showAndWait();
+		}
+	}
+	public boolean checkBookFields() {
+		boolean result = true;
+		
+		if(addISBN.getText() == null) {
+			result = false;
+		}
+		if(addAuthor.getText() == null) {
+			result = false;
+		}
+		if(addGenre.getText() == null) {
+			result = false;
+		}
+		if(addShelf.getText() == null) {
+			result = false;
+		}
+		if(addPublisher.getText() == null) {
+			result = false;
+		}
+		if(addQuantity.getText() == null) {
+			result = false;
+		}
+		if(addPages.getText() == null) {
+			result = false;
+		}
+		
+		return result;
 	}
 	@FXML
 	void addCustomer(ActionEvent event) throws Exception {
@@ -375,12 +414,43 @@ public class AdminStartPageController implements  Initializable {
 		customerListCardID.setCellValueFactory(new PropertyValueFactory<Customer, String>("card_id"));
 		customerListDebt.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("debt"));
 		
-		/*try {
-			allBorrowedTable.setItems(getAllBorrowedBooks());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		addPages.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+		addShelf.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+		addISBN.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+		addQuantity.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+		
 	}
 
 	public void removeBook(int book_id) throws Exception {
