@@ -35,7 +35,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class AdminStartPageController implements  Initializable {
+public class AdminStartPageController implements Initializable {
 	static Customer customer;
 	final String EOL = System.lineSeparator();
 	int IDScanNumber;
@@ -44,7 +44,9 @@ public class AdminStartPageController implements  Initializable {
 	private String bookErrorText="";
 	@FXML RadioButton isbnSelected, titleSelected;
 
+	
 
+	
 	@FXML
 	private Tab manageCustomer, manageBooks, borrowedBooks, BorrowedBy, allBorrowedBooks, allDelayedBooks;
 
@@ -428,7 +430,7 @@ public class AdminStartPageController implements  Initializable {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
 		        String newValue) {
 		        if (!newValue.matches("\\d*")) {
-		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		            addShelf.setText(newValue.replaceAll("[^\\d]", ""));
 		        }
 		    }
 		});
@@ -437,7 +439,7 @@ public class AdminStartPageController implements  Initializable {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
 		        String newValue) {
 		        if (!newValue.matches("\\d*")) {
-		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		            addISBN.setText(newValue.replaceAll("[^\\d]", ""));
 		        }
 		    }
 		});
@@ -446,7 +448,7 @@ public class AdminStartPageController implements  Initializable {
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
 		        String newValue) {
 		        if (!newValue.matches("\\d*")) {
-		            addPages.setText(newValue.replaceAll("[^\\d]", ""));
+		            addQuantity.setText(newValue.replaceAll("[^\\d]", ""));
 		        }
 		    }
 		});
