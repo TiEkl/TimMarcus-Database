@@ -80,6 +80,7 @@ public class Database implements AutoCloseable {
 				"quantity INTEGER NOT NULL, " +
 				"pages INTEGER NOT NULL, " +
 				"isbn TEXT NOT NULL" +
+				"cover_url TEXT DEFAULT NULL" +
 				");";
 		PreparedExecute(sql);
 	}
@@ -307,7 +308,7 @@ public class Database implements AutoCloseable {
 	}
 	public Book searchOneBook(int book_id) throws SQLException {
 
-		String title, author, genre, publisher;
+		String title, author, genre, publisher, coverURL;
 		long isbn;
 		int pages, quantity, shelf;
 		double rating;
@@ -324,7 +325,8 @@ public class Database implements AutoCloseable {
 		quantity = getNumberAvailable(book_id);
 		shelf = rs.getInt("shelf");
 		rating = getRating(book_id);
-		Book result = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf);			
+		coverURL = rs.getString("cover_url");
+		Book result = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);			
 		rs.close();
 		stmt.close();
 		return result;
@@ -391,7 +393,8 @@ public class Database implements AutoCloseable {
 			long isbn = rs.getLong("isbn");
 			int quantity = getNumberAvailable(book_id);
 			double rating = getRating(book_id);
-			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf);	
+			String coverURL = rs.getString("cover_url");
+			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);	
 			searchedBooks.add(temp);
 		}
 		Collections.sort(searchedBooks);
@@ -546,7 +549,7 @@ public class Database implements AutoCloseable {
 	public Book[] getBookArray(ResultSet bookSet) throws SQLException {
 
 		ArrayList<Book> bookList = new ArrayList<Book>();
-		String title, author, genre, publisher;
+		String title, author, genre, publisher, coverURL;
 		long isbn;
 		int pages, book_id, quantity, shelf;
 		double rating;
@@ -561,7 +564,8 @@ public class Database implements AutoCloseable {
 			shelf = bookSet.getInt("shelf");
 			quantity = getNumberAvailable(book_id);
 			rating = getRating(book_id);
-			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf);
+			coverURL = bookSet.getString("cover_url");
+			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);
 			bookList.add(temp);	
 		}
 		Book[] bookArray = bookList.toArray(new Book[bookList.size()]);
