@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -170,15 +172,23 @@ public class CheckOutController implements Initializable {
 		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
 		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
 		
-		/*try {
-			library = new Database();*/
-			setCheckoutData();
-			checkoutTable.setItems(getCheckoutData());
-			
-		/*} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		setCheckoutData();
+		checkoutTable.setItems(getCheckoutData());
+		
+		IDScanText.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            IDScanText.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+	            if (IDScanText.getText().length() > 4) {
+	                String s = IDScanText.getText().substring(0, 4);
+	                IDScanText.setText(s);
+	            }
+		    }
+		});
+		
 	}
 	void initData(ArrayList<Book> list) throws SQLException {
 		

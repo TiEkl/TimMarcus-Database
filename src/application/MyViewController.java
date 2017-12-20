@@ -12,6 +12,7 @@ import com.sun.glass.ui.Accessible.EventHandler;
 import com.sun.glass.ui.MenuBar;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 
@@ -206,7 +207,7 @@ public class MyViewController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 	
 	@FXML

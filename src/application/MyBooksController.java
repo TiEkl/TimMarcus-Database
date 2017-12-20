@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -175,7 +177,20 @@ public class MyBooksController implements Initializable {
 		borrowedReturnCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, String>("returnDate"));
 		borrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		borrowedBookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
-
+		
+		IDScan.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            IDScan.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+	            if (IDScan.getText().length() > 4) {
+	                String s = IDScan.getText().substring(0, 4);
+	                IDScan.setText(s);
+	            }
+		    }
+		});
 	}
 
 	public ObservableList<BorrowedBook> getBorrowedBook() throws Exception{
