@@ -20,7 +20,7 @@ public class Main extends Application {
 			checkoutData = new staticData();
 			Parent root = FXMLLoader.load(getClass().getResource("/application/MyView.fxml"));
 			Scene scene = new Scene(root,1080,750);
-			
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Library System");
 			primaryStage.setScene(scene);
 			primaryStage.show();
