@@ -30,14 +30,18 @@ public class Database implements AutoCloseable {
 		createLibraryDatabase();
 		stmt = conn.createStatement();
 		checkoutList = new ArrayList<Book>();
+		//setRecursiveTriggersTrue();
 		//top10Array = createTop10();
 		/*createAdmin("tiEkl", "hejhej123");
 		createAdmin("maDan", "password");
 		createAdmin("saBol", "1ab2c3");
 		System.out.println("Admins created");*/
 	}
+	public void setRecursiveTriggersTrue() throws SQLException {
+		String sql = "PRAGMA recursive_triggers = true;";
+		PreparedExecute(sql);
+	}
 	public void createTables() throws SQLException {
-
 		createBooksTable();
 		createBorrowedBooksTable();
 		createCustomerTable();
@@ -464,7 +468,7 @@ public class Database implements AutoCloseable {
 			addDebt(card_id, debt);
 		}
 		String onTime = book.returnOnTime();
-		String insertHistory = "INSERT INTO history " +
+		String insertHistory = "INSERT OR REPLACE INTO history " +
 				"(card_id, book_id, returned_on_time, rating)" +
 				"VALUES " +
 				"(?,?,?,?);";
