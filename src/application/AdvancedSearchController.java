@@ -33,6 +33,7 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -48,6 +49,7 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML
 	private MenuItem exit;
 	
+
 	@FXML
 	private TextField Search, SearchAuthor;
 	
@@ -177,26 +179,6 @@ public class AdvancedSearchController implements Initializable   {
 		app_stage.show();
 	}
 
-	/*public void genToplistInit() {
-
-		try {
-			library = new Database ();
-			myview = new MyViewController();
-
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}	
-		//set up the columns in the table
-		TitleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-		AuthorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
-		GenreCol.setCellValueFactory(new PropertyValueFactory<Book, String>("genre"));
-		PublisherCol.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
-		PagesCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("pages"));
-		ISBNCol.setCellValueFactory(new PropertyValueFactory<Book, Long>("isbn"));
-		QuantityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
-		Book_idCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("book_id"));
-	}*/
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -219,6 +201,26 @@ public class AdvancedSearchController implements Initializable   {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		result.setRowFactory((tableView) -> {
+		      return new TooltipTableRow<Book>((Book book) -> {
+		        return book.getCoverURL();
+		      });
+		});
+		
+       /* result.setRowFactory(tv -> new TableRow<Book>() {
+            private Tooltip hoverImage = new Tooltip();
+            @Override
+            public void updateItem(Book book, boolean empty) {
+                super.updateItem(book, empty);
+                if (book == null) {
+                    setTooltip(null);
+                } else {
+                    hoverImage.setText(book.getTitle()+", written by:  "+book.getAuthor());
+                    setTooltip(hoverImage);
+                }
+            }
+        });*/
 	}
 
 	public ObservableList<Book> getBook(boolean searchMethod, String...strings) throws Exception{

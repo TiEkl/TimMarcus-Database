@@ -2,7 +2,7 @@ package application;
 
 public class Book implements Comparable<Book> {
 	final String EOL = System.lineSeparator();
-	private String title, author, genre, publisher;
+	private String title, author, genre, publisher, coverURL;
 	private int pages, book_id, quantity, shelf;
 	public int getShelf() {
 		return shelf;
@@ -25,7 +25,7 @@ public class Book implements Comparable<Book> {
 		this.book_id = book_id;
 		this.shelf = shelf;
 	}
-	public Book(String title, String author, String genre, String publisher, int pages, long isbn, int book_id, int quantity, double rating, int shelf) {
+	public Book(String title, String author, String genre, String publisher, int pages, long isbn, int book_id, int quantity, double rating, int shelf, String coverURL) {
 		this.title = title;
 		this.author = author;
 		this.genre = genre;
@@ -36,6 +36,7 @@ public class Book implements Comparable<Book> {
 		this.quantity = quantity;
 		this.rating = rating;
 		this.shelf = shelf;
+		this.coverURL = coverURL;
 	}
 	public Book(Book another) {
 		this.title = another.getTitle();
@@ -47,6 +48,9 @@ public class Book implements Comparable<Book> {
 		this.book_id = another.getBook_ID();
 		this.shelf=another.getShelf();
 	
+	}
+	public String getCoverURL() {
+		return this.coverURL;
 	}
 	public String toString() {
 		

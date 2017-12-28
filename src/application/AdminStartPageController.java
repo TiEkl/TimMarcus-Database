@@ -372,7 +372,6 @@ public class AdminStartPageController implements Initializable {
 		} else if ((result.get() == ButtonType.CANCEL)) {
 
 		}
-
 	}
 
 	@Override
