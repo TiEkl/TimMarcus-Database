@@ -104,8 +104,6 @@ public class MyBooksController implements Initializable {
 			}
 		}
 	}
-	
-	
 
 	@FXML
 	void enterCardIDButton(ActionEvent event) throws Exception {
@@ -178,6 +176,7 @@ public class MyBooksController implements Initializable {
 		borrowedDaysCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("days"));
 		borrowedBookIDCol.setCellValueFactory(new PropertyValueFactory<BorrowedBook, Integer>("book_id"));
 		
+		//Make textfield IDScan integer only
 		IDScan.textProperty().addListener(new ChangeListener<String>() {
 		    @Override
 		    public void changed(ObservableValue<? extends String> observable, String oldValue, 

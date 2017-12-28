@@ -170,6 +170,7 @@ public class Database implements AutoCloseable {
 
 		ResultSet rs = PreparedQuery(sql, card_id);  
 		Customer result = rsToCustomer(rs);
+		rs.close();
 		return result;	
 	}
 	public Customer[] rsToCustomerArray(ResultSet customerSet) throws SQLException {
@@ -185,6 +186,7 @@ public class Database implements AutoCloseable {
 			Customer temp = new Customer(name, city, street, phoneNr, card_id);
 			customerList.add(temp);	
 		}
+		customerSet.close();
 		Customer[] customerArray = customerList.toArray(new Customer[customerList.size()]);
 		return customerArray;
 	}
@@ -204,6 +206,7 @@ public class Database implements AutoCloseable {
 			Customer temp = new Customer(name, city, street, phoneNr, card_id, debt);
 			customerList.add(temp);	
 		}
+		customerSet.close();
 		Customer[] customerArray = customerList.toArray(new Customer[customerList.size()]);
 		return customerArray;
 	}
@@ -216,6 +219,7 @@ public class Database implements AutoCloseable {
 		street = customerSet.getString("street");
 		card_id = customerSet.getInt("card_id");
 		Customer result = new Customer(name, city, street, phoneNr, card_id);
+		customerSet.close();
 		return result;
 	}
 
@@ -276,6 +280,10 @@ public class Database implements AutoCloseable {
 				" LIMIT 1";
 		ResultSet randomSet = PreparedQuery(sql);
 		int randomNr = randomSet.getInt(1);
+		randomSet.close();
+		if(randomNr <= 999) {
+			genCardID();
+		}
 		return randomNr;
 	}
 	public  ArrayList<Book> getCheckoutList() {
@@ -298,12 +306,14 @@ public class Database implements AutoCloseable {
 				+ " WHERE card_id = ?";
 		ResultSet borrowedSet = PreparedQuery(sql, card_id);		
 		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
+		borrowedSet.close();
 		return borrowedArray;
 	}
 	public BorrowedBook[] getBorrowedBooks() throws SQLException {
 		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)";
 		ResultSet borrowedSet = PreparedQuery(sql);		
 		BorrowedBook[] borrowedArray = getBorrowedArray(borrowedSet);
+		borrowedSet.close();
 		return borrowedArray;
 	}
 	public Book searchOneBook(int book_id) throws SQLException {
@@ -328,7 +338,6 @@ public class Database implements AutoCloseable {
 		coverURL = rs.getString("cover_url");
 		Book result = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);			
 		rs.close();
-		stmt.close();
 		return result;
 	}
 	public BorrowedBook[] getDelayedBooksList() throws SQLException {
@@ -338,6 +347,7 @@ public class Database implements AutoCloseable {
 
 		ResultSet books = PreparedQuery(sql, todayEpoch);
 		BorrowedBook[] result = getBorrowedArray(books);
+		books.close();
 
 		return result;
 	}
@@ -353,6 +363,7 @@ public class Database implements AutoCloseable {
 				result = true;
 			}	
 		}
+		rs.close();
 		return result;
 	}
 	public Book[] search(String search, String category) throws SQLException  {
@@ -360,11 +371,8 @@ public class Database implements AutoCloseable {
 		String sql = "SELECT * FROM books " +
 				"WHERE " + category + " LIKE ?";
 		ResultSet rs = PreparedQuery(sql ,"%"+ search+"%");
-
-
-	
 		Book[] searchedArray = getBookArray(rs);
-
+		rs.close();
 
 		return searchedArray;
 	}
@@ -374,6 +382,7 @@ public class Database implements AutoCloseable {
 				"WHERE title LIKE ? AND author LIKE ?" ;
 		ResultSet rs = PreparedQuery(sql ,"%"+ title +"%", "%" + author + "%");
 		Book[] searchedArray = getBookArray(rs);
+		rs.close();
 		return searchedArray;
 
 	}
@@ -398,6 +407,7 @@ public class Database implements AutoCloseable {
 			searchedBooks.add(temp);
 		}
 		Collections.sort(searchedBooks);
+		rs.close();
 		Book[] returnArray = new Book[10];
 		for(int i = 0; i < 10; i++) {
 			returnArray[i] = searchedBooks.get(i);
@@ -481,7 +491,7 @@ public class Database implements AutoCloseable {
 		isbn = rs2.getLong("isbn");
 		pages = rs2.getInt("pages");
 		BorrowedBook result = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);	
-
+		rs2.close();
 		return result;
 	}
 	public boolean checkIfAvailable(int book_id) throws SQLException {
@@ -493,6 +503,8 @@ public class Database implements AutoCloseable {
 		String sqlQuantity = "SELECT quantity FROM books WHERE book_id =?";
 		ResultSet bookQuantity = PreparedQuery(sqlQuantity, book_id);
 		quantity = bookQuantity.getInt("quantity");
+		nrOfBorrowed.close();
+		bookQuantity.close();
 		if(borrowed >= quantity) {
 			result = false;
 		}
@@ -509,8 +521,7 @@ public class Database implements AutoCloseable {
 		String getQuantity = "SELECT quantity FROM books WHERE book_id = ?";
 		ResultSet tableQuantity = PreparedQuery(getQuantity, book_id);
 		int quantity = tableQuantity.getInt(1);
-
-
+		tableQuantity.close();
 		if(quantity - change <= 0) {
 			removeBook(book_id);
 		}
@@ -543,6 +554,7 @@ public class Database implements AutoCloseable {
 			BorrowedBook temp = new BorrowedBook(book_id,title, author, genre, publisher, pages, isbn, borrowed_epoch, return_epoch, card_id);
 			borrowed_list.add(temp);	
 		}
+		borrowedSet.close();
 		BorrowedBook[] borrowedArray = borrowed_list.toArray(new BorrowedBook[borrowed_list.size()]);
 		return borrowedArray;
 	}
@@ -568,6 +580,7 @@ public class Database implements AutoCloseable {
 			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);
 			bookList.add(temp);	
 		}
+		bookSet.close();
 		Book[] bookArray = bookList.toArray(new Book[bookList.size()]);
 		return bookArray;
 	}
@@ -576,6 +589,7 @@ public class Database implements AutoCloseable {
 		String sql = "SELECT * FROM books WHERE genre = ?";
 		ResultSet genreBooks = PreparedQuery(sql, genre);
 		Book[] result = getBookArray(genreBooks);
+		genreBooks.close();
 		return result;
 	}
 	public int getNumberAvailable(int book_id) throws SQLException {
@@ -588,6 +602,8 @@ public class Database implements AutoCloseable {
 		ResultSet bookQuantity = PreparedQuery(sqlQuantity, book_id);
 		quantity = bookQuantity.getInt("quantity");
 		result = quantity - borrowed;
+		nrOfBorrowed.close();
+		bookQuantity.close();
 		return result;		
 	}
 	public Book[] getTop10() throws SQLException {
