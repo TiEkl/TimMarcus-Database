@@ -32,7 +32,7 @@
       </Button>
       <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="934.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="manageCustomer" text=" Costumer">
+          <Tab fx:id="manageCustomer" text=" Customer">
                <content>
                   <TabPane prefHeight="558.0" prefWidth="891.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -208,10 +208,11 @@
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="IDScan" layoutX="14.0" layoutY="33.0" prefHeight="27.0" prefWidth="291.0" promptText="Search" />
-                                          <RadioButton layoutX="14.0" layoutY="77.0" mnemonicParsing="false" text="Card ID" />
-                                          <RadioButton layoutX="93.0" layoutY="77.0" mnemonicParsing="false" text="Name" />
                                           <Button fx:id="searchBorrowedByButton" defaultButton="true" layoutX="244.0" layoutY="73.0" mnemonicParsing="false" onAction="#searchBorrowedByButton" text="Search" />
-                                          <TextField fx:id="borrowedName" layoutX="648.0" layoutY="33.0" prefHeight="27.0" prefWidth="252.0" />
+                                          <TextField fx:id="borrowedName" blendMode="MULTIPLY" editable="false" layoutX="648.0" layoutY="33.0" prefHeight="27.0" prefWidth="252.0">
+                                             <effect>
+                                                <Blend />
+                                             </effect></TextField>
                                           <TableView fx:id="borrowedByTable" layoutX="14.0" layoutY="121.0" prefHeight="336.0" prefWidth="838.0">
                                              <columns>
                                                 <TableColumn fx:id="borrowedByTitleCol" prefWidth="214.0" text="Title" />

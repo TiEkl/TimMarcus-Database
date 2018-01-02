@@ -81,7 +81,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="AddCheckOut" defaultButton="true" layoutX="891.0" layoutY="317.0" mnemonicParsing="false" onAction="#AddToCheckOut" text="Add to Cbeck Out" />
+      <Button fx:id="AddCheckOut" defaultButton="true" layoutX="891.0" layoutY="317.0" mnemonicParsing="false" onAction="#AddToCheckOut" text="Add to Check Out" />
       
    </children>
 </AnchorPane>

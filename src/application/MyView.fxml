@@ -54,12 +54,6 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <SplitMenuButton layoutX="180.0" layoutY="403.0" mnemonicParsing="false" text="Genre">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Fiction" />
-          <MenuItem mnemonicParsing="false" text="Fantasy" />
-        </items>
-      </SplitMenuButton>
       <ImageView fitHeight="62.0" fitWidth="65.0" layoutX="497.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Search.png" />
@@ -80,7 +74,6 @@
          </image>
       </ImageView>
       <Button fx:id="GoToAdminLogin" defaultButton="true" layoutX="988.0" layoutY="43.0" mnemonicParsing="false" onAction="#GoToAdminLogin" opacity="0.74" prefHeight="17.0" prefWidth="60.0" text="Admin" />
-      <ChoiceBox layoutX="154.0" layoutY="491.0" prefWidth="150.0" />
      
 	</children>
 </AnchorPane>
