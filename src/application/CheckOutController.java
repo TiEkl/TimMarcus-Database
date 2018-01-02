@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 public class CheckOutController implements Initializable {
 	@FXML
 	private MenuItem exit;
+	final String EOL = System.lineSeparator();
 	private static Database library;
 	private final ObservableList<Book> checkoutData = FXCollections.observableArrayList();
 	// Event Listener on MenuItem[#exit].onAction
@@ -56,25 +57,28 @@ public class CheckOutController implements Initializable {
 	    
 	@FXML
 	void borrowBooksButton(ActionEvent event) throws Exception {
-		
-		
+
+
 		try(Database db = new Database()) {
+			
 			String borrowSuccess = db.addBorrowedList(Integer.valueOf(IDScanText.getText()), 4);
 			Alert addBook = new Alert(AlertType.INFORMATION);
 			addBook.setTitle("Borrow Books");
 			addBook.setHeaderText(null);
 			addBook.setContentText(borrowSuccess);
 			addBook.showAndWait();
+
 		}
-		
+		checkoutTable.getItems().clear();
+		IDScanText.clear();
 	}
 	    
 	@FXML 
 	void  IDScanButton(ActionEvent event) throws Exception{
 		cardID =  Integer.valueOf(IDScanText.getText());
 		try (Database db = new Database()) {
-		Customer current = db.getCustomer(cardID);
-		showNameField.setText(current.getName());
+			Customer current = db.getCustomer(cardID);
+			showNameField.setText(current.getName());
 		}
 	}
 	    
