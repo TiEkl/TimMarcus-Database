@@ -244,34 +244,32 @@ public class Database implements AutoCloseable {
 		ArrayList<Book> duplicates = new ArrayList<Book>();
 		long unixBorrowed = System.currentTimeMillis() / 1000L;
 		long unixReturn = unixBorrowed + (UNIXWEEK * nrWeeks);
-		int length = Main.checkoutData.getCheckoutSize();
 		int book_id;
 		String result="";
 		String sql = "INSERT INTO borrowed_books" +
 				"(book_id, card_id, borrowed_epoch, return_epoch)"  +
 				"VALUES "+
 				"(?,?,?,?)";
-		for(int i = 0; i < length; i++) {
+		for(int i = 0; i < Main.checkoutData.getCheckoutSize(); i++) {
 			book_id = Main.checkoutData.getCheckoutList().get(i).getBook_ID();
 			if(checkIfAlreadyBorrowed(book_id, card_id)) {
 				duplicates.add(Main.checkoutData.getCheckoutList().get(i));
+				Main.checkoutData.removeFromCheckout(book_id);
 			}
 		}
 		if(duplicates.size() >= 1) {
 			result += "You have already borrowed the following books: " + EOL;
 			for(int i = 0; i < duplicates.size(); i++) {
-				result += duplicates.get(i).successBorrow() + EOL;
+				result += duplicates.get(i).borrowedSuccess() + EOL;
 			}
-			result += "Please remove them from the checkout.";
-			return result;
 		}
-		for(int i = 0; i < length; i++) {
+		for(int i = 0; i < Main.checkoutData.getCheckoutSize(); i++) {
 			book_id = Main.checkoutData.getCheckoutList().get(i).getBook_ID();
 			PreparedUpdate(sql, book_id, card_id, unixBorrowed, unixReturn);
 		}
-		result = "You have successfully borrowed the following book(s): " + EOL;
+		result += "You have successfully borrowed the following book(s): " + EOL;
 		for(Book borrowed : Main.checkoutData.getCheckoutList()) {
-			result+= borrowed.successBorrow() + EOL;
+			result+= borrowed.borrowedSuccess() + EOL;
 		}
 		Main.checkoutData.clearCheckoutList();
 		return result;
@@ -305,7 +303,7 @@ public class Database implements AutoCloseable {
 		}
 		return result;
 	}
-	public BorrowedBook[] getBorrowedBooks(int card_id) throws SQLException {
+ 	public BorrowedBook[] getBorrowedBooks(int card_id) throws SQLException {
 		String sql = "SELECT * FROM books INNER JOIN borrowed_books USING(book_id)"
 				+ " WHERE card_id = ?";
 		ResultSet borrowedSet = PreparedQuery(sql, card_id);		

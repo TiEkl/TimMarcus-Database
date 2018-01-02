@@ -28,4 +28,8 @@ public class staticData {
 	public boolean removeFromCheckout(Book removal) {
 		return checkoutList.remove(removal);
 	}
+	public boolean removeFromCheckout(int book_id) {
+		
+		return checkoutList.removeIf(book -> book.getBook_ID() == book_id);
+	}
 }

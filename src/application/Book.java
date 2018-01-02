@@ -116,7 +116,7 @@ public class Book implements Comparable<Book> {
 	public String alreadyBorrowed() {
 		return "You have already borrowed" + this.title + " , please remove it from the checkout.";
 	}
-	public String successBorrow() {
+	public String borrowedSuccess() {
 		String result = title + " by " + author;
 		return result;
 	}
