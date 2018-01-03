@@ -473,6 +473,22 @@ public class AdminStartPageController implements Initializable {
 		    	  return customer.tooltipToString();
 		      });
 		});
+		allDelayedTable.setRowFactory((tableView) -> {
+		      return new customerTooltipTableRow<BorrowedBook>((BorrowedBook borrowedBook) -> {
+		    	  Customer customer = null;
+		    	  int card_id = borrowedBook.getCard_id();
+		    	  try(Database db = new Database()) {
+		    		  customer = db.getCustomer(card_id);
+		    	  } catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	  return customer.tooltipToString();
+		      });
+		});
 	}
 
 	public void removeBook(int book_id) throws Exception {
@@ -517,6 +533,7 @@ public class AdminStartPageController implements Initializable {
 		addCardID.clear();
 		addStreet.clear();
 	}
+	
 	public ObservableList<Customer> getFullCustomerList() throws Exception {
 		ObservableList<Customer> customerList = FXCollections.observableArrayList();
 		try(Database db = new Database()) {

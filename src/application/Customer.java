@@ -45,6 +45,6 @@ public class Customer {
 		return card_id;
 	}
 	public String tooltipToString() {
-		return this.name + ". " + this.city +"."; 
+		return this.name + ". " + this.street + ", " + this.city +"."; 
 	}
 }
