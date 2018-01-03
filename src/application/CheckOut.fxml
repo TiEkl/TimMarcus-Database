@@ -52,8 +52,8 @@
       </Button>
       <TableView fx:id="checkoutTable" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0" stylesheets="@tableView.css">
          <columns>
-            <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
             <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
+            <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
             <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
             <TableColumn fx:id="PagesCol" prefWidth="63.0" text="Pages" />
             <TableColumn fx:id="PublisherCol" prefWidth="112.0" text="Publisher" />

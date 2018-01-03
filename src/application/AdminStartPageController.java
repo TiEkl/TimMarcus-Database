@@ -58,7 +58,8 @@ public class AdminStartPageController implements Initializable {
 
 	@FXML
 	private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer,
-	searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer, getAllDelayedButton;
+	searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer,
+	getAllDelayedButton, getAllBorrowedBooks;
 
 	@FXML
 	private TableView<Customer> updateCustomerTable, customerListTable;
@@ -175,6 +176,11 @@ public class AdminStartPageController implements Initializable {
 			}
 		}
 		
+	}
+	
+	@FXML
+	void getAllBorrowedBooks(ActionEvent event) throws Exception {
+		allBorrowedTable.setItems(getAllBorrowedBooks());
 	}
 
 	@FXML
