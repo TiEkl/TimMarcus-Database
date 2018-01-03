@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -19,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +37,7 @@ public class CheckOutController implements Initializable {
 	private MenuItem exit;
 	final String EOL = System.lineSeparator();
 	private static Database library;
+	List<Integer> choiceWeeks = new ArrayList<>();
 	private final ObservableList<Book> checkoutData = FXCollections.observableArrayList();
 	// Event Listener on MenuItem[#exit].onAction
     private Button AdvSearch, Toplist, CheckOut, GoBack, MyBooks, removeSelected, borrowBooks, IDScan;
@@ -57,11 +61,23 @@ public class CheckOutController implements Initializable {
 	    
 	@FXML
 	void borrowBooksButton(ActionEvent event) throws Exception {
-
-
+		int amountWeeks;
+		ChoiceDialog<Integer> dialog = new ChoiceDialog<>(1, choiceWeeks);
+		dialog.setTitle("Choose the number of weeks");
+		dialog.setHeaderText(null);
+		dialog.setContentText("Choose the number of weeks to borrow the books: ");
+		
+		Optional<Integer> result = dialog.showAndWait();
+		
+		if(result.isPresent()) {
+			amountWeeks = result.get();
+		}
+		else {
+			return;
+		}
 		try(Database db = new Database()) {
 			
-			String borrowSuccess = db.addBorrowedList(Integer.valueOf(IDScanText.getText()), 4);
+			String borrowSuccess = db.addBorrowedList(Integer.valueOf(IDScanText.getText()), amountWeeks);
 			Alert addBook = new Alert(AlertType.INFORMATION);
 			addBook.setTitle("Borrow Books");
 			addBook.setHeaderText(null);
@@ -196,6 +212,11 @@ public class CheckOutController implements Initializable {
 	            }
 		    }
 		});
+		
+		choiceWeeks.add(1);
+		choiceWeeks.add(2);
+		choiceWeeks.add(4);
+		choiceWeeks.add(8);
 		
 	}
 	void initData(ArrayList<Book> list) throws SQLException {
