@@ -58,7 +58,8 @@ public class AdminStartPageController implements Initializable {
 
 	@FXML
 	private Button logOut, addCustomerButton, addBook, searchRemove, clearAddBookForm, selectCustomer,
-	searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer, getAllDelayedButton;
+	searchUpdateCustomer, confirmUpdateCustomer, searchBorrowedByButton, removeCustomer,
+	getAllDelayedButton, getAllBorrowedBooks;
 
 	@FXML
 	private TableView<Customer> updateCustomerTable, customerListTable;
@@ -175,6 +176,11 @@ public class AdminStartPageController implements Initializable {
 			}
 		}
 		
+	}
+	
+	@FXML
+	void getAllBorrowedBooks(ActionEvent event) throws Exception {
+		allBorrowedTable.setItems(getAllBorrowedBooks());
 	}
 
 	@FXML
@@ -451,7 +457,22 @@ public class AdminStartPageController implements Initializable {
 		        }
 		    }
 		});
-		
+		allBorrowedTable.setRowFactory((tableView) -> {
+		      return new customerTooltipTableRow<BorrowedBook>((BorrowedBook borrowedBook) -> {
+		    	  Customer customer = null;
+		    	  int card_id = borrowedBook.getCard_id();
+		    	  try(Database db = new Database()) {
+		    		  customer = db.getCustomer(card_id);
+		    	  } catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	  return customer.tooltipToString();
+		      });
+		});
 	}
 
 	public void removeBook(int book_id) throws Exception {

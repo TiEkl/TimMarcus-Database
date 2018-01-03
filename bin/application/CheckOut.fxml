@@ -35,30 +35,25 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="CheckOut" defaultButton="true" disable="true" layoutX="778.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" text="Check Out" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="CheckOut" defaultButton="true" disable="true" layoutX="720.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" text="Check Out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="Toplist" defaultButton="true" layoutX="577.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="MyBooks" defaultButton="true" layoutX="458.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="MyBooks" defaultButton="true" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-      <Button fx:id="AdvSearch" defaultButton="true" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" opacity="0.86" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="AdvSearch" defaultButton="true" layoutX="196.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" opacity="0.86" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
       <TableView fx:id="checkoutTable" layoutX="52.0" layoutY="377.0" prefHeight="314.0" prefWidth="977.0" stylesheets="@tableView.css">
          <columns>
-            <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
             <TableColumn fx:id="TitleCol" prefWidth="257.0" text="Title" />
+            <TableColumn fx:id="AuthorCol" prefWidth="232.0" text="Author" />
             <TableColumn fx:id="GenreCol" prefWidth="112.0" text="Genre" />
             <TableColumn fx:id="PagesCol" prefWidth="63.0" text="Pages" />
             <TableColumn fx:id="PublisherCol" prefWidth="112.0" text="Publisher" />

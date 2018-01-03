@@ -68,6 +68,10 @@ public class CheckOutController implements Initializable {
 			addBook.setContentText(borrowSuccess);
 			addBook.showAndWait();
 
+			checkoutTable.getItems().clear();
+			IDScanText.clear();
+
+
 		}
 		checkoutTable.getItems().clear();
 		IDScanText.clear();

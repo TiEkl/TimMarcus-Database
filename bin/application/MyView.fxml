@@ -18,7 +18,7 @@
          </image>
       </ImageView>
 		
-      <Button fx:id="AdvSearch" defaultButton="true" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" opacity="0.86" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="AdvSearch" defaultButton="true" layoutX="196.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" opacity="0.86" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -44,27 +44,16 @@
         </menus>
       </MenuBar>
       <Pane layoutX="196.0" layoutY="270.0" prefHeight="29.0" prefWidth="425.0" />
-      <Button fx:id="MyBooks" defaultButton="true" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="MyBooks" defaultButton="true" layoutX="458.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="Toplist" defaultButton="true" layoutX="577.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="CheckOut" defaultButton="true" layoutX="720.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" opacity="0.86" text="Check Out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="CheckOut" defaultButton="true" layoutX="778.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" opacity="0.86" text="Check Out" textOverrun="CENTER_ELLIPSIS">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-      <SplitMenuButton layoutX="180.0" layoutY="403.0" mnemonicParsing="false" text="Genre">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Fiction" />
-          <MenuItem mnemonicParsing="false" text="Fantasy" />
-        </items>
-      </SplitMenuButton>
       <ImageView fitHeight="62.0" fitWidth="65.0" layoutX="497.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Search.png" />
@@ -72,20 +61,19 @@
       </ImageView>
       <HBox layoutX="181.0" layoutY="340.0" prefHeight="27.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <RadioButton fx:id="RadioTitle" mnemonicParsing="false" text="Title">
+            <RadioButton fx:id="RadioTitle" mnemonicParsing="false" selected="true" text="Title">
                <toggleGroup>
                   <ToggleGroup fx:id="RadioOption" />
                </toggleGroup></RadioButton>
             <RadioButton fx:id="RadioAuthor" mnemonicParsing="false" text="Author" toggleGroup="$RadioOption" />
          </children>
       </HBox>
-      <ImageView fitHeight="17.0" fitWidth="21.0" layoutX="960.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="17.0" fitWidth="21.0" layoutX="960.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@fpmwlddibizqewcyodnb.png" />
          </image>
       </ImageView>
-      <Button fx:id="GoToAdminLogin" defaultButton="true" layoutX="988.0" layoutY="70.0" mnemonicParsing="false" onAction="#GoToAdminLogin" opacity="0.74" prefHeight="17.0" prefWidth="60.0" text="Admin" />
-      <ChoiceBox layoutX="154.0" layoutY="491.0" prefWidth="150.0" />
+      <Button fx:id="GoToAdminLogin" defaultButton="true" layoutX="988.0" layoutY="43.0" mnemonicParsing="false" onAction="#GoToAdminLogin" opacity="0.74" prefHeight="17.0" prefWidth="60.0" text="Admin" />
      
 	</children>
 </AnchorPane>

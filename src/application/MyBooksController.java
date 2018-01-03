@@ -97,10 +97,12 @@ public class MyBooksController implements Initializable {
 				}
 				else {
 					db.returnBook(cardID, aBook.getBook_ID(), 0);
+					
 				}
 
 			} else if ((result.get() == ButtonType.CANCEL)) {
 				db.returnBook(cardID, aBook.getBook_ID(), 0);
+				enterCardIDButton(event);
 			}
 		}
 	}
