@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class TooltipTableRow<T> extends TableRow<T> {
-
+	private String missingCover = "http://www.jameshmayfield.com/wp-content/uploads/2015/03/defbookcover-min.jpg";
 	private Function<T, String> toolTipStringFunction;
 
 	public TooltipTableRow(Function<T, String> toolTipStringFunction) {
@@ -30,8 +30,8 @@ public class TooltipTableRow<T> extends TableRow<T> {
 			tooltip.setGraphic(new ImageView(image));
 			}
 			else {
-				tooltip.setStyle("-fx-font-size: 14");
-				tooltip.setText("Missing image.");
+				Image image = new Image(missingCover, 500, 250, true, true, true);
+				tooltip.setGraphic(new ImageView(image));
 			}
 			hackTooltipStartTiming(tooltip);
 			setTooltip(tooltip);
