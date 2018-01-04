@@ -23,9 +23,9 @@
                   <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="false" text="About">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutMenuButton" text="About" />
                </items>
             </Menu>
          </menus>
