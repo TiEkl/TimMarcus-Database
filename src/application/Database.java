@@ -462,7 +462,7 @@ public class Database implements AutoCloseable {
 		book = getOneBorrowedBook(card_id, book_id);
 		if (!book.onTime()) {
 			int debt = 0;
-			debt = book.getDaysOver() * 2;
+			debt = -1 * (book.getDaysOver() * 2);
 			addDebt(card_id, debt);
 		}
 		String onTime = book.returnOnTime();
