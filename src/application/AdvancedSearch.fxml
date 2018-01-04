@@ -20,9 +20,9 @@
                   <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="false" text="About">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutMenuButton" text="About" />
                </items>
             </Menu>
          </menus>
@@ -37,22 +37,17 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="AdvSearch" defaultButton="true" disable="true" layoutX="103.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="AdvSearch" defaultButton="true" disable="true" layoutX="196.0" layoutY="153.0" mnemonicParsing="false" onAction="#AdvSearch" text="Advanced Search" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="MyBooks" defaultButton="true" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="MyBooks" defaultButton="true" layoutX="458.0" layoutY="153.0" mnemonicParsing="false" onAction="#EnterMyBorrowedBooks" opacity="0.86" text="My Borrowed Books" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="Toplist" defaultButton="true" layoutX="577.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-      <Button fx:id="CheckOut" defaultButton="true" layoutX="778.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" opacity="0.86" text="Check Out" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="CheckOut" defaultButton="true" layoutX="720.0" layoutY="153.0" mnemonicParsing="false" onAction="#GoToCheckOut" opacity="0.86" text="Check Out" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -74,19 +69,13 @@
       <Text layoutX="137.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
       <TextField fx:id="SearchAuthor" layoutX="180.0" layoutY="258.0" onAction="#onEnter" prefHeight="27.0" prefWidth="625.0" />
       <Text layoutX="129.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-      <SplitMenuButton layoutX="180.0" layoutY="296.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="210.0" text="Genre">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-         </items>
-      </SplitMenuButton>
       <Button fx:id="SearchButton" defaultButton="true" layoutX="444.0" layoutY="317.0" mnemonicParsing="false" onAction="#SearchButton" prefHeight="27.0" prefWidth="97.0" text="Search" />
       <Button fx:id="generateToplist" defaultButton="true" layoutX="686.0" layoutY="317.0" mnemonicParsing="false" onAction="#generateToplist" opacity="0.86" text="Toplist" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="AddCheckOut" defaultButton="true" layoutX="891.0" layoutY="317.0" mnemonicParsing="false" onAction="#AddToCheckOut" text="Add to Cbeck Out" />
+      <Button fx:id="AddCheckOut" defaultButton="true" layoutX="891.0" layoutY="317.0" mnemonicParsing="false" onAction="#AddToCheckOut" text="Add to Check Out" />
       
    </children>
 </AnchorPane>

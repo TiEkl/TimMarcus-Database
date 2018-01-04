@@ -21,14 +21,14 @@
                   <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="false" text="About">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutMenuButton" text="About" />
                </items>
             </Menu>
          </menus>
       </MenuBar>
-      <Button fx:id="GoBack" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Go Back" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="GoBack" defaultButton="true" layoutX="42.0" layoutY="93.0" mnemonicParsing="false" onAction="#GoBack" opacity="0.86" text="Go Back" textOverrun="CENTER_ELLIPSIS">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

@@ -32,7 +32,7 @@
       </Button>
       <TabPane fx:id="adminManageTab" layoutX="28.0" layoutY="83.0" prefHeight="591.0" prefWidth="934.0" stylesheets="@application.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="manageCustomer" text=" Costumer">
+          <Tab fx:id="manageCustomer" text=" Customer">
                <content>
                   <TabPane prefHeight="558.0" prefWidth="891.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -182,6 +182,7 @@
                                                 <TableColumn fx:id="allBorrowedbookIDCol" prefWidth="83.0" text="Book ID" />
                                             </columns>
                                           </TableView>
+                                          <Button fx:id="getAllBorrowedBooks" defaultButton="true" layoutX="29.0" layoutY="22.0" mnemonicParsing="false" onAction="#getAllBorrowedBooks" text="Get list" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -208,18 +209,19 @@
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="IDScan" layoutX="14.0" layoutY="33.0" prefHeight="27.0" prefWidth="291.0" promptText="Search" />
-                                          <RadioButton layoutX="14.0" layoutY="77.0" mnemonicParsing="false" text="Card ID" />
-                                          <RadioButton layoutX="93.0" layoutY="77.0" mnemonicParsing="false" text="Name" />
                                           <Button fx:id="searchBorrowedByButton" defaultButton="true" layoutX="244.0" layoutY="73.0" mnemonicParsing="false" onAction="#searchBorrowedByButton" text="Search" />
-                                          <TextField fx:id="borrowedName" layoutX="648.0" layoutY="33.0" prefHeight="27.0" prefWidth="252.0" />
-                                          <TableView fx:id="borrowedByTable" layoutX="14.0" layoutY="121.0" prefHeight="336.0" prefWidth="838.0">
+                                          <TextField fx:id="borrowedName" blendMode="MULTIPLY" editable="false" layoutX="648.0" layoutY="33.0" prefHeight="27.0" prefWidth="252.0">
+                                             <effect>
+                                                <Blend />
+                                             </effect></TextField>
+                                          <TableView fx:id="borrowedByTable" layoutX="14.0" layoutY="121.0" prefHeight="336.0" prefWidth="838.0" stylesheets="@tableView.css">
                                              <columns>
                                                 <TableColumn fx:id="borrowedByTitleCol" prefWidth="214.0" text="Title" />
                                                 <TableColumn fx:id="borrowedByAuthorCol" prefWidth="142.0" text="Author" />
                                                 <TableColumn fx:id="borrowedByGenreCol" prefWidth="150.0" text="Genre" />
                                                 <TableColumn fx:id="borrowedByIsbnCol" prefWidth="175.0" text="ISBN" />
                                                 <TableColumn fx:id="borrowedByQuantityCol" prefWidth="61.0" text="Quantity" />
-                                                <TableColumn fx:id="borrowedByBookIDCol" prefWidth="83.0" text="Book ID" />
+                                                <TableColumn fx:id="borrowedByBookIDCol" prefWidth="95.0" text="Book ID" />
                                              </columns>
                                           </TableView>
                                        </children>

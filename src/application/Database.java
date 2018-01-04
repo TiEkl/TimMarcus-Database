@@ -334,7 +334,8 @@ public class Database implements AutoCloseable {
 		publisher = rs.getString("publisher");
 		isbn = rs.getLong("isbn");
 		pages = rs.getInt("pages");
-		quantity = getNumberAvailable(book_id);
+		//quantity = getNumberAvailable(book_id);
+		quantity = rs.getInt("quantity");
 		shelf = rs.getInt("shelf");
 		rating = getRating(book_id);
 		coverURL = rs.getString("cover_url");
@@ -576,7 +577,8 @@ public class Database implements AutoCloseable {
 			isbn = bookSet.getLong("isbn");
 			pages = bookSet.getInt("pages");
 			shelf = bookSet.getInt("shelf");
-			quantity = getNumberAvailable(book_id);
+			//quantity = getNumberAvailable(book_id);
+			quantity = bookSet.getInt("quantity");
 			rating = getRating(book_id);
 			coverURL = bookSet.getString("cover_url");
 			Book temp = new Book(title, author, genre, publisher, pages, isbn, book_id, quantity, rating, shelf, coverURL);

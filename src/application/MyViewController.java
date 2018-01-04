@@ -134,6 +134,15 @@ public class MyViewController implements Initializable {
 		Platform.exit();
 
 	}
+	
+	@FXML
+	void aboutMenuButton(ActionEvent event) {
+		Alert addBook = new Alert(AlertType.INFORMATION);
+		addBook.setTitle("Library System");
+		addBook.setHeaderText("Made by :Tim Eklund & Marcus Danielsson");
+		addBook.setContentText("SQLite | Java | JavaFX | jBCrypt");
+		addBook.showAndWait();
+	}
 
 
 
@@ -210,13 +219,5 @@ public class MyViewController implements Initializable {
 
 	}
 	
-	@FXML
-	void aboutMenuButton(ActionEvent event) {
-		Alert addBook = new Alert(AlertType.INFORMATION);
-		addBook.setTitle("Library System");
-		addBook.setHeaderText("Tim Eklund & Marcus Danielsson");
-		addBook.setContentText("@Copyright");
-		addBook.showAndWait();
-		
-	}
+
 }

@@ -44,5 +44,7 @@ public class Customer {
 	public int getCard_id() {
 		return card_id;
 	}
-
+	public String tooltipToString() {
+		return this.name + ". " + this.street + ", " + this.city +"."; 
+	}
 }
