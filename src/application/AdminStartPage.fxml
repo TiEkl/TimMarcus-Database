@@ -221,7 +221,7 @@
                                                 <TableColumn fx:id="borrowedByGenreCol" prefWidth="150.0" text="Genre" />
                                                 <TableColumn fx:id="borrowedByIsbnCol" prefWidth="175.0" text="ISBN" />
                                                 <TableColumn fx:id="borrowedByQuantityCol" prefWidth="61.0" text="Quantity" />
-                                                <TableColumn fx:id="borrowedByBookIDCol" prefWidth="83.0" text="Book ID" />
+                                                <TableColumn fx:id="borrowedByBookIDCol" prefWidth="95.0" text="Book ID" />
                                              </columns>
                                           </TableView>
                                        </children>

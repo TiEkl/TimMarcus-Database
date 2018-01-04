@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
@@ -25,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
@@ -34,6 +36,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -47,7 +50,7 @@ public class AdvancedSearchController implements Initializable   {
 	@FXML
 	private AnchorPane rootPane;
 	@FXML
-	private MenuItem exit;
+	private MenuItem exit, about;
 	
 
 	@FXML
@@ -79,9 +82,7 @@ public class AdvancedSearchController implements Initializable   {
 		this.textSearch = textSearch;
 	}
  
-    @FXML
-    void exitProgram(ActionEvent event) {
-    }
+   
     
     @FXML
     void SearchButton(ActionEvent event) throws Exception {
@@ -255,12 +256,7 @@ public class AdvancedSearchController implements Initializable   {
 		}
 		return book;
 	}
-	/* public ObservableList<Book> getToplist() throws SQLException{
-		ObservableList<Book> book = FXCollections.observableArrayList();
-		} 
-		return book;
-	}
-	 */
+	
 
 	public void setStringResultAuthor(String text) {
 		SearchAuthor.setText(text);	
@@ -280,55 +276,20 @@ public class AdvancedSearchController implements Initializable   {
 		AdvancedSearchController.searchCategory = searchCategory;
 	}
 	
+	 @FXML
+	    void exitProgram(ActionEvent event) {
+	    	Platform.exit();
+	    }
 	
-				
+	@FXML
+	void aboutMenuButton(ActionEvent event) {
+		Alert addBook = new Alert(AlertType.INFORMATION);
+		addBook.setTitle("Library System");
+		addBook.setHeaderText("Made by :Tim Eklund & Marcus Danielsson");
+		addBook.setContentText("SQLite | Java | JavaFX | jBCrypt");
+		addBook.showAndWait();
+	}		
 			
 	
 
-	/*
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		Title.setCellValueFactory(new PropertyValueFactory<Database, String>("id"));
-        Author.setCellValueFactory(new PropertyValueFactory<Database, String>("name"));
-        Genre.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-		Pages.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-		Publisher.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-		Quantity.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-		ISBN.setCellValueFactory(new PropertyValueFactory<Database, String>("active"));
-
-	}
-
-
-
-	private Database[] parseUserList() {
-		String result = "";
-		ResultSet rs;
-		Statement stmt;
-		try {
-
-			Connection conn = DriverManager.getConnection(Database.dbUrl);
-
-
-		     stmt = conn.createStatement();
-		       rs = stmt.executeQuery("SELECT title, author, genre, pages, shelf  FROM books WHERE title LIKE '%two%'");
-
-		      while (rs.next()) {
-		    	  String title = rs.getString("title");
-		    	  String author = rs.getString("author");
-		    	  String genre = rs.getString("genre");
-		    	  String pages = rs.getString("pages");
-		    	  String publisher = rs.getString("Publisher");
-		    	  String Quantity = rs.getString("Quantity");
-		    	  String ISBN = rs.getString("ISBN");
-
-
-		return null;
-	}
-		}
-		catch(Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-		}
-			return Database  ;
-		}	*/
 }

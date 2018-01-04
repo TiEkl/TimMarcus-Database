@@ -29,14 +29,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="exit" onAction="#exitProgram" text="Exit">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem fx:id="EnterAdminLogin" mnemonicParsing="false" onAction="#EnterAdminLogin" text="Admin-Login" />
+                  <MenuItem fx:id="exit" onAction="#exitProgram" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="About">
             <items>
               <MenuItem fx:id="about" mnemonicParsing="false" onAction="#aboutMenuButton" text="About" />
             </items>
